@@ -12,5 +12,8 @@
   },
   "author": "The Society of Software Engineers at RIT",
   "license": "MIT",
-  "readmeFilename": "README.markdown"
+  "readmeFilename": "README.markdown",
+  "dependencies": {
+    "socket.io": "0.9.11"
+  }
 }
