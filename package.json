@@ -2,19 +2,21 @@
   "name": "BioGrid",
   "version": "0.0.1",
   "description": "Build creatures and watch them survive in a hostile world",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
+    "start": "node app"
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git://github.com/rit-sse/rapdev12.git"
   },
-  "author": "The Society of Software Engineers at RIT",
+  "author": "The Society of Software Engineers",
   "license": "MIT",
   "readmeFilename": "README.markdown",
   "dependencies": {
     "socket.io": "0.9.11",
-    "express": "3.x"
+    "express": "3.x",
+    "jade": "*"
   }
 }
