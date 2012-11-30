@@ -8,7 +8,6 @@ function CreatureCore(x, y) {
   this.y = y;
 }
 
-<<<<<<< HEAD
 CreatureCore.prototype.move = function(direction) {
   x = x + direction[0];
   y = y + direction[1];
@@ -25,8 +24,3 @@ CreatureCore.prototype.canMove = function(world, direction) {
   	return true
   }
 };
-=======
-CreatureCore.prototype.move = function(direction){
-  
-};
->>>>>>> 5d25b2f0f39857dd4eb10dec6b9cce1227b1b88f
