@@ -14,6 +14,7 @@
   "license": "MIT",
   "readmeFilename": "README.markdown",
   "dependencies": {
-    "socket.io": "0.9.11"
+    "socket.io": "0.9.11",
+    "express": "3.x"
   }
 }
