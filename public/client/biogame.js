@@ -16,14 +16,15 @@ window.onload = function() {
  * the initial game world with data from the server.
  */
 function initGame(data) {
+    var wid = 1000;
     var stage = new Kinetic.Stage({
         container: 'biogame',
-        width: 800,
+        width: wid,
         height: 600
     });
     
     var bg = new Kinetic.Layer();
-    var wid = 1000;
+    
     
     //A tile for the gradient background
     var bgTile = new Kinetic.Rect({
