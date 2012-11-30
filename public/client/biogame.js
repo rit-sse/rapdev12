@@ -1,15 +1,21 @@
 
-var mapGroup = new Kinetic.Group();
-var map = new Map(mapGroup);
+var BioGame = function BioGame(stage) {
+	this.stage = stage;
+	this.viewport = new Viewport(stage);
+
+	this.mapGroup = new Kinetic.Group();
+	this.map = new Map(this.mapGroup);
+}
+
 
 /*
  * Client game entry point. Initializes game resources and loads
  * the initial game world with data from the server.
  */
-function initGame(data) {
+BioGame.prototype.initGame = function(data) {
 	// Create a map with the provided tile data
-	map.loadTileData(data.map);
-	viewport.draw();
+	this.map.loadTileData(data.map);
+	this.viewport.draw();
 }
 
 
@@ -28,27 +34,21 @@ window.onload = function() {
         height: 600
     });
 
-    var bg = new Kinetic.Layer();
+    var biogame = new BioGame(stage);
 
-    //A tile for the gradient background
-    var bgTile = new Kinetic.Rect({
-            width: wid,
-            height: 600,
-            fill: {
-                start: {
-                    x: wid/2,
-                    y: 0,
-                    radius: 0
-                },
-                end: {
-                    x: wid/2,
-                    y: 0,
-                    radius: 600
-                },
-                colorStops: [0, '#99ddff', 1, '#004466']
-            }
-        });
-
-    bg.add(bgTile);
-    stage.add(bg);
+    // Test tile loading
+    biogame.initGame({
+		"map": [
+			[ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
+			[ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
+			[ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
+			[ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
+			[ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
+			[ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
+			[ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
+			[ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
+			[ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
+			[ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
+		]
+	});
 }

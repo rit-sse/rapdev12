@@ -3,7 +3,7 @@ var Map = function Map(mapGroup) {
 	this.mapGroup = mapGroup;
 
 	this.tileGroup = new Kinetic.Group();
-	mapGroup.add(this.tileGroup);
+	this.mapGroup.add(this.tileGroup);
 }
 
 
