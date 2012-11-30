@@ -1,5 +1,3 @@
-console.log("communication module loaded.");
-
 var use = function(socket, name, callback) {
   socket.on(name, function(data) {
     var result = callback(data);

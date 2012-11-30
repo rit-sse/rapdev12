@@ -1,14 +1,15 @@
-// XXX TESTING!!!
+var socket;
 
 $(document).ready(function() {
-  var socket = io.connect('http://localhost');
+  socket = io.connect('http://localhost');
 
   socket.on('connected', function(data) {
-    socket.emit('request-message'); // provoke message
+    socket.emit('request-message', 'echo-successful'); // Provoke test message
   });
 
+  // Test message
   socket.on('request-message', function(data) {
-    alert(data);
+    console.log(data);
   });
 });
 
