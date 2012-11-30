@@ -1,0 +1,124 @@
+<project name="BioGrid" default="jslint" basedir=".">
+
+
+    <!-- Build options definition -->
+    <property name="debug" value="true" />
+    <property name="verbose" value="true" />
+
+	
+	<!-- directory definitions -->
+	<property name="srcdir" location="${basedir}" />
+	<!--<property name="testdir" location="${basedir}/test" /> -->
+	<property name="tooldir" location="${basedir}/tools" />
+	
+	<property name="reportsdir" location="${basedir}/reports" />
+	<property name="reports.test" location="${reportsdir}/tests" />
+	<property name="reports.coverage" location="${reportsdir}/coverage" />
+	<property name="reports.jslint" location="${reportsdir}/jslint" />
+ 
+ 
+	<!-- Special Task homes -->
+    <property name="jslint.home" location="${reportsdir}/tools/jslint" />
+	
+	
+	
+    <!--
+*******************************************************************************
+* Task Definitions                                                          *
+*******************************************************************************    
+    -->	
+	
+	<taskdef name="jslint" classname="com.googlecode.jslint4java.ant.JSLintTask">
+		<classpath>
+			<fileset dir="${jslint.home}" includes="**/*.jar" />
+		</classpath>
+	</taskdef>
+
+    <!--
+*******************************************************************************
+* Target Definitions                                                          *
+*******************************************************************************    
+    -->
+    <target name="clean" description="Remove build products.">
+        <delete dir="${reportsdir}" />
+    </target>
+
+	
+	
+	<target name="init" depends="clean" description="Prepare the directory structure.">
+        <mkdir dir="${reportsdir}" />
+        <mkdir dir="${reports.test}" />
+        <mkdir dir="${reports.coverage}" />
+		<mkdir dir="${reports.jslint}" />
+    </target>
+
+	
+	<target name="jslint" description="Runs jslint4java on the src directory.">
+		<echo message="Running jslint ..." />
+		<jslint>
+			<formatter type="plain"/>
+			<formatter type="junit" destfile="${reports.jslint}"/>
+			<fileset dir="${srcdir}">
+				<include name = "**/*.js"/>
+				<exclude name = "**/*.pack.js"/> 
+				<exclude name = "**/*.min.js"/> 
+			</fileset>
+		</jslint>
+	</target>
+	
+	
+	
+	 <target name="mocha-jenkins" description="Test framework">
+        <echo message="Installing Deps ..." />
+        <exec executable="npm" failonerror="true">
+			<env key="NODE_PATH" value="/tmp/node_modules/" />
+            <arg value="install" />
+        </exec>
+		
+        <echo message="Running the tests ..." />
+		<exec executable="mocha"  output="build/testResults/mocha.xml" failonerror="true">
+			<env key="NODE_PATH" value="/tmp/node_modules/" />
+				<arg value="--reporter" />
+				<arg value="xunit" />
+			</exec>
+        <echo message="Tests done" />
+    </target>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+ <!--
+    <property name="src" location="src" />
+    <property name="build" location="bin" />
+    <property name="build.bin" value="${build}/bin" />
+    <property name="test.build" location="bin-test" />
+    <property name="test.build.bin" value="${test.build}/bin" />
+    <property name="test.reports" value="reports" />
+    <property name="test.reports.junit" value="reports/junit" />
+    <property name="test.reports.pmd" value="reports/pmd" />
+    <property name="test.reports.coverage" value="reports/coverage" />
+    <property name="test.src" location="test" />
+	
+-->
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+</project>
