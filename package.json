@@ -4,8 +4,8 @@
   "description": "Build creatures and watch them survive in a hostile world",
   "main": "app.js",
   "scripts": {
-    "start": "node app"
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app",
+    "test": "./node_modules/.bin/mocha --reporter list"
   },
   "repository": {
     "type": "git",
@@ -18,5 +18,8 @@
     "socket.io": "0.9.11",
     "express": "3.x",
     "jade": "*"
+  },
+  "devDependencies": {
+    "mocha": "1.7.x"
   }
 }
