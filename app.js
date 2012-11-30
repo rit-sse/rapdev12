@@ -1,10 +1,10 @@
-
 /**
  * Module dependencies.
  */
 
 var express = require('express')
   , routes = require('./routes')
+  , comm = require('./comm')
   , user = require('./routes/user')
   , http = require('http')
   , path = require('path');
