@@ -4,8 +4,25 @@ function World() {
   this.creatures = {};
 }
 
+World.prototype.getUIDs = function() {
+  var uids = [];
+  for(var uid in this) if (this.hasOwnProperty(uid)) {
+    keys.push(uid);
+  }
+  return uids;
+};
+
+World.prototype.generateUID = function() {
+	var uids = this.getUIDs;
+	var uid = 0;
+	while(uids.indexOf(uid) > -1) {
+		uid++;
+	}
+	return uid;
+};
+
 World.prototype.addCreature = function(creature) {
-	this.creatures[this.generateID()] = creature;
+	this.creatures[this.generateUID()] = creature;
 };
 
 World.prototype.getCreature = function(id) {
