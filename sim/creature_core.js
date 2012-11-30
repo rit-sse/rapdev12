@@ -19,7 +19,10 @@ CreatureCore.prototype.canMove = function(world, direction) {
   	return false
   }
   else if(typeof world.tiles[y[x+direction[0]]] == 'undefined'){
-
+  	return false
+  }
+  else {
+  	return true
   }
 };
 =======
