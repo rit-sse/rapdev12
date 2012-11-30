@@ -1,6 +1,7 @@
 function World() {
   this.size = 9001;
   this.tiles = make2DArray(this.size);
+  this.creatures = {};
 }
 
 //See http://stackoverflow.com/a/6495274/406249
