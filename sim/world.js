@@ -5,7 +5,7 @@ function World() {
 }
 
 World.prototype.addCreature = function(creature) {
-	this.creatures[this.generateID] = creature;
+	this.creatures[this.generateID()] = creature;
 };
 
 World.prototype.getCreature = function(id) {
