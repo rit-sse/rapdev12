@@ -1,16 +1,12 @@
 //Creature.js
 
-var name;
-var speed;
-var pos;
-var canMove=false;
-
 //Creature class
-function Creature() {
+function Creature(name, speed, pos) {
   this.name = name;
   this.speed = speed;
   this.pos = pos;
   this.alive = false;
+  this.canMove = false;
 }
 
 Creature.prototype.Move = function(){
