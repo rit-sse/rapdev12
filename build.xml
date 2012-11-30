@@ -1,4 +1,4 @@
-<project name="BioGrid" default="jslint" basedir=".">
+<project name="BioGrid" default="jenkins" basedir=".">
 
 
     <!-- Build options definition -->
@@ -18,7 +18,7 @@
  
  
 	<!-- Special Task homes -->
-    <property name="jslint.home" location="${reportsdir}/tools/jslint" />
+    <property name="jslint.home" location="${basedir}/tools/jslint" />
 	
 	
 	
@@ -55,7 +55,7 @@
 	
 	<target name="jslint" description="Runs jslint4java on the src directory.">
 		<echo message="Running jslint ..." />
-		<jslint>
+		<jslint haltOnFailure="false" >
 			<formatter type="plain"/>
 			<formatter type="junit" destfile="${reports.jslint}"/>
 			<fileset dir="${srcdir}">
@@ -87,7 +87,7 @@
 	
 	
 	
-	
+	<target name="jenkins" depends="init, jslint" description="the jenkins on commit task"/>
 	
 	
 	
