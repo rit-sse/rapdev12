@@ -2,9 +2,10 @@ extends layout
 
 block scripts
   script(src='http://kineticjs.com/download/v4.1.2/kinetic-v4.1.2.js')
-  script(src='public/client/biogame.js')
-  script(src='public/client/map.js')
+  script(src='/lib/underscore.js')
+  script(src='/lib/backbone.js')
+  script(src='/client/biogame.js')
+  script(src='/client/map.js')
 
 block content
-  h1= title
-  canvas#biogame
+  div#biogame
