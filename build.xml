@@ -57,7 +57,7 @@
 		<echo message="Running jslint ..." />
 		<jslint haltOnFailure="false" >
 			<formatter type="plain"/>
-			<formatter type="junit" destfile="${reports.jslint}"/>
+			<formatter type="checkstyle" destfile="${reports.jslint}"/>
 			<fileset dir="${srcdir}">
 				<include name = "**/*.js"/>
 				<exclude name = "**/*.pack.js"/> 
