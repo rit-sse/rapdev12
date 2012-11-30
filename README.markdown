@@ -5,6 +5,9 @@ BioGrid
 
 Get started
 -----------
+If you're using Windows, you **should** install Visual Studio so you
+can build the native extensions for some Node.js modules.
+
 1. Install [Node.js][1] (Available for Windows, Mac OS X, and Linux)
 2. Clone this repository
 3. Move to the repository directory and run `npm install` in your favorite
