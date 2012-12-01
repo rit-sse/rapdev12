@@ -18,6 +18,7 @@ $(document).ready(function() {
 
   socket.on('push_diff', function(data){
     console.log(data);
+    $("#output").html(data.name + "<br/>" + data.data.rand);
   });
 });
 
