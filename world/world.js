@@ -1,6 +1,8 @@
+// require:
+// 	 utils/world-utils.js
+
 function World( jsonObject ) {
-	
-	
+
 	this.creatures = [];
 	
 	this.activeCreatures = [];
@@ -24,7 +26,7 @@ function World( jsonObject ) {
 			};
 			this.map[i].push(  currentTile  );
 			if (currentTile.terrain.passable == true){
-				this.passableTiles.push( [i,j] )
+				this.passableTiles.push( [i,j] );
 			};
 		};
 	};
@@ -34,8 +36,10 @@ function World( jsonObject ) {
 
 World.prototype.addCreature = function( creature ) {
 	this.creatures.push( creature );
+  this.activeCreatures.push( creature );
+	var randTile = this.getRandomValidTile();
 	creature.setId( this.creatures.length - 1 );
-	this.getRandomValidTile().inhabitant = creature.getId();
+	randTile.inhabitant = creature.getId();
 };
 
 World.prototype.populateWithItems = function() {
@@ -76,12 +80,47 @@ World.prototype.findInTiles = function( condition ) {
 	var valid = [];
 	for ( var row = 0; row < this.map.length; row++ ) {
 		for ( var col = 0; col < this.map[0].length; col++ ) {
-			if ( condition( this.getTile( row, col ) ) ) {
+			var currentTile = this.getTile( row, col );
+			if ( condition( currentTile ) ) {
 				valid.push( currentTile );
 			}
 		}
 	}
 	return valid;
+}
+
+World.prototype.moveCreature = function( id, direction ) {
+	var modPos;
+	if (direction == Direction.NORTH){
+		modPos = [0,-1];
+	}else if (direction == Direction.SOUTH){
+		modPos = [0,+1];
+	}else if (direction == Direction.EAST){
+		modPos = [+1,0];
+	}else if (direction == Direction.WEST){
+		modPos = [-1,0];
+	}else if (direction == Direction.NORTHWEST){
+		modPos = [-1,-1];
+	}else if (direction == Direction.NORTHEAST){
+		modPos = [+1,-1];
+	}else if (direction == Direction.SOUTHWEST){
+		modPos = [-1,+1];
+	}else if (direction == Direction.SOUTHEAST){
+		modPos = [+1,+1];
+	}
+	
+	creaturePosition = this.getCreaturePosition(id);
+	newPos = [creaturePosition.row + modPos[0], creaturePosition.col + modPos[1]];
+	tileCheck = this.getTerrainAtTile(newPos[0],newPos[1]).passable == true
+							&& this.getInhabitantAtTile(newPos[0],newPos[1]);
+	if (tileCheck) {
+		this.getTile(creaturePosition.row, creaturePosition.col).inhabitant = null;
+		this.getTile(newPos[0], newPos[1]).inhabitant = id;
+	}
+	else {
+		this.creatures.onCollision();
+	}
+	return tileCheck;
 }
 
 World.prototype.randomElement = function( someArray ) {
@@ -100,28 +139,61 @@ World.prototype.isValidCreatureId = function( creatureID ) {
 World.prototype.getCreaturePosition = function( creatureID ) {
 	// TODO: This is an O(N) operation. Can it be made faster with some ease?
 	if ( this.isValidCreatureId( creatureID ) ) {
-		var tile = this.findInTiles( function( tile ) {
+		return this.findInTiles( function( tile ) {
 			return tile.inhabitant == creatureID;
 		})[0];
-		return { "row": tile.row, "col": tile.col };
 	} else {
 		return null;
 	}
+}
+
+/*
+ * Returns all active creatures.
+ */
+World.prototype.getActiveCreatures = function() {
+    return this.activeCreatures;
+}
+
+World.prototype.toJSON = function() {
+	return JSON.stringify( {
+		"map": this.getMapJSON(),
+		"creatureClasses": this.getCreatureClassesJSON(),
+		"creatures": this.getCreaturesJSON()
+	});
+}
+
+World.prototype.getMapJSON = function() {
+	var jsonMap = [];
+	for ( var row = 0; row < this.map.length; row++ ) {
+			jsonMap.push( [] );
+		for ( var col = 0; col < this.map[0].length; col++ ) {
+			jsonMap[row][col] = this.map[row][col].terrain.name;
+		}
+	}
+	return JSON.stringify(jsonMap);
+}
+
+World.prototype.getCreatureClassesJSON = function() {
+	return null;
+}
+
+World.prototype.getCreaturesJSON = function() {
+	return null;
 }
 
 // TODO: Make this read from world.json instead of hardcoding it
 var worldjson = {
   "terrain": [
     {
-      "name": "grass",
+      "name": Terrain.GRASS,
       "passable": true
     },
     {
-      "name": "water",
+      "name": Terrain.WATER,
       "passable": false
     },
     {
-      "name": "rock",
+      "name": Terrain.ROCK,
       "passable": false
     }
   ],
@@ -146,3 +218,14 @@ var worldjson = {
 }
 
 var world = new World( worldjson );
+exports.worldjson = worldjson;
+exports.World = World;
+
+var comm;
+exports.use_comm = function(c) {
+  comm = c;
+}
+
+exports.client_hooks = {};
+exports.updates = {};
+

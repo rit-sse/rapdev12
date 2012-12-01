@@ -44,8 +44,7 @@ window.onload = function() {
   var socket = io.connect('http://localhost:3000');
 
   socket.on('connected', function(data) {
-    biogame.initGame(data);
-    biogame.splash.SetPercent(1);
+    biogame.splash.SetPercent(0.5);
   });
 
   // Test message
@@ -62,6 +61,14 @@ window.onload = function() {
     $("#output").html(data.name + "<br/>" + data.data.rand);
   });
 
+  socket.on('get_map', function(data){
+    biogame.initGame(data);
+    biogame.splash.SetPercent(1);
+  });
+
+  $('#sendRequest').click(function(){
+    socket.emit('get_map');
+  });
 
   // Add keyboard input to the map
   $(document).keydown(function(e) {
