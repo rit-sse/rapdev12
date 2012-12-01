@@ -25,6 +25,7 @@ function World( jsonObject ) {
 	this.passableTiles = [];
 	
 	this.map = [];
+	var currentRow; var currentCol;
 	for(var i=0; i<jsonObject.map.length; i++){
 		currentRow = jsonObject.map[i];
 		this.map.push([]);
