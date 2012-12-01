@@ -10,8 +10,8 @@ function Creature(name, classId, world,attack,defence,speed){
 	this.attack = attack;
 	this.defence = defence;
 	this.speed = speed;
-    this.classId = classId;
-    this.name = name;
+  this.classId = classId;
+  this.name = name;
 };
 
 /*

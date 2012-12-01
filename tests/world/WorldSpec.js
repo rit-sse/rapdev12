@@ -2,6 +2,10 @@ var World = require('../../world/world.js').World;
 var Creature = require('../../creature/Creature.js').Creature;
 
 describe( "world.js suite", function() {
+
+  // ----------------------------------------------------------------------
+  // --------------------  Set up test data  ------------------------------
+  // ----------------------------------------------------------------------
   var testWorld = {
     "terrain": [
       {
@@ -47,6 +51,10 @@ describe( "world.js suite", function() {
     smallWorld = new World( smallTestWorld );
     aCreature = new Creature( "Frankenyacht", "yacht", smallWorld, 10, 10, 10 );
   });
+
+  // ----------------------------------------------------------------------
+  // ------------------------------  Tests   ------------------------------
+  // ----------------------------------------------------------------------
 
   it( "loads the correct terrain", function() {
     expect( world.terrain[0] ).toEqual( {"name": "grass", "passable": true} );
@@ -130,16 +138,67 @@ describe( "world.js suite", function() {
     expect( smallWorldMap ).toEqual( [["grass","grass"],["grass","grass"]] );
   });
 
-  it( "correctly dumps to client-readable object", function() {
-    var clientDump = smallWorld.toClientDump();
+  it( "correctly represents the creature classes for client", function() {
+    var aDifferentCreature =
+      new Creature( "Dorrene", "queen", smallWorld, 99, 99, 99 );
     smallWorld.addCreature( aCreature );
+    smallWorld.addCreature( aDifferentCreature );
+    var smallWorldCreatureClasses = smallWorld.getCreatureClassesForClient();
+
+    expect( smallWorldCreatureClasses ).toEqual( [
+    {
+      "id": aCreature.classId,
+      "name": aCreature.name,
+      "speed": aCreature.speed,
+      "attack": aCreature.attack
+    },
+    {
+      "id": aDifferentCreature.classId,
+      "name": aDifferentCreature.name,
+      "speed": aDifferentCreature.speed,
+      "attack": aDifferentCreature.attack
+    }
+    ]);
+  });
+
+  it( "correctly represents the creatures for client", function() {
+    var aDifferentCreature =
+      new Creature( "Dorrene", "queen", smallWorld, 99, 99, 99 );
+    smallWorld.addCreature( aCreature );
+    smallWorld.addCreature( aDifferentCreature );
+    var smallWorldCreatures = smallWorld.getCreaturesForClient();
+    var aCreatureTile = smallWorld.getCreaturePosition( aCreature.getId() );
+    var aDifferentCreatureTile =
+      smallWorld.getCreaturePosition( aDifferentCreature.getId() );
+
+    expect( smallWorldCreatures ).toEqual( [
+    {
+      "id": aCreature.getId(),
+      "class": aCreature.classId,
+      "name": aCreature.name,
+      "row": aCreatureTile.row,
+      "col": aCreatureTile.col
+    },
+    {
+      "id": aDifferentCreature.getId(),
+      "class": aDifferentCreature.classId,
+      "name": aDifferentCreature.name,
+      "row": aDifferentCreatureTile.row,
+      "col": aDifferentCreatureTile.col
+    }
+    ]);
+  });
+
+  it( "correctly dumps to client-readable object", function() {
+    smallWorld.addCreature( aCreature );
+    var clientDump = smallWorld.toClientDump();
     var creatureTile = smallWorld.getCreaturePosition( aCreature.getId() );
 
     expect( clientDump ).toEqual( {
       "map": [ ["grass","grass"], ["grass","grass"] ],
       "creatureClasses": [ {
         "id": aCreature.classId,
-        "name": "yacht",
+        "name": aCreature.name,
         "speed": 10,
         "attack": 10
       }],

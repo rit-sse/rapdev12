@@ -1,9 +1,8 @@
-function Tile(occupant,terrain,inhabitable, row,column){
+function Tile(occupant,terrain,row,column){
     this.occupant = occupant;
     this.terrain = terrain;
     this.row = row;
     this.column = column;
-    this.inhabitable = inhabitable;
 };
 
 exports.Tile = Tile;
