@@ -17,12 +17,16 @@ exports.updates = {};
 
 function World( jsonObject ) {
 
+	//list of creatures
 	this.creatures = [];
 	
+	//list of alive creatures
 	this.activeCreatures = [];
 	
+	//list of terrain accessed via index
 	this.terrain = jsonObject.terrain;
 	
+	//list of tiles that are passable
 	this.passableTiles = [];
 	
 	this.map = [];
@@ -124,6 +128,7 @@ World.prototype.moveCreature = function( id, direction ) {
 							&& this.getInhabitantAtTile(newPos[0],newPos[1]);
 	if (tileCheck) {
 		this.getTile(creaturePosition.row, creaturePosition.col).occupant = null;
+		this.passableTiles.push(creaturePosition);
 		this.getTile(newPos[0], newPos[1]).occupant = id;
 	}
 	else {
