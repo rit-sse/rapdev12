@@ -29,6 +29,13 @@ var subtitles =     ["SSE Approved!",
                     "Thinking with\nPortals!",
                     "A Series of Tubes!"]
 
+/*
+ * Returns a random subtitle to display
+ */
+function getRandomSubTitle() {
+    return subtitles[Math.floor(Math.random() * subtitles.length)];
+}
+
 /** 
 * This is the contructor and manager for the Splash screen.
 * It 
@@ -112,11 +119,11 @@ var Splash = function Splash(stage,onkill) {
         var subtext = new Kinetic.Text({
             x: imgWidth,
             y: imgHeight,
-            text: subtitles.randomVal(),
+            text: getRandomSubTitle(),
             fontSize: lineSize,
             fontFamily: 'Calibri',
             textFill: '#11aadd',
-            align: 'center',
+            align: 'center'
         });
         subtext.rotate(-Math.PI/6); //Rotating the text on a 30 degree slant
     
@@ -240,7 +247,7 @@ var Splash = function Splash(stage,onkill) {
             });
             
             if (Math.random()>=0.2) {
-                subtext.setText(subtitles.randomVal());
+                subtext.setText(getRandomSubTitle());
             }
         }
  
