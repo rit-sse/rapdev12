@@ -2,30 +2,42 @@
 // 	 utils/world-utils.js
 
 var Terrain = require('../utils/world-utils').Terrain;
+var Tile = require('../world/Tile.js').Tile;
+
+exports.worldjson = worldjson;
+exports.World = World;
+
+var comm;
+exports.use_comm = function(c) {
+  comm = c;
+}
+
+exports.client_hooks = {};
+exports.updates = {};
 
 function World( jsonObject ) {
+	this.creatureClasses = [];
 
+	//list of creatures
 	this.creatures = [];
 	
+	//list of alive creatures
 	this.activeCreatures = [];
 	
+	//list of terrain accessed via index
 	this.terrain = jsonObject.terrain;
 	
+	//list of tiles that are passable
 	this.passableTiles = [];
 	
 	this.map = [];
+	var currentRow; var currentCol;
 	for(var i=0; i<jsonObject.map.length; i++){
 		currentRow = jsonObject.map[i];
 		this.map.push([]);
 		for(var j=0; j < currentRow.length; j++){
-			currentCol = currentRow[j];
-			currentTile = {
-				"inhabitant":null,
-				"terrain":this.terrain[jsonObject.map[i][j]],
-				"item":null,
-				"row":i,
-				"col":j
-			};
+			var currentCol = currentRow[j];
+			var currentTile = new Tile(null,(this.terrain[jsonObject.map[i][j]]),i,j);
 			this.map[i].push(  currentTile  );
 			if (currentTile.terrain.passable == true){
 				this.passableTiles.push( [i,j] );
@@ -37,11 +49,19 @@ function World( jsonObject ) {
 };
 
 World.prototype.addCreature = function( creature ) {
+	if ( this.creatureClasses.indexOf( creature.classId ) == -1 ) {
+		this.creatureClasses.push( {
+			"id": creature.classId,
+			"name": creature.name,
+			"speed": creature.speed,
+			"attack": creature.attack
+		} );
+	}
 	this.creatures.push( creature );
-  this.activeCreatures.push( creature );
 	var randTile = this.getRandomValidTile();
 	creature.setId( this.creatures.length - 1 );
-	randTile.inhabitant = creature.getId();
+	this.activeCreatures.push( creature );
+	randTile.occupant = creature.getId();
 };
 
 World.prototype.populateWithItems = function() {
@@ -57,7 +77,7 @@ World.prototype.getTerrainAtTile = function( row, col ) {
 };
 
 World.prototype.getInhabitantAtTile = function( row, col ){
-	return this.creatures[ this.getTile(row, col).inhabitant ];
+	return this.creatures[ this.getTile(row, col).occupant ];
 };
 
 World.prototype.getItemAtTile = function( row, col ) {
@@ -66,7 +86,7 @@ World.prototype.getItemAtTile = function( row, col ) {
 
 World.prototype.getRandomValidTile = function() {
 	var validTiles = this.findInTiles( function( tile ) {
-		return tile.terrain.passable && tile.inhabitant === null;
+		return tile.terrain.passable && tile.occupant === null;
 	});
 	return this.randomElement( validTiles );
 };
@@ -116,8 +136,9 @@ World.prototype.moveCreature = function( id, direction ) {
 	tileCheck = this.getTerrainAtTile(newPos[0],newPos[1]).passable == true
 							&& this.getInhabitantAtTile(newPos[0],newPos[1]);
 	if (tileCheck) {
-		this.getTile(creaturePosition.row, creaturePosition.col).inhabitant = null;
-		this.getTile(newPos[0], newPos[1]).inhabitant = id;
+		this.getTile(creaturePosition.row, creaturePosition.col).occupant = null;
+		this.passableTiles.push(creaturePosition);
+		this.getTile(newPos[0], newPos[1]).occupant = id;
 	}
 	else {
 		this.creatures.onCollision();
@@ -142,7 +163,7 @@ World.prototype.getCreaturePosition = function( creatureID ) {
 	// TODO: This is an O(N) operation. Can it be made faster with some ease?
 	if ( this.isValidCreatureId( creatureID ) ) {
 		return this.findInTiles( function( tile ) {
-			return tile.inhabitant == creatureID;
+			return tile.occupant == creatureID;
 		})[0];
 	} else {
 		return null;
@@ -156,31 +177,43 @@ World.prototype.getActiveCreatures = function() {
     return this.activeCreatures;
 }
 
-World.prototype.toJSON = function() {
-	return JSON.stringify( {
-		"map": this.getMapJSON(),
-		"creatureClasses": this.getCreatureClassesJSON(),
-		"creatures": this.getCreaturesJSON()
-	});
+World.prototype.toClientDump = function() {
+	return {
+		"map": this.getMapForClient(),
+		"creatureClasses": this.getCreatureClassesForClient(),
+		"creatures": this.getCreaturesForClient()
+	};
 }
 
-World.prototype.getMapJSON = function() {
-	var jsonMap = [];
+World.prototype.getMapForClient = function() {
+	var clientMap = [];
 	for ( var row = 0; row < this.map.length; row++ ) {
-			jsonMap.push( [] );
+			clientMap.push( [] );
 		for ( var col = 0; col < this.map[0].length; col++ ) {
-			jsonMap[row][col] = this.map[row][col].terrain.name;
+			clientMap[row][col] = this.map[row][col].terrain.name;
 		}
 	}
-	return JSON.stringify(jsonMap);
+	return clientMap;
 }
 
-World.prototype.getCreatureClassesJSON = function() {
-	return null;
+World.prototype.getCreatureClassesForClient = function() {
+	return this.creatureClasses;
 }
 
-World.prototype.getCreaturesJSON = function() {
-	return null;
+World.prototype.getCreaturesForClient = function() {
+	var clientCreatures = [];
+	for ( var i = 0; i < this.activeCreatures.length; i++ ) {
+		var c = this.activeCreatures[i];
+		var creatureTile = this.getCreaturePosition( c.getId() );
+		clientCreatures.push( {
+			"id": c.getId(),
+			"class": c.classId,
+			"name": c.name,
+			"row": creatureTile.row,
+			"col": creatureTile.col
+		});
+	}
+	return clientCreatures;
 }
 
 // TODO: Make this read from world.json instead of hardcoding it
@@ -220,14 +253,4 @@ var worldjson = {
 }
 
 var world = new World( worldjson );
-exports.worldjson = worldjson;
-exports.World = World;
-
-var comm;
-exports.use_comm = function(c) {
-  comm = c;
-}
-
-exports.client_hooks = {};
-exports.updates = {};
 
