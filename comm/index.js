@@ -2,6 +2,8 @@ var _unused = function(data) {
   return(data);
 }
 
+exports.msg = "hi";
+
 var globals = {};
 
 exports.push_all_updates = function() {
@@ -13,16 +15,20 @@ exports.push_all_updates = function() {
 }
 
 exports.push_update = function(name) {
-  for (var k in globals.updates) {
-    if (name == k) {
-      var result = globals.updates[name]()
+  // for (var k in globals.updates) {
+  //   if (name == k) {
+  //     var result = globals.updates[name]()
 
-      globals.socket.emit(name, result);
-    }
-  }
+  //     globals.socket.emit(name, result);
+  //   }
+  // }
+  //
+  globals.io.sockets.emit('push_diff', {1: 2});
 }
 
 exports.start = function(io, simulation) {
+  globals.io = io;
+
   io.sockets.on('connection', function (socket) {
     socket.emit('connected'); // Handshake with client
 

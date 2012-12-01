@@ -45,3 +45,6 @@ sim = require('./tests/comm')
 var io = require('socket.io').listen(server);
 sim.use_comm(comm);
 comm.start(io, sim);
+
+exports.server = server;
+exports.io = io;
