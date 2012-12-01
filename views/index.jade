@@ -9,11 +9,13 @@ block scripts
   script(src='/client/map.js')
   script(src='/client/biogame.js')
   script(src='/socket.io/socket.io.js')
+  script(src='/javascripts/communication.js')
 
 block content
   div#biogame
   aside 
     ul#creature-classes
     div#upload-ui
-      p Upload Creature
-      input(type='file')
+      form(action="/file_upload",method="POST",enctype="multipart/form-data")
+        input(type="file",name="js_file")
+        input(type="submit")
