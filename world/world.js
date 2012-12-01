@@ -7,13 +7,19 @@ function World( jsonObject ) {
 	
 	this.terrain = jsonObject.terrain;
 	
+	this.passableTiles = [];
+	
 	this.map = [];
 	for(var i=0; i<jsonObject.map.length; i++){
 		currentRow = jsonObject.map[i];
 		this.map.push([]);
 		for(var j=0; j < curretnRow.length; j++){
 			currentCol = currentRow[j];
-			this.map[i].push(  jsonObject.map[i][j]  );
+			currentTile = jsonObject.map[i][j]
+			this.map[i].push(  currentTile  );
+			if (currentTile.passable == true){
+				this.passableTiles.push( currentTile )
+			};
 		};
 	};
 	
