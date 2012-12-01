@@ -33,8 +33,10 @@ function World( jsonObject ) {
 
 World.prototype.addCreature = function( creature ) {
 	this.creatures.append( creature );
-	this.getRandomValidTile().inhabitant = this.creatures.length - 1;
+	var randTile = this.getRandomValidTile()
+	randTile.inhabitant = this.creatures.length - 1;
 	creature.setId( this.creatures.length - 1 );
+	//save position into creature
 };
 
 World.prototype.populateWithItems = function() {
@@ -81,6 +83,39 @@ World.prototype.findInTiles = function( condition ) {
 		}
 	}
 	return valid;
+}
+
+World.prototype.moveCreature = function( id, direction ) {
+	var newPos;
+	if (direction == Direction.NORTH){
+		newPos = [0,-1];
+	}else if (direction == Direction.SOUTH){
+		newPos = [0,+1];
+	}else if (direction == Direction.EAST){
+		newPos = [+1,0];
+	}else if (direction == Direction.WEST){
+		newPos = [-1,0];
+	}else if (direction == Direction.NORTHWEST){
+		newPos = [-1,-1];
+	}else if (direction == Direction.NORTHEAST){
+		newPos = [+1,-1];
+	}else if (direction == Direction.SOUTHWEST){
+		newPos = [-1,+1];
+	}else if (direction == Direction.SOUTHEAST){
+		newPos = [+1,+1];
+	}
+	
+	creaturePostion = [0,0] // Grab position!
+	// modify newPos by creaturePosition
+	tileCheck = this.getTerrainAtTile(newPos[0],newPos[1]).passable == true
+							&& this.getInhabitantAtTile(newPos[0],newPos[1]);
+	if (tileCheck) {
+		//move creature to new position
+	}
+	else {
+		this.creatures.onCollision();
+	}
+	return tileCheck
 }
 
 World.prototype.randomElement = function( someArray ) {
