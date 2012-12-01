@@ -5,18 +5,6 @@ function MapCreatures(viewport) {
 	this.creatures = {};
 }
 
-MapCreatures.prototype.tileColor = function(color) {
-	switch (color) {
-		case 1:
-			return 'yellow';
-			break;
-		case 2:
-		default:
-			return 'red';
-			break;
-	}
-};
-
 
 /*
  * Add a creature to the internal store of classes and display its information
