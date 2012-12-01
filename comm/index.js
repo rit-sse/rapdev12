@@ -1,35 +1,44 @@
-var use = function(socket, name, callback) {
-  socket.on(name, function(data) {
-    var result = callback(data);
-
-    socket.emit(name, result);
-  });
-}
-
-var join = function(data) {
-
-}
-
-var base_world = function(data) {
-
-}
-
-var creature_list = function(data) {
-
-}
-
 var _unused = function(data) {
   return(data);
 }
 
-exports.start = function(io) {
+var globals = {};
+
+exports.push_all_updates = function() {
+  for (var name in globals.updates) {
+    var result = globals.updates[name]()
+
+    globals.socket.emit(name, result);
+  }
+}
+
+exports.push_update = function(name) {
+  for (var k in globals.updates) {
+    if (name == k) {
+      var result = globals.updates[name]()
+
+      globals.socket.emit(name, result);
+    }
+  }
+}
+
+exports.start = function(io, simulation) {
   io.sockets.on('connection', function (socket) {
     socket.emit('connected'); // Handshake with client
 
-    use(socket, 'join', join);
-    use(socket, 'base-world', base_world);
-    use(socket, 'creature-list', creature_list);
+    // Register client hooks
+    for (var name in simulation.client_hooks) {
+      socket.on(name, function(data) {
+        var result = simulation.client_hooks[name](data);
 
-    use(socket, 'request-message', _unused);
+        socket.emit(name, result);
+      });
+    }
+
+    // Register update hooks
+    globals.updates = simulation.updates;
+
+    // Save socket
+    globals.socket = socket;
   });
 }
