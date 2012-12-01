@@ -14,6 +14,11 @@ append scripts
   script(src='/javascripts/communication.js')
 
 block content
+<<<<<<< HEAD
+  h1= title
+  p Welcome to #{title}
+  input(type='button', id='sendRequest', value='Get Map')
+=======
   div#biogame.canvas
   aside.sidebar
     ul#creature-classes
@@ -21,3 +26,4 @@ block content
       form(action="/file_upload",method="POST",enctype="multipart/form-data")
         input(type="file",name="js_file")
         input(type="submit")
+>>>>>>> 2467a34f6057e46538907f3bfc624c60b3de3b20

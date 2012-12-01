@@ -20,5 +20,14 @@ $(document).ready(function() {
     console.log(data);
     $("#output").html(data.name + "<br/>" + data.data.rand);
   });
+
+  socket.on('get_map', function(data){
+    console.log(data);
+  });
+
+  $('#sendRequest').click(function(){
+    socket.emit('get_map');
+  });
+
 });
 
