@@ -1,4 +1,5 @@
 var World = require('../../world/world.js').World;
+var Creature = require('../../creature/Creature.js').Creature;
 
 describe( "world.js suite", function() {
   var testWorld = {
@@ -44,16 +45,7 @@ describe( "world.js suite", function() {
   beforeEach( function() {
     world = new World( testWorld );
     smallWorld = new World( smallTestWorld );
-    aCreature = {
-      "id": 0,
-      "name": "yacht",
-      getId: function() {
-        return this.id;
-      },
-      setId: function( id ) {
-        this.id = id;
-      }
-    };
+    aCreature = new Creature( "Frankenyacht", "yacht", smallWorld, 10, 10, 10 );
   });
 
   it( "loads the correct terrain", function() {
@@ -137,6 +129,29 @@ describe( "world.js suite", function() {
     var smallWorldMap = JSON.parse( smallWorldMapJSON );
 
     expect( smallWorldMap ).toEqual( [["grass","grass"],["grass","grass"]] );
+  });
+
+  it( "correctly dumps to client-readable object", function() {
+    var clientDump = smallWorld.toClientDump();
+    smallWorld.addCreature( aCreature );
+    var creatureTile = smallWorld.getCreaturePosition( aCreature.getId() );
+
+    expect( clientDump ).toEqual( {
+      "map": [ ["grass","grass"], ["grass","grass"] ],
+      "creatureClasses": [ {
+        "id": aCreature.classId,
+        "name": "yacht",
+        "speed": 10,
+        "attack": 10
+      }],
+      "creatures": [ {
+        "id": aCreature.getId(),
+        "class": aCreature.classId,
+        "name": aCreature.name,
+        "row": creatureTile.row,
+        "col": creatureTile.col
+      }]
+    });
   });
 
 } );

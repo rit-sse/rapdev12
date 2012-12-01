@@ -15,6 +15,7 @@ exports.client_hooks = {};
 exports.updates = {};
 
 function World( jsonObject ) {
+	this.creatureClasses = [];
 
 	this.creatures = [];
 	
@@ -49,6 +50,14 @@ function World( jsonObject ) {
 };
 
 World.prototype.addCreature = function( creature ) {
+	if ( this.creatureClasses.indexOf( creature.classId ) == -1 ) {
+		this.creatureClasses.push( {
+			"id": creature.classId,
+			"name": creature.name,
+			"speed": creature.speed,
+			"attack": creature.attack
+		});
+	}
 	this.creatures.push( creature );
   this.activeCreatures.push( creature );
 	var randTile = this.getRandomValidTile();
@@ -168,31 +177,42 @@ World.prototype.getActiveCreatures = function() {
     return this.activeCreatures;
 }
 
-World.prototype.toJSON = function() {
-	return JSON.stringify( {
-		"map": this.getMapJSON(),
-		"creatureClasses": this.getCreatureClassesJSON(),
-		"creatures": this.getCreaturesJSON()
-	});
+World.prototype.toClientDump = function() {
+	return {
+		"map": this.getMapForClient(),
+		"creatureClasses": this.getCreatureClassesForClient(),
+		"creatures": this.getCreaturesForClient()
+	};
 }
 
-World.prototype.getMapJSON = function() {
-	var jsonMap = [];
+World.prototype.getMapForClient = function() {
+	var clientMap = [];
 	for ( var row = 0; row < this.map.length; row++ ) {
-			jsonMap.push( [] );
+			clientMap.push( [] );
 		for ( var col = 0; col < this.map[0].length; col++ ) {
-			jsonMap[row][col] = this.map[row][col].terrain.name;
+			clientMap[row][col] = this.map[row][col].terrain.name;
 		}
 	}
-	return JSON.stringify(jsonMap);
+	return clientMap;
 }
 
-World.prototype.getCreatureClassesJSON = function() {
-	return null;
+World.prototype.getCreatureClassesForClient = function() {
+	return this.creatureClasses;
 }
 
-World.prototype.getCreaturesJSON = function() {
-	return null;
+World.prototype.getCreaturesForClient = function() {
+	var clientCreatures = [];
+	for ( var c in this.activeCreatures ) {
+		var creatureTile = this.getCreaturePosition( c.getId() );
+		clientCreatures.push( {
+			"id": c.getId(),
+			"class": c.classId,
+			"name": c.name,
+			"row": creatureTile.row,
+			"col": creatureTile.col
+		});
+	}
+	return clientCreatures;
 }
 
 // TODO: Make this read from world.json instead of hardcoding it
