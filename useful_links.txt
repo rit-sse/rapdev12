@@ -1,0 +1,8 @@
+http://www.degraeve.com/color-palette/index.php?q=http://onlyhdwallpapers.com/thumbnail/water_blue_waves_bubbles_wave_bubble_desktop_1680x1050_hd-wallpaper-852484.jpg,00406602699838739D0BA3DC9BDBF8,0060C000A6FF1298F900ECFFF6FEFF
+Color Scheme Designed with Splash Screen colorscheme pre-loaded
+
+http://kineticjs.com/docs/
+KineticJS Api Docs
+
+http://www.fontsquirrel.com/fontface/generator
+@font-face fixer/generator for if/when we want custom fonts
