@@ -14,12 +14,20 @@ function tileType(id) {
 	}
 }
 
-
+/**
+ * Initializes a Map object
+ * @param {Kinetic.Layer} viewport The Kinetic layer in which to draw the map
+ */
 var Map = function Map(viewport) {
 	this.viewport = viewport;
 }
 
-
+/**
+ * Populates the tiles array with Objects containing Kinetic Images, the node
+ * IDs, and the tile types, adds the Images to the viewport, and tells the
+ * viewport to draw.
+ * @param {Array<Array<String>>} tileData Each map tile's type in the grid
+ */
 Map.prototype.loadTileData = function(tileData) {
 	this.tiles = [];
 
