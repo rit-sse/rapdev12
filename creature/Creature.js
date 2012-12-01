@@ -64,3 +64,7 @@ Creature.prototype.onSleepTurn = function(){
 
 Creature.prototype.onNoEnergy = function(){
 };
+
+Creature.prototype.setId = function(id){
+	this.id = id;
+}
