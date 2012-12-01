@@ -1,7 +1,7 @@
 var socket;
 
 $(document).ready(function() {
-  socket = io.connect('http://129.21.207.136');
+  socket = io.connect('http://localhost:3000');
 
   socket.on('connected', function(data) {
     socket.emit('echo', 'echo-successful'); // Provoke test message
@@ -14,6 +14,11 @@ $(document).ready(function() {
 
   socket.on('count', function(data) {
     console.log(data);
+  });
+
+  socket.on('push_diff', function(data){
+    console.log(data);
+    $("#output").html(data.name + "<br/>" + data.data.rand);
   });
 });
 
