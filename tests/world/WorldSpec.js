@@ -63,16 +63,29 @@ describe( "world.js suite", function() {
       {"name": "rock", "passable": false})
     expect( world.getTerrainAtTile( 2, 2)).toEqual(
       {"name": "water", "passable": false})
-  })
+  });
 
   it( "selects 50 randomly chosen 'valid' tiles are actually valid" , function() {
     validTiles = true;
     for( var i = 0; i < 50 && validTiles; i++ ) {
       var tile = world.getRandomValidTile();
 
-      validTiles = (tile.inhabitant == null) && tile.terrain.passable;
+      validTiles = (tile.inhabitant == null) || tile.terrain.passable;
     }
     expect( validTiles ).toBe( true );
+  });
+
+  it( "gets the correct subset of tiles for a condition", function() {
+    var subset = world.findInTiles( function( tile ) {
+      return tile.terrain.name == "rock";
+    } );
+    expect( subset.length ).toEqual( 6 );
+  });
+
+  it( "gets a random element from an array", function() {
+    var someArray = [ 0, 1, 2, 3 ];
+    var someElement = world.randomElement( someArray );
+    expect( someArray.indexOf( someElement ) != -1 ).toBe( true );
   });
 
 } );
