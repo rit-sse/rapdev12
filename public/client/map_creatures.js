@@ -15,6 +15,11 @@ MapCreatures.prototype.tileColor = function(color){
 	}
 };
 
+
+/* 
+ * Add a creature to the internal store of classes and display its information
+ * in the sidebar
+ */
 MapCreatures.prototype.addCreatureClass = function(creatureClass){
   this.creatureClasses[creatureClass.id] = creatureClass;
   $("#creature-classes").append("<li>" + creatureClass.name + "</li>");

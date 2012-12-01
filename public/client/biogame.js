@@ -31,12 +31,14 @@ window.onload = function() {
     //TODO: send websockets request to server API
     //  to get the initail game state (send to initGame)
 
-    var wid = 1000;
-    var stage = new Kinetic.Stage({
+    window.stage = new Kinetic.Stage({
         container: 'biogame',
-        width: wid,
-        height: 600
+        width: $("#biogame").width(),
+        height: $("#biogame").height()
     });
+
+    console.log($(stage.getDOM()).width());
+    console.log($(stage.getDOM()).height());
 
     biogame = new BioGame(stage);
 
