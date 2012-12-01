@@ -1,9 +1,9 @@
 function World( jsonObject ) {
 	
 	
-	this.creatures = {};
+	this.creatures = [];
 	
-	this.activeCreatures = {};
+	this.activeCreatures = [];
 	
 	this.terrain = jsonObject.terrain;
 	
@@ -23,7 +23,7 @@ function World( jsonObject ) {
 		};
 	};
 	
-	this.items = {};
+	this.items = [];
 	
 };
 
