@@ -30,15 +30,16 @@ BioGame.prototype.initGame = function(data) {
 window.onload = function() {
     //TODO: send websockets request to server API
     //  to get the initail game state (send to initGame)
+    //
+
+
+    var wrapper = $("#biogame");
 
     window.stage = new Kinetic.Stage({
         container: 'biogame',
-        width: $("#biogame").width(),
-        height: $("#biogame").height()
+        width: wrapper.width(),
+        height: wrapper.height()
     });
-
-    console.log($(stage.getDOM()).width());
-    console.log($(stage.getDOM()).height());
 
     biogame = new BioGame(stage);
     
@@ -145,3 +146,26 @@ window.onload = function() {
     }
     fakeLoad();
 }
+
+
+$(window).resize(function () {
+    waitForFinalEvent(function(){
+      var canvas = $("#biogame");
+      window.stage.setWidth(canvas.width());
+      window.stage.setHeight(canvas.height());
+    }, 50, "resize");
+});
+
+
+var waitForFinalEvent = (function () {
+  var timers = {};
+  return function (callback, ms, uniqueId) {
+    if (!uniqueId) {
+      uniqueId = "Don't call this twice without a uniqueId";
+    }
+    if (timers[uniqueId]) {
+      clearTimeout (timers[uniqueId]);
+    }
+    timers[uniqueId] = setTimeout(callback, ms);
+  };
+})();

@@ -7,6 +7,11 @@ body {
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
     position: relative;
     height: 100%;
+    overflow: hidden;
+}
+
+aside {
+    display: block;
 }
 
 a {
@@ -25,4 +30,5 @@ a {
     width: 350px;
     position: absolute;
     top: 0; right: 0;
+    height: 100%;
 }
