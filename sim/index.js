@@ -1,19 +1,26 @@
-var world_lib = require('../world/world');
-
-var comm;
-var running = true;
+var world_lib = require('../world/world')
+  , world
+  , comm
+  , running = true;
 
 exports.use_comm = function(c) {
   comm = c;
 }
 
+exports.client_hooks = {
+  'get_map':function(){
+    return(world);
+  }
+}
+
 exports.updates = {};
 
 exports.startSim = function() {
-	var world = new world_lib.World(world_lib.worldjson);
+	world = new world_lib.World(world_lib.worldjson);
 	var turn = 0;
 	var a_turn = function(){
 		console.log("turn");
+    comm.push_update('heartbeat');
 		if(running){
 			setTimeout(a_turn, 100);
 		}

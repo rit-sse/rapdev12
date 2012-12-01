@@ -1,6 +1,14 @@
 // require:
 // 	 utils/world-utils.js
 
+var comm;
+exports.use_comm = function(c) {
+  comm = c;
+}
+
+exports.client_hooks = {};
+exports.updates = {};
+
 function World( jsonObject ) {
 
 	this.creatures = [];
