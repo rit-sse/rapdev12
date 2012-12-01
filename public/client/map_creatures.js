@@ -1,9 +1,11 @@
+
 function MapCreatures(viewport) {
 	this.creatureClasses = {};
 	this.viewport = viewport;
+	this.creatures = {};
 }
 
-MapCreatures.prototype.tileColor = function(color){
+MapCreatures.prototype.tileColor = function(color) {
 	switch (color) {
 		case 1:
 			return 'yellow';
@@ -16,13 +18,13 @@ MapCreatures.prototype.tileColor = function(color){
 };
 
 
-/* 
+/*
  * Add a creature to the internal store of classes and display its information
  * in the sidebar
  */
-MapCreatures.prototype.addCreatureClass = function(creatureClass){
+MapCreatures.prototype.addCreatureClass = function(creatureClass) {
 	var image = new Image();
-	image.src = "../assets/images/" + creatureClass.id + ".png";
+	image.src = "/assets/images/" + creatureClass.id + ".png";
 	image.height = TILE_SIZE;
 	image.width = TILE_SIZE;
 	this.creatureClasses[creatureClass.id] = creatureClass;
@@ -31,29 +33,30 @@ MapCreatures.prototype.addCreatureClass = function(creatureClass){
 };
 
 
-MapCreatures.prototype.loadCreatureClassData = function(data){
+MapCreatures.prototype.loadCreatureClassData = function(data) {
 	for(var i = 0, len = data.length; i < len; i++ ){
     	this.addCreatureClass(data[i]);
 	}
 };
 
-MapCreatures.prototype.loadCreatureData = function(data){
-	for(var i in data){
+
+MapCreatures.prototype.loadCreatureData = function(data) {
+	for (var i in data) {
 		var creature = data[i];
 		var animations = {
 			idle: [{
 				x: 0,
-				y: 0, 
-				width: TILE_SIZE, 
+				y: 0,
+				width: TILE_SIZE,
 				height: TILE_SIZE
-			}], 
+			}],
 			walk: []
 		}
 
 		//Create the animation objects from the sprite map
-		for(j = 0; j < 32; j++){
+		for (j = 0; j < 32; j++) {
 			animations.walk.push({
-				x: 64*j,
+				x: 64 * j,
 				y: 0,
 				width: TILE_SIZE,
 				height: TILE_SIZE
@@ -62,16 +65,40 @@ MapCreatures.prototype.loadCreatureData = function(data){
 
 		//Create the sprite and add it to the viewport
 		var creatureImage = new Kinetic.Sprite({
-			x: creature.x*TILE_SIZE,
-			y: creature.y*TILE_SIZE,
+			x: creature.x * TILE_SIZE,
+			y: creature.y * TILE_SIZE,
 			height: TILE_SIZE,
 			width: TILE_SIZE,
 			image: this.creatureClasses[data[i].class].assets.image,
 			animations: animations,
 			animation: 'idle'
 		});
-		this.viewport.add(creatureImage);
-	
-}
+
+		//Save a reference to the new creature
+		var nodeId = this.viewport.add(creatureImage);
+		var newCreature = {
+			"id": creature.id,
+			"image": creatureImage,
+			"node": nodeId
+		}
+		this.creatures[creature.id] = newCreature;
+	}
+
 	this.viewport.draw();
+}
+
+
+MapCreatures.prototype.moveCreature = function(creatureId, x, y) {
+	var creatureImg = this.creatures[creatureId].image;
+	creatureImg.setX(x * TILE_SIZE);
+	creatureImg.setY(y * TILE_SIZE);
+
+	this.viewport.draw();
+}
+
+
+MapCreatures.prototype.applyOperation = function(action, data) {
+	if (action == "move") {
+		this.moveCreature(data.id, data.x, data.y);
+	}
 }

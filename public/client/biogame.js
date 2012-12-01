@@ -23,6 +23,22 @@ BioGame.prototype.initGame = function(data) {
 }
 
 /*
+ * Applies game state changes from the server to the client
+ */
+BioGame.prototype.applyDelta = function(delta) {
+	for (var i = 0; i < delta.operation.length; i++) {
+		var operation = delta.operation[i];
+
+		if (operation.type == "creature") {
+			this.mapCreatures.applyOperation(operation.action, operation.data);
+		} else if (operation.type == "creatureclass") {
+			//TODO
+		}
+	}
+}
+
+
+/*
  * Create a websocket to the server and request
  * the game state when loading the window.
  */
