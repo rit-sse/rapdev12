@@ -1,4 +1,5 @@
-exports.World = World;
+// require:
+// 	 utils/world-utils.js
 
 function World( jsonObject ) {
 
