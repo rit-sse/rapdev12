@@ -37,7 +37,8 @@ exports.push_diff = function(diff){
 
 exports.start = function(io, simulation) {
   io.sockets.on('connection', function (socket) {
-    socket.emit('connected', {
+    socket.emit('connected');
+    socket.emit('get_map', {
       map: [
           [ "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass" ],
           [ "grass", "grass", "rock", "grass", "grass", "grass", "grass", "rock", "grass", "grass" ],
