@@ -19,6 +19,4 @@ exports.use_comm = function(c) {
 
 setInterval(function() {
   comm.push_diff({name:"Michael", data:{rand:Math.random()}});
-  comm.push_update('echo');
-  comm.push_all_updates();
 }, 2000);
