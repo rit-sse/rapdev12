@@ -34,5 +34,9 @@ describe("Make a creature", function(){
 	it('calls onDeath',function(){
 		expect('You Died').toEqual(creature1.onDeath());
 	});
+	it('calls move', function(){
+		expect('north').toEqual(creature1.move(Direction.NORTH));
+		expect('south').toEqual(creature1.move(Direction.SOUTH));
+	});
 });
 
