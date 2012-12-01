@@ -3,6 +3,10 @@ var SOUTH = [0, -1];
 var EAST = [1, 0];
 var WEST = [-1, 0];
 
+module.exports ={
+  CreatureCore: CreatureCore
+}
+
 function CreatureCore(x, y) {
   this.x = x;
   this.y = y;
