@@ -13,8 +13,8 @@ block scripts
   script(src='/javascripts/communication.js')
 
 block content
-  div#biogame
-  aside 
+  div#biogame.canvas
+  aside.sidebar
     ul#creature-classes
     div#upload-ui
       form(action="/file_upload",method="POST",enctype="multipart/form-data")
