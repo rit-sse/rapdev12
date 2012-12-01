@@ -21,10 +21,7 @@ exports.use_comm = function(c) {
 }
 
 setInterval(function() {
+  comm.push_diff({name:"Michael", data:{x:149,y:67}});
   comm.push_all_updates();
 }, 2000);
 
-setInterval(function() {
-  comm.push_all_updates();
-  comm.push_update('echo');
-}, 1000);

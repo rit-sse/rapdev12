@@ -13,13 +13,19 @@ exports.push_all_updates = function() {
 }
 
 exports.push_update = function(name) {
-  for (var k in globals.updates) {
-    if (name == k) {
-      var result = globals.updates[name]()
+  // for (var k in globals.updates) {
+  //   if (name == k) {
+  //     var result = globals.updates[name]()
 
-      globals.socket.emit(name, result);
-    }
-  }
+  //     globals.socket.emit(name, result);
+  //   }
+  // }
+  var result = globals.updates[name]()
+  globals.socket.emit(name, result);
+}
+
+exports.push_diff = function(diff){
+  globals.socket.emit('push_diff', diff);
 }
 
 exports.start = function(io, simulation) {
@@ -36,6 +42,7 @@ exports.start = function(io, simulation) {
     }
 
     // Register update hooks
+    simulation.updates.push_diff = function(){ return; };
     globals.updates = simulation.updates;
 
     // Save socket
