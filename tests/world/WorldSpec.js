@@ -48,5 +48,14 @@ describe( "world.js suite", function() {
       [4,5],[5,0],[5,2],[5,3],[5,4]
     ]);
   });
+  
+  it( "returns the correct terrain at a tile", function() {
+    expect( world.getTerrainAtTile( 0, 0)).toEqual(
+      {"name": "grass", "passable": true})
+    expect( world.getTerrainAtTile( 1, 1)).toEqual(
+      {"name": "rock", "passable": false})
+    expect( world.getTerrainAtTile( 2, 2)).toEqual(
+      {"name": "water", "passable": false})
+  })
 
 } );
