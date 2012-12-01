@@ -12,6 +12,7 @@ function World() {
     }
   }
   this.creatures = {};
+  this.uid_curr = 0;
 }
 
 World.prototype.getUIDs = function() {
@@ -23,12 +24,8 @@ World.prototype.getUIDs = function() {
 };
 
 World.prototype.generateUID = function() {
-	var uids = this.getUIDs;
-	var uid = 0;
-	while(uids.indexOf(uid) > -1) {
-		uid++;
-	}
-	return uid;
+	this.uid_curr++;
+  return this.uid_curr;
 };
 
 World.prototype.addCreature = function(creature) {
@@ -42,6 +39,21 @@ World.prototype.getCreature = function(id) {
 World.prototype.destroyCreature = function(id) {
 	delete this.creatures[id];
 };
+
+World.prototype.creatureGrid = function() {
+  var grid = make2DArray(this.size);
+  for(var i in grid){
+    for(var j = 0; j < this.size; j++){
+      grid[i][j] = null;
+    }
+  }
+
+  for(var i in this.creatures){
+    var creature = this.creatures[i];
+    grid[creature.x][creature.y] = creature;
+  }
+  return grid;
+}
 
 //See http://stackoverflow.com/a/6495274/406249
 function make2DArray(size) {
@@ -57,9 +69,14 @@ function make2DArray(size) {
 
 World.prototype.to_string = function(){
   var str_rep = "";
+  var creature_grid = this.creatureGrid();
   for(i in this.tiles){
     for(j in this.tiles[i]){
-      str_rep += this.tiles[i][j].to_string();
+      if(creature_grid[i][j]){
+        str_rep += "c";
+      } else {
+        str_rep += this.tiles[i][j].to_string();
+      }
     }
     str_rep += "\n";
   }

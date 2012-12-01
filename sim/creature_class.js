@@ -10,6 +10,7 @@ module.exports = {
 
 
 function CreatureClass(name, speed, pos) {
+  CreatureClass.super_.call(this,0,0);
   this.name = name;
   this.speed = speed;
   this.pos = pos;
