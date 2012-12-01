@@ -2,6 +2,7 @@
 // 	 utils/world-utils.js
 
 var Terrain = require('../utils/world-utils').Terrain;
+var Tile = require('../world/Tile.js').Tile;
 
 exports.worldjson = worldjson;
 exports.World = World;
@@ -31,14 +32,8 @@ function World( jsonObject ) {
 		currentRow = jsonObject.map[i];
 		this.map.push([]);
 		for(var j=0; j < currentRow.length; j++){
-			currentCol = currentRow[j];
-			currentTile = {
-				"inhabitant":null,
-				"terrain":this.terrain[jsonObject.map[i][j]],
-				"item":null,
-				"row":i,
-				"col":j
-			};
+			var currentCol = currentRow[j];
+			var currentTile = new Tile(null,(this.terrain[jsonObject.map[i][j]]),i,j);
 			this.map[i].push(  currentTile  );
 			if (currentTile.terrain.passable == true){
 				this.passableTiles.push( [i,j] );
@@ -62,7 +57,7 @@ World.prototype.addCreature = function( creature ) {
   this.activeCreatures.push( creature );
 	var randTile = this.getRandomValidTile();
 	creature.setId( this.creatures.length - 1 );
-	randTile.inhabitant = creature.getId();
+	randTile.occupant = creature.getId();
 };
 
 World.prototype.populateWithItems = function() {
@@ -78,7 +73,7 @@ World.prototype.getTerrainAtTile = function( row, col ) {
 };
 
 World.prototype.getInhabitantAtTile = function( row, col ){
-	return this.creatures[ this.getTile(row, col).inhabitant ];
+	return this.creatures[ this.getTile(row, col).occupant ];
 };
 
 World.prototype.getItemAtTile = function( row, col ) {
@@ -87,7 +82,7 @@ World.prototype.getItemAtTile = function( row, col ) {
 
 World.prototype.getRandomValidTile = function() {
 	var validTiles = this.findInTiles( function( tile ) {
-		return tile.terrain.passable && tile.inhabitant === null;
+		return tile.terrain.passable && tile.occupant === null;
 	});
 	return this.randomElement( validTiles );
 };
@@ -137,8 +132,8 @@ World.prototype.moveCreature = function( id, direction ) {
 	tileCheck = this.getTerrainAtTile(newPos[0],newPos[1]).passable == true
 							&& this.getInhabitantAtTile(newPos[0],newPos[1]);
 	if (tileCheck) {
-		this.getTile(creaturePosition.row, creaturePosition.col).inhabitant = null;
-		this.getTile(newPos[0], newPos[1]).inhabitant = id;
+		this.getTile(creaturePosition.row, creaturePosition.col).occupant = null;
+		this.getTile(newPos[0], newPos[1]).occupant = id;
 	}
 	else {
 		this.creatures.onCollision();
@@ -163,7 +158,7 @@ World.prototype.getCreaturePosition = function( creatureID ) {
 	// TODO: This is an O(N) operation. Can it be made faster with some ease?
 	if ( this.isValidCreatureId( creatureID ) ) {
 		return this.findInTiles( function( tile ) {
-			return tile.inhabitant == creatureID;
+			return tile.occupant == creatureID;
 		})[0];
 	} else {
 		return null;
@@ -250,3 +245,6 @@ var worldjson = {
     [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
   ]
 }
+
+var world = new World( worldjson );
+
