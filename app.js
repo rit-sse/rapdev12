@@ -50,4 +50,3 @@ sim.use_comm(comm);
 world.use_comm(comm);
 sim.startSim();
 comm.start(io, sim);
-comm.start(io, world);

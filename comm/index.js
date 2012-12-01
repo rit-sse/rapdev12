@@ -112,6 +112,5 @@ exports.start = function(io, simulation) {
     var id = socket.id;
     console.log(id + " connected");
     allSockets.push(socket);
-
   });
 }
