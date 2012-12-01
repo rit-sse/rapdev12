@@ -19,8 +19,7 @@ exports.startSim = function() {
 	world = new world_lib.World(world_lib.worldjson);
 	var turn = 0;
 	var a_turn = function(){
-		console.log("turn");
-    comm.push_update('heartbeat');
+		// console.log("turn");
 		if(running){
 			setTimeout(a_turn, 100);
 		}
