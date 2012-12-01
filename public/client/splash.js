@@ -1,5 +1,5 @@
 
-//List of random subtitles
+//List of random subtitles (Add more!)
 var subtitles =     ["SSE Approved!",
                     ".JS",
                     "With Friends!",
@@ -29,25 +29,41 @@ var subtitles =     ["SSE Approved!",
                     "Thinking with\nPortals!",
                     "A Series of Tubes!"]
 
-
-var Splash = function Splash(stage) {
+/** 
+* This is the contructor and manager for the Splash screen.
+* It 
+* @param stage The stage to use to draw the splash screen on
+* @param onkill A callback function to be called when the splash is removed using its Kill function.
+* @see Splash.Kill,Splash.SetPercent,Splash.Disperse
+*/
+var Splash = function Splash(stage,onkill) {
     this.stage = stage;
+    this.onkill = onkill;
     
 
-    
+    var lexical = this;
     this.layers = {
         "bg" : new Kinetic.Layer(),
         "logo" : new Kinetic.Layer(),
         "loader" : new Kinetic.Layer()
     };
     
-    var lexical = this;
+    /** 
+    * Removes all traces of the splash screen from the stage.
+    */
     this.Kill = function Kill() {
         lexical.layers.bg.remove();
         lexical.layers.logo.remove();
         lexical.layers.loader.remove();
+        lexical.onkill();
     }
     
+    /** 
+    * This sets the percentage of the loadingbar, provided it's been setup, 
+    * and also cleans up and disperses the splash screen when it's passed a value >=1.
+    * @param per a number between 0 and 1 indicating the percent loaded
+    * @see Splash.Disperse
+    */
     this.SetPercent = function SetPercent(per) {
         if (lexical.loader && lexical.loader.ready) {
             lexical.loader.setAdjustedWidth(per);
@@ -57,6 +73,7 @@ var Splash = function Splash(stage) {
         }
     }
     
+    //Background gradient
     var wid = this.stage.getWidth();
     var bgrect = new Kinetic.Rect({
         width: wid,
@@ -79,6 +96,7 @@ var Splash = function Splash(stage) {
     
     this.layers.bg.add(bgrect);
     
+    //logo and such onload stuff
     var ratio = 1000/947;
     var logoData = new Image();
     var lineSize = (40/600)*stage.getHeight();
@@ -87,6 +105,7 @@ var Splash = function Splash(stage) {
     logoData.onload = function() {
         var logoGroup = new Kinetic.Group();
 
+        //logo subtitle text
         var splash = this.splash;
         var imgWidth    = ratio*(stage.getHeight()*0.75);
         var imgHeight   = (stage.getHeight()*0.75);
@@ -101,6 +120,7 @@ var Splash = function Splash(stage) {
         });
         subtext.rotate(-Math.PI/6); //Rotating the text on a 30 degree slant
     
+        //logo image itself
         var logoImg = new Kinetic.Image({
             image: logoData,
             x: stage.getWidth() / 2 - imgWidth/2,
@@ -112,14 +132,6 @@ var Splash = function Splash(stage) {
         logoGroup.add(logoImg);
         logoGroup.add(subtext);
         
-        var per=0;
-        logoGroup.on('mousedown', function() {
-            
-            per+=0.2;
-            splash.SetPercent(per);
-        });
-        
-        
         splash.layers.logo.add(logoGroup);
         
         //configuration variables for the motion of the logo
@@ -127,6 +139,9 @@ var Splash = function Splash(stage) {
         var period = 6000; // in ms
         var centerY = stage.getHeight() / 2;
         
+        /** 
+        * Private function to animate the title logo, passed to Kinetic.Animation
+        */
         var animFunc = function animFunc(frame) {
             var y = amplitude * Math.sin(frame.time * 2 * Math.PI / period) + centerY - imgHeight/2
             logoImg.setY(y); //This moves the logo vertically
@@ -209,6 +224,12 @@ var Splash = function Splash(stage) {
         });
         loading.setCornerRadius((lineSize-(lineSize/4))/2);
         loading.minimum = lineSize;
+        
+        /** 
+        * Internally used function to set the width of the loading bar based on its percentage
+        * @param percent A number between 0 and 1 used to determine the percentage of the bar to draw
+        * @see Splash.SetPercentage
+        */
         loading.setAdjustedWidth = function(percent) {
             //0 to 1 mapped to lineSize to imgWidth-(lineSize/4)
             var percent = Math.min(Math.max(percent,0),1)
@@ -232,6 +253,7 @@ var Splash = function Splash(stage) {
         splash.loader = loading;
         splash.loader.ready = true;
         
+        //Animates the gradient in the background of the loading bar
         var amp1 = lineSize;
         var amp2 = lineSize*2;
         var period1 = 2500; //in ms
@@ -264,6 +286,11 @@ var Splash = function Splash(stage) {
         splash.stage.add(splash.layers.loader);
     };
     
+    /** 
+    * This transitions the splashscreen into full transparency and off the screen.
+    * @param callback A function to be called when the transition is finished (eg. to remove it)
+    * @see Splash.Kill
+    */
     this.Disperse = function Disperse(callback) {
         lexical.logoAnim.stop();
         lexical.layers.logo.transitionTo({
@@ -271,15 +298,15 @@ var Splash = function Splash(stage) {
             opacity: 0,
             duration: 0.75
         });
-        lexical.layers.bg.transitionTo({
+        lexical.cbtrans = lexical.layers.bg.transitionTo({
             opacity: 0,
-            duration: 0.75
+            duration: 0.75,
+            callback: callback
         });
         lexical.layers.loader.transitionTo({
             y: lexical.stage.getHeight()*(3/2),
             opacity: 0,
-            duration: 0.75,
-            callback: callback
+            duration: 0.75
         });
     }
 }
