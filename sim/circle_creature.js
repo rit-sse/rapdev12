@@ -12,4 +12,6 @@ function CircleCreature(name, speed, pos) {
 
 CircleCreature.inherits(c_class);
 
-
+CircleCreature.prototype.act = function() {
+  
+}
