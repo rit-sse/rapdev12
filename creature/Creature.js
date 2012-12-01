@@ -3,13 +3,14 @@
 /*
 Initiates the creatures health, energy, attack, defence, speed.
 */
-function Creature(world,attack,defence,speed){
+function Creature(classId, world,attack,defence,speed){
 	this.world = world;
 	this.health = 100;
 	this.energy = 100;
 	this.attack = attack;
 	this.defence = defence;
 	this.speed = speed;
+    this.classId = classId;
 };
 
 /*
