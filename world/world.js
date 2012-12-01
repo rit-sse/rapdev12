@@ -111,18 +111,18 @@ World.prototype.moveCreature = function( id, direction ) {
 		modPos = [+1,+1];
 	}
 	
-	creaturePosition = this.getCreaturePosition(id)
+	creaturePosition = this.getCreaturePosition(id);
 	newPos = [creaturePosition.row + modPos[0], creaturePosition.col + modPos[1]];
-	tileCheck = this.getTerrainAtTile(newPos[0],newPos[1]).passable == true
+	tileCheck = this.getTerrainAtTile(newPos[0],newPos[1]).passable == true;
 							&& this.getInhabitantAtTile(newPos[0],newPos[1]);
 	if (tileCheck) {
-		this.getTile(creaturePosition.row, creaturePosition.col).inhabitant = null
-		this.getTile(newPos[0], newPos[1]).inhabitant = id
+		this.getTile(creaturePosition.row, creaturePosition.col).inhabitant = null;
+		this.getTile(newPos[0], newPos[1]).inhabitant = id;
 	}
 	else {
 		this.creatures.onCollision();
 	}
-	return tileCheck
+	return tileCheck;
 }
 
 World.prototype.randomElement = function( someArray ) {
@@ -154,6 +154,32 @@ World.prototype.getCreaturePosition = function( creatureID ) {
  */
 World.prototype.getActiveCreatures = function() {
     return this.activeCreatures;
+}
+
+World.prototype.toJSON = function() {
+	return JSON.stringify( {
+		"map": this.getMapJSON(),
+		"creatureClasses": this.getCreatureClassesJSON(),
+		"creatures": this.getCreaturesJSON()
+	});
+}
+
+World.prototype.getMapJSON = function() {
+	var jsonMap = [];
+	for ( var row = 0; row < this.map.length; row++ ) {
+			jsonMap.push( [] );
+		for ( var col = 0; col < this.map[0].length; col++ ) {
+			jsonMap[row][col] = this.map[row][col].terrain.name;
+		}
+	}
+}
+
+World.prototype.getCreatureClassesJSON = function() {
+	return null;
+}
+
+World.prototype.getCreaturesJSON = function() {
+	return null;
 }
 
 // TODO: Make this read from world.json instead of hardcoding it

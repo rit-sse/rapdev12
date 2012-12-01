@@ -1,6 +1,6 @@
 var Terrain = {
     GRASS: "grass",
-    ROCK: "rock",
+    WATER: "water",
     SAND: "sand",
-    WATER: "water"
+    ROCK: "rock"
 }
