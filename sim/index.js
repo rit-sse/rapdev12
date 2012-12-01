@@ -1,27 +1,24 @@
-exports.client_hooks = {
-  'derp': function(data) {
-    return(data);
-  }
-}
-
-var count = 0;
-exports.updates = {
-  'echo': function() {
-    console.log('ping');
-  },
-
-  'count': function() {
-    return(count++);
-  }
-}
+var world_lib = require('../world/world');
 
 var comm;
+var running = true;
+
 exports.use_comm = function(c) {
   comm = c;
 }
 
-setInterval(function() {
-  comm.push_diff({name:"Michael", data:{x:149,y:67}});
-  comm.push_all_updates();
-}, 2000);
+exports.updates = {};
 
+exports.startSim = function() {
+	var world = new world_lib.World(world_lib.worldjson);
+	var turn = 0;
+	var a_turn = function(){
+		console.log("turn");
+		if(running){
+			setTimeout(a_turn, 100);
+		}
+	}
+
+	setTimeout(0,a_turn());
+
+}

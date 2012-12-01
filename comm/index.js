@@ -3,31 +3,34 @@ var _unused = function(data) {
 }
 
 var globals = {};
+var allSockets = [];
 
 exports.push_all_updates = function() {
-  for (var name in globals.updates) {
-    var result = globals.updates[name]()
-
-    globals.socket.emit(name, result);
+  for (var name = 0; name < globals.updates.size; name++) {
+    for (var s = 0; s < allSockets.size; s++){
+      var result = globals.updates[name]()
+      allSockets[s].emit(name, result);
+    }
   }
 }
 
 exports.push_update = function(name) {
   for (var k in globals.updates) {
     if (name == k) {
-      var result = globals.updates[name]()
-
-      globals.socket.emit(name, result);
+      for (var s = 0; s < allSockets.size; s++){
+        var result = globals.updates[name]()
+        allSockets[s].emit(name, result);
+      }
     }
   }
-  // var result = globals.updates[name]()
-  // globals.socket.emit(name, result);
 }
 
 exports.push_diff = function(diff){
   for (var k in globals.updates) {
     if ('push_diff' == k) {
-      globals.socket.emit('push_diff', diff);
+      for (var s =0; s < allSockets.size; s++){
+        allSockets[s].emit('push_diff', diff);
+      }
     }
   }
 }
@@ -40,16 +43,18 @@ exports.start = function(io, simulation) {
     for (var name in simulation.client_hooks) {
       socket.on(name, function(data) {
         var result = simulation.client_hooks[name](data);
-
         socket.emit(name, result);
       });
     }
 
     // Register update hooks
-    simulation.updates.push_diff = function(){ return; };
+    simulation.updates.push_diff = function(){ return; }
     globals.updates = simulation.updates;
 
     // Save socket
-    globals.socket = socket;
+    var id = socket.id;
+    console.log(id + " connected");
+    allSockets.push(socket);
+
   });
 }
