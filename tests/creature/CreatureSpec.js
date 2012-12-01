@@ -1,3 +1,5 @@
+var Creature = require("../../creature/Creature.js").Creature;
+
 describe("Make a creature", function(){
 	var testWorldJSON = {
     "terrain": [

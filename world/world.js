@@ -3,6 +3,17 @@
 
 var Terrain = require('../utils/world-utils').Terrain;
 
+exports.worldjson = worldjson;
+exports.World = World;
+
+var comm;
+exports.use_comm = function(c) {
+  comm = c;
+}
+
+exports.client_hooks = {};
+exports.updates = {};
+
 function World( jsonObject ) {
 
 	this.creatures = [];
@@ -220,14 +231,4 @@ var worldjson = {
 }
 
 var world = new World( worldjson );
-exports.worldjson = worldjson;
-exports.World = World;
-
-var comm;
-exports.use_comm = function(c) {
-  comm = c;
-}
-
-exports.client_hooks = {};
-exports.updates = {};
 
