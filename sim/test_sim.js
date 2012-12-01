@@ -1,4 +1,4 @@
-var c_class = require("./cricle_creature");
+var c_class = require("./circle_creature");
 
 var c1 = c_class.CircleCreature();
 var c2 = c_class.CircleCreature();
