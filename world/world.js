@@ -31,35 +31,42 @@ function World( jsonObject ) {
 	
 };
 
-World.prototype.addCreature = function( creature ){
-	this.getRandomValidTile().inhabitant = creature;
+World.prototype.addCreature = function( creature ) {
+	this.creatures.append( creature );
+	this.getRandomValidTile().inhabitant = this.creatures.length - 1;
 };
 
-World.prototype.populateWithItems = function(){
+World.prototype.populateWithItems = function() {
 	
 };
 
-World.prototype.getTile = function( row, col ){
+World.prototype.getTile = function( row, col ) {
 	return this.map[row][col];
 };
 
-World.prototype.getTerrainAtTile = function( row, col ){
+World.prototype.getTerrainAtTile = function( row, col ) {
 	return this.getTile(row, col).terrain;
 };
 
 World.prototype.getInhabitantAtTile = function( row, col ){
-	return this.getTile(row, col).inhabitant;
+	return this.creatures[ this.getTile(row, col).inhabitant ];
 };
 
-World.prototype.getItemAtTile = function( row, col ){
+World.prototype.getItemAtTile = function( row, col ) {
 	return this.getTile(row, col).item;
 };
 
 World.prototype.getRandomValidTile = function() {
-	// TODO: Make sure the tile is valid before returning
-	// "valid" tile is passable and has no inhabitant
-	return this.getTile( Math.floor(Math.random()*this.map[0].length),
-											 Math.floor(Math.random()*this.map.length) );
+	var valid = [];
+	for ( var row = 0; row < this.map.length; row++ ) {
+		for ( var col = 0; col < this.map[0].length; col++ ) {
+			currentTile = this.getTile( row, col );
+			if ( currentTile.terrain.passable && currentTile.inhabitant == null ) {
+				valid.push( currentTile );
+			}
+		}
+	}
+	return valid[ Math.floor( Math.random()*valid.length ) ];
 };
 
 // TODO: Make this read from world.json instead of hardcoding it

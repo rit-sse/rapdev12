@@ -58,4 +58,13 @@ describe( "world.js suite", function() {
       {"name": "water", "passable": false})
   })
 
+  it( "ten randomly chosen 'valid' tiles are actually valid" , function() {
+    for( var i = 0; i < 10; i++ ) {
+      var tile = world.getRandomValidTile();
+
+      expect( tile.inhabitant ).toEqual( null );
+      expect( tile.terrain.passable ).toBe( true );
+    }
+  });
+
 } );
