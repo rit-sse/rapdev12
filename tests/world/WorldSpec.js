@@ -1,4 +1,5 @@
 var World = require('../../world/world.js').World;
+var Creature = require('../../creature/Creature.js').Creature;
 
 describe( "world.js suite", function() {
   var testWorld = {
@@ -44,16 +45,7 @@ describe( "world.js suite", function() {
   beforeEach( function() {
     world = new World( testWorld );
     smallWorld = new World( smallTestWorld );
-    aCreature = {
-      "id": 0,
-      "name": "yacht",
-      getId: function() {
-        return this.id;
-      },
-      setId: function( id ) {
-        this.id = id;
-      }
-    };
+    aCreature = new Creature( "Frankenyacht", "yacht", smallWorld, 10, 10, 10 );
   });
 
   it( "loads the correct terrain", function() {
@@ -116,7 +108,7 @@ describe( "world.js suite", function() {
   });
 
   it( "correctly gets a creature by ID", function() {
-    world.creatures.push( aCreature );
+    world.addCreature( aCreature );
 
     expect( world.getCreatureById( aCreature.id ).name )
       .toEqual( aCreature.name );
@@ -124,6 +116,7 @@ describe( "world.js suite", function() {
 
   it( "correctly gets a creature's position", function() {
     world.creatures.push( aCreature );
+    aCreature.setId( 0 );
     var tile = world.getRandomValidTile();
     tile.occupant = aCreature.getId();
 
@@ -131,11 +124,33 @@ describe( "world.js suite", function() {
       .toEqual( tile );
   });
 
-  it( "correctly represents the map in JSON", function() {
-    var smallWorldMapJSON = smallWorld.getMapJSON();
-    var smallWorldMap = JSON.parse( smallWorldMapJSON );
+  it( "correctly represents the map for client", function() {
+    var smallWorldMap = smallWorld.getMapForClient();
 
     expect( smallWorldMap ).toEqual( [["grass","grass"],["grass","grass"]] );
+  });
+
+  it( "correctly dumps to client-readable object", function() {
+    var clientDump = smallWorld.toClientDump();
+    smallWorld.addCreature( aCreature );
+    var creatureTile = smallWorld.getCreaturePosition( aCreature.getId() );
+
+    expect( clientDump ).toEqual( {
+      "map": [ ["grass","grass"], ["grass","grass"] ],
+      "creatureClasses": [ {
+        "id": aCreature.classId,
+        "name": "yacht",
+        "speed": 10,
+        "attack": 10
+      }],
+      "creatures": [ {
+        "id": aCreature.getId(),
+        "class": aCreature.classId,
+        "name": aCreature.name,
+        "row": creatureTile.row,
+        "col": creatureTile.col
+      }]
+    });
   });
 
 } );
