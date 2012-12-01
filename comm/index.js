@@ -37,7 +37,63 @@ exports.push_diff = function(diff){
 
 exports.start = function(io, simulation) {
   io.sockets.on('connection', function (socket) {
-    socket.emit('connected'); // Handshake with client
+    socket.emit('connected', {
+      map: [
+          [ "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass" ],
+          [ "grass", "grass", "rock", "grass", "grass", "grass", "grass", "rock", "grass", "grass" ],
+          [ "grass", "grass", "rock", "grass", "grass", "grass", "grass", "rock", "grass", "grass" ],
+          [ "grass", "grass", "rock", "grass", "grass", "grass", "grass", "rock", "grass", "grass" ],
+          [ "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass" ],
+          [ "grass", "water", "grass", "grass", "grass", "grass", "grass", "grass", "water", "grass" ],
+          [ "grass", "grass", "water", "grass", "grass", "grass", "grass", "water", "grass", "grass" ],
+          [ "grass", "grass", "grass", "sand", "sand", "sand", "sand", "grass", "grass", "grass" ],
+          [ "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass" ],
+          [ "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass" ]
+      ],
+      creatureClasses: [
+        {
+          id: 1,
+          name: "Redshirt",
+          speed: 2,
+          strength: 1,
+          assets: {
+            color: "red",
+          }
+        },
+        {
+          id: 2,
+          name: "Officer",
+          speed: 10,
+          strength: 10,
+          assets: {
+            color: "gold",
+          }
+        }
+      ],
+      creatures: [
+        {
+          id: 1,
+          class: 2,
+          name: "Kirk",
+          x: 5,
+          y: 5
+        },
+        {
+          id: 2,
+          class: 1,
+          name: "Bob",
+          x: 2,
+          y: 2
+        },
+        {
+          id: 3,
+          class: 1,
+          name: "Joe",
+          x: 7,
+          y: 2
+        }
+      ]
+    }); // Handshake with client
 
     // Register client hooks
     for (var name in simulation.client_hooks) {
