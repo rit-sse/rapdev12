@@ -1,0 +1,6 @@
+extends layout
+
+block content
+ form(action="/file_upload",method="POST",enctype="multipart/form-data")
+   input(type="file",name="js_file")
+   input(type="submit")
