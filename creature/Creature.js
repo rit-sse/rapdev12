@@ -50,6 +50,12 @@ Creature.prototype.sleepFor = function(time){
 };
 
 /*
+Returns the amount of time left for the creature to sleep
+*/
+Creature.prototype.getTimeToSleep = function(){
+	return this.timeLeftToSleep;
+};
+/*
 Main method that will be called that the maker of the creature will implement.
 */
 Creature.prototype.act = function(){
@@ -103,33 +109,33 @@ Allows the board to set the creatures id
 */
 Creature.prototype.setId = function(id){
 	this.id = id;
-}
+};
 
 /*
 Returns the given creatures id
 */
 Creature.prototype.getId = function(){
 	return this.id;
-}
+};
 
 /*
 This is not needed? The world should know this.
 */
-Creature.prototype.setPos(row,col){
+Creature.prototype.setPos = function(row,col){
 	this.row = row;
 	this.col = col;
-}
+};
 
 /*
 Removes the given amount of health from the creature.
 */
-Creature.prototype.removeHealth(damage){
+Creature.prototype.removeHealth = function(damage){
 	this.health-=damage;
-}
+};
 
 /*
 Adds the given amount of health to the given creature.
 */
-Creature.prototype.heal(healAmount){
+Creature.prototype.heal = function(healAmount){
 	this.health+=healAmount
-}
+};
