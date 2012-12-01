@@ -1,6 +1,16 @@
+var tile = require('./tile')
+module.exports = {
+  World: World
+}
+
 function World() {
-  this.size = 9001;
+  this.size = 10;
   this.tiles = make2DArray(this.size);
+  for(i in this.tiles){
+    for(j = 0; j < this.size; j++){
+      this.tiles[i][j] = new tile.Tile();
+    }
+  }
   this.creatures = {};
 }
 
@@ -43,4 +53,15 @@ function make2DArray(size) {
   }
 
   return arr;
-}
+};
+
+World.prototype.to_string = function(){
+  var str_rep = "";
+  for(i in this.tiles){
+    for(j in this.tiles[i]){
+      str_rep += this.tiles[i][j].to_string();
+    }
+    str_rep += "\n";
+  }
+  return str_rep;
+};
