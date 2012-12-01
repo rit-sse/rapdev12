@@ -32,10 +32,10 @@ CreatureCore.prototype.move = function(direction) {
 //
 //@return boolean
 CreatureCore.prototype.canMove = function(world, direction) {
-  if(typeof world.tiles[y+direction[1]] == 'undefined') {
+  if(typeof world.tiles[this.y+direction[1]] == 'undefined') {
   	return false
   }
-  else if(typeof world.tiles[y[x+direction[0]]] == 'undefined'){
+  else if(typeof world.tiles[this.y[this.x+direction[0]]] == 'undefined'){
   	return false
   }
   else {
