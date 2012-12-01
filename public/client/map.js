@@ -18,8 +18,9 @@ function tileType(id) {
  * Initializes a Map object
  * @param {Kinetic.Layer} viewport The Kinetic layer in which to draw the map
  */
-var Map = function Map(viewport) {
+function Map(viewport) {
 	this.viewport = viewport;
+	this.tiles = []
 }
 
 /**
