@@ -18,6 +18,7 @@ var BioGame = function BioGame(stage) {
 BioGame.prototype.initGame = function(data) {
     // Create a map with the provided tile data
     this.map.loadTileData(data.map);
+    this.mapCreatures.loadCreatureClassData(data.creatureClasses);
     this.mapCreatures.loadCreatureData(data.creatures);
 }
 
