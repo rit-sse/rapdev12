@@ -59,6 +59,7 @@ Creature.prototype.getTimeToSleep = function(){
 Main method that will be called that the maker of the creature will implement.
 */
 Creature.prototype.act = function(){
+    return 'creature acts';
 };
 
 /*
@@ -90,11 +91,11 @@ Creature.prototype.onDeath = function(){
 An API defined event that counts down to when your creature sould wake up or wakes you up if your creature gets hungry.
 */
 Creature.prototype.onSleepTurn = function(){
-	if(this.timeLeftToSleep > 0){
-		this.timeLeftToSleep-=1;
-	}else{
-		act();
-	}
+    if (this.timeLeftToSleep > 0) {
+        this.timeLeftToSleep -= 1;
+    } else {
+        this.act();
+    }
 };
 
 /*
