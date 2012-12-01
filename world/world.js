@@ -36,11 +36,10 @@ function World( jsonObject ) {
 
 World.prototype.addCreature = function( creature ) {
 	this.creatures.push( creature );
-    this.activeCreatures.push( creature );
+  this.activeCreatures.push( creature );
 	var randTile = this.getRandomValidTile();
-	randTile.inhabitant = this.creatures.length - 1;
 	creature.setId( this.creatures.length - 1 );
-	//save position into creature
+	randTile.inhabitant = creature.getId();
 };
 
 World.prototype.populateWithItems = function() {
@@ -81,7 +80,8 @@ World.prototype.findInTiles = function( condition ) {
 	var valid = [];
 	for ( var row = 0; row < this.map.length; row++ ) {
 		for ( var col = 0; col < this.map[0].length; col++ ) {
-			if ( condition( this.getTile( row, col ) ) ) {
+			var currentTile = this.getTile( row, col );
+			if ( condition( currentTile ) ) {
 				valid.push( currentTile );
 			}
 		}
@@ -170,6 +170,7 @@ World.prototype.getMapJSON = function() {
 			jsonMap[row][col] = this.map[row][col].terrain.name;
 		}
 	}
+	return JSON.stringify(jsonMap);
 }
 
 World.prototype.getCreatureClassesJSON = function() {
