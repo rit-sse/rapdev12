@@ -46,4 +46,5 @@ sim = require('./tests/comm')
 // Set up comm module and socket.io
 var io = require('socket.io').listen(server);
 sim.use_comm(comm);
+sim.startSim();
 comm.start(io, sim);
