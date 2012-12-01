@@ -128,7 +128,7 @@ describe( "world.js suite", function() {
     tile.occupant = aCreature.getId();
 
     expect( world.getCreaturePosition( aCreature.getId() ) )
-      .toEqual( { "row": tile.row, "col": tile.col } );
+      .toEqual( tile );
   });
 
   it( "correctly represents the map in JSON", function() {

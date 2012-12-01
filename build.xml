@@ -43,6 +43,18 @@
         <delete dir="${reportsdir}" />
     </target>
 
+    <target name="jasmine-test" description="Runs unit tests">
+    	<exec executable="jasmine-node">
+    		<arg value="--junitreport"/>
+    		<arg value="${basedir}/tests"/>
+    	</exec>
+
+    	<move todir="${reports.test}">
+    		<fileset dir="${basedir}/reports">
+    			<include name="*.xml"/>
+    		</fileset>
+    	</move>
+    </target>
 	
 	
 	<target name="init" depends="clean" description="Prepare the directory structure.">
@@ -87,7 +99,7 @@
 	
 	
 	
-	<target name="jenkins" depends="init, jslint" description="the jenkins on commit task"/>
+	<target name="jenkins" depends="init, jslint, jasmine-test" description="the jenkins on commit task"/>
 	
 	
 	
