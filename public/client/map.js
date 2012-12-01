@@ -1,15 +1,15 @@
 
 
-TILE_SIZE = 32;
+TILE_SIZE = 64;
 
-function tileColor(color) {
-	switch (color) {
+function tileType(id) {
+	switch (id) {
 		case 1:
-			return 'blue';
+			return 'sand';
 			break;
 		case 2:
 		default:
-			return 'white';
+			return 'sand';
 			break;
 	}
 }
@@ -29,21 +29,23 @@ Map.prototype.loadTileData = function(tileData) {
 
 		for (var col in tileData[row]) {
 			// Create a rectangle to represent the tile
-			var rect = new Kinetic.Rect({
+			var imgObj = new Image();
+			imgObj.src = "assets/images/tiles/" + tileType(tileData[row][col]) + ".png";
+			var image = new Kinetic.Image({
 				x: col * TILE_SIZE,
 				y: row * TILE_SIZE,
 				width: TILE_SIZE,
 				height: TILE_SIZE,
-				fill: tileColor(tileData[row][col])
+				image: imgObj
 			});
 
 			// Add the tile image to the tile group
-			var nodeID = this.viewport.add(rect);
+			var nodeID = this.viewport.add(image);
 
 			// Save the tile for later reference
 			this.tiles[row][col] = {
 				'type': tileData[row][col],
-				'image': rect,
+				'image': image,
 				'node': nodeID
 			};
 		}
