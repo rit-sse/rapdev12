@@ -108,8 +108,9 @@ describe( "world.js suite", function() {
     var tile = world.getRandomValidTile();
     tile.inhabitant = aCreature.getId();
 
-    expect( world.getCreaturePosition( aCreature.getId() ) )
-      .toEqual( { "row": tile.row, "col": tile.col } );
+    var creatureTile = world.getCreaturePosition( aCreature.getId() );
+    expect( creatureTile.row ).toEqual( tile.row );
+    expect( creatureTile.col ).toEqual( tile.col );
   });
 
 } );

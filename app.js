@@ -24,6 +24,8 @@ app.configure(function(){
   app.use(express.methodOverride());
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
+  app.use(express.errorHandler());
+  app.locals.pretty = true;
 });
 
 app.configure('development', function(){
@@ -41,6 +43,8 @@ server.listen(app.get('port'), function() {
   console.log("Express server listening on port " + app.get('port'));
 });
 
+// Set up testing module
+sim = require('./tests/comm')
 // Set up comm module and socket.io
 var io = require('socket.io').listen(server);
 sim.use_comm(comm);

@@ -59,7 +59,6 @@ Creature.prototype.getTimeToSleep = function(){
 Main method that will be called that the maker of the creature will implement.
 */
 Creature.prototype.act = function(){
-    return 'creature acts';
 };
 
 /*
@@ -117,14 +116,6 @@ Returns the given creatures id
 */
 Creature.prototype.getId = function(){
 	return this.id;
-};
-
-/*
-This is not needed? The world should know this.
-*/
-Creature.prototype.setPos = function(row,col){
-	this.row = row;
-	this.col = col;
 };
 
 /*

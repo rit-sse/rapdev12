@@ -21,5 +21,9 @@
   },
   "devDependencies": {
     "mocha": "1.7.x"
+  },
+  "testDependencies": {
+    "websocket-client": "*",
+    "jasmine-node": "*"
   }
 }
