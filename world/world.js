@@ -1,6 +1,8 @@
 // require:
 // 	 utils/world-utils.js
 
+var Terrain = require('../utils/world-utils').Terrain;
+
 function World( jsonObject ) {
 
 	this.creatures = [];

@@ -1,4 +1,4 @@
-var Terrain = {
+exports.Terrain = {
     GRASS: "grass",
     WATER: "water",
     SAND: "sand",
