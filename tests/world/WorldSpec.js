@@ -24,9 +24,17 @@ describe( "world.js suite", function() {
     ]
   }
   var world;
+  var aCreature;
 
   beforeEach( function() {
     world = new World( testWorldJSON );
+    aCreature = {
+      "id": 0,
+      "name": "yacht",
+      getId: function() {
+        return this.id;
+      }
+    };
   });
 
   it( "loads the correct terrain", function() {
@@ -89,11 +97,19 @@ describe( "world.js suite", function() {
   });
 
   it( "correctly gets a creature by ID", function() {
-    var aCreature = { "id": 0, "name": "Yacht" };
     world.creatures.push( aCreature );
 
     expect( world.getCreatureById( aCreature.id ).name )
       .toEqual( aCreature.name );
+  });
+
+  it( "correctly gets a creature's position", function() {
+    world.creatures.push( aCreature );
+    var tile = world.getRandomValidTile();
+    tile.inhabitant = aCreature.getId();
+
+    expect( world.getCreaturePosition( aCreature.getId() ) )
+      .toEqual( { "row": tile.row, "col": tile.col } );
   });
 
 } );
