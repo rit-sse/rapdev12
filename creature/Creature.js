@@ -1,6 +1,6 @@
 //The Creature API
 
-function Creature(id,world,attack,defence,speed){
+function Creature(world,attack,defence,speed){
 	this.world = world;
 	this.health = 100;
 	this.energy = 100;
@@ -67,4 +67,8 @@ Creature.prototype.onNoEnergy = function(){
 
 Creature.prototype.setId = function(id){
 	this.id = id;
+}
+
+Creature.prototype.getId = function(){
+	return this.id;
 }
