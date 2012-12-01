@@ -34,6 +34,7 @@ function World( jsonObject ) {
 World.prototype.addCreature = function( creature ) {
 	this.creatures.append( creature );
 	this.getRandomValidTile().inhabitant = this.creatures.length - 1;
+	creature.setId( this.creatures.length - 1 );
 };
 
 World.prototype.populateWithItems = function() {
@@ -57,17 +58,34 @@ World.prototype.getItemAtTile = function( row, col ) {
 };
 
 World.prototype.getRandomValidTile = function() {
+	var validTiles = this.findInTiles( function( tile ) {
+		return tile.terrain.passable && tile.inhabitant === null;
+	});
+	return this.randomElement( validTiles );
+};
+
+World.prototype.getRandomItemlessTile = function() {
+	var validTiles = this.findInTiles( function( tile ) {
+		return tile.item == null;
+	});
+	return this.randomElement( validTiles );
+}
+
+World.prototype.findInTiles = function( condition ) {
 	var valid = [];
 	for ( var row = 0; row < this.map.length; row++ ) {
 		for ( var col = 0; col < this.map[0].length; col++ ) {
-			currentTile = this.getTile( row, col );
-			if ( currentTile.terrain.passable && currentTile.inhabitant == null ) {
+			if ( condition( this.getTile( row, col ) ) ) {
 				valid.push( currentTile );
 			}
 		}
 	}
-	return valid[ Math.floor( Math.random()*valid.length ) ];
-};
+	return valid;
+}
+
+World.prototype.randomElement = function( someArray ) {
+	return someArray[ Math.floor( Math.random()*someArray.length ) ];
+}
 
 // TODO: Make this read from world.json instead of hardcoding it
 var worldjson = {
