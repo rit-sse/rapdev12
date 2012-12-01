@@ -1,14 +1,19 @@
 extends layout
 
 block scripts
-  script(src='/lib/kinetic-v4.1.2.js')
-  script(src='/lib/kineticjs.viewport-v1.0.0.js')
+  script(src='/lib/kinetic-v4.1.2.min.js')
+  script(src='/lib/jquery-1.8.3.min.js')
   script(src='/lib/underscore.js')
   script(src='/lib/backbone.js')
+  script(src='/client/map_creatures.js')
   script(src='/client/map.js')
   script(src='/client/biogame.js')
+  script(src='/socket.io/socket.io.js')
 
 block content
   div#biogame
   aside 
     ul#creature-classes
+    div#upload-ui
+      p Upload Creature
+      input(type='file')
