@@ -32,9 +32,9 @@ function World( jsonObject ) {
 };
 
 World.prototype.addCreature = function( creature ) {
-	this.creatures.append( creature );
-	this.getRandomValidTile().inhabitant = this.creatures.length - 1;
+	this.creatures.push( creature );
 	creature.setId( this.creatures.length - 1 );
+	this.getRandomValidTile().inhabitant = creature.id;
 };
 
 World.prototype.populateWithItems = function() {
@@ -85,6 +85,16 @@ World.prototype.findInTiles = function( condition ) {
 
 World.prototype.randomElement = function( someArray ) {
 	return someArray[ Math.floor( Math.random()*someArray.length ) ];
+}
+
+World.prototype.getCreatureById = function( creatureID ) {
+	return creatureID < this.creatures.length ?
+		this.creatures[ creatureID ] : null;
+}
+
+World.prototype.moveNorth = function( creatureID ) {
+	// TODO: This is an O(N) operation. Can it be made faster with some ease?
+
 }
 
 // TODO: Make this read from world.json instead of hardcoding it

@@ -65,7 +65,7 @@ describe( "world.js suite", function() {
       {"name": "water", "passable": false})
   });
 
-  it( "selects 50 randomly chosen 'valid' tiles are actually valid" , function() {
+  it( "50 randomly chosen 'valid' tiles are actually valid" , function() {
     validTiles = true;
     for( var i = 0; i < 50 && validTiles; i++ ) {
       var tile = world.getRandomValidTile();
@@ -86,6 +86,14 @@ describe( "world.js suite", function() {
     var someArray = [ 0, 1, 2, 3 ];
     var someElement = world.randomElement( someArray );
     expect( someArray.indexOf( someElement ) != -1 ).toBe( true );
+  });
+
+  it( "correctly gets a creature by ID", function() {
+    var aCreature = { "id": 0, "name": "Yacht" };
+    world.creatures.push( aCreature );
+
+    expect( world.getCreatureById( aCreature.id ).name )
+      .toEqual( aCreature.name );
   });
 
 } );
