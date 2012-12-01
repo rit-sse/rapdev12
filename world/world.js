@@ -4,7 +4,6 @@
 var Terrain = require('../utils/world-utils').Terrain;
 var Tile = require('../world/Tile.js').Tile;
 
-exports.worldjson = worldjson;
 exports.World = World;
 
 var comm;
@@ -252,4 +251,5 @@ var worldjson = {
 }
 
 var world = new World( worldjson );
+exports.worldjson = worldjson;
 
