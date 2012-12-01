@@ -1,8 +1,6 @@
 // require:
 // 	 utils/world-utils.js
 
-exports.World = World;
-
 function World( jsonObject ) {
 
 	this.creatures = [];
@@ -28,7 +26,7 @@ function World( jsonObject ) {
 			};
 			this.map[i].push(  currentTile  );
 			if (currentTile.terrain.passable == true){
-				this.passableTiles.push( [i,j] )
+				this.passableTiles.push( [i,j] );
 			};
 		};
 	};
@@ -39,7 +37,7 @@ function World( jsonObject ) {
 World.prototype.addCreature = function( creature ) {
 	this.creatures.push( creature );
     this.activeCreatures.push( creature );
-	var randTile = this.getRandomValidTile()
+	var randTile = this.getRandomValidTile();
 	randTile.inhabitant = this.creatures.length - 1;
 	creature.setId( this.creatures.length - 1 );
 	//save position into creature
@@ -220,3 +218,5 @@ var worldjson = {
 
 var world = new World( worldjson );
 exports.worldjson = worldjson;
+exports.World = World;
+
