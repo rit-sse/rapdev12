@@ -18,7 +18,9 @@ function World( jsonObject ) {
 			currentTile = {
 				"inhabitant":null,
 				"terrain":this.terrain[jsonObject.map[i][j]],
-				"item":null
+				"item":null,
+				"row":i,
+				"col":j
 			};
 			this.map[i].push(  currentTile  );
 			if (currentTile.terrain.passable == true){
@@ -28,7 +30,6 @@ function World( jsonObject ) {
 	};
 	
 	this.items = [];
-	
 };
 
 World.prototype.addCreature = function( creature ) {
@@ -120,6 +121,27 @@ World.prototype.moveCreature = function( id, direction ) {
 
 World.prototype.randomElement = function( someArray ) {
 	return someArray[ Math.floor( Math.random()*someArray.length ) ];
+}
+
+World.prototype.getCreatureById = function( creatureID ) {
+	return this.isValidCreatureId( creatureID ) ?
+		this.creatures[ creatureID ] : null;
+}
+
+World.prototype.isValidCreatureId = function( creatureID ) {
+	return creatureID < this.creatures.length;
+}
+
+World.prototype.getCreaturePosition = function( creatureID ) {
+	// TODO: This is an O(N) operation. Can it be made faster with some ease?
+	if ( this.isValidCreatureId( creatureID ) ) {
+		var tile = this.findInTiles( function( tile ) {
+			return tile.inhabitant == creatureID;
+		})[0];
+		return { "row": tile.row, "col": tile.col };
+	} else {
+		return null;
+	}
 }
 
 // TODO: Make this read from world.json instead of hardcoding it
