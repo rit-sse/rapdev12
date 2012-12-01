@@ -8,7 +8,8 @@ var express = require('express')
   , comm = require('./comm')
   , user = require('./routes/user')
   , http = require('http')
-  , path = require('path');
+  , path = require('path')
+  , uploads = require('./routes/file_upload');
 
 var app = express();
 
@@ -18,7 +19,7 @@ app.configure(function(){
   app.set('view engine', 'jade');
   app.use(express.favicon());
   app.use(express.logger('dev'));
-  app.use(express.bodyParser());
+  app.use(express.bodyParser({uploadDir: './tmp'}));
   app.use(express.methodOverride());
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
@@ -30,6 +31,8 @@ app.configure('development', function(){
 
 app.get('/', routes.index);
 app.get('/users', user.list);
+app.get('/file_upload', uploads.index);
+app.post('/file_upload', uploads.post);
 
 var server = http.createServer(app)
 
