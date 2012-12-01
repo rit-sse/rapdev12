@@ -28,6 +28,10 @@ Map.prototype.loadTileData = function(tileData) {
 			// Create a rectangle to represent the tile
 			var imgObj = new Image();
 			imgObj.src = "assets/images/tiles/" + tileData[row][col] + ".png";
+			imgObj.onload = function () {
+				biogame.viewport.draw();
+			}
+
 			var image = new Kinetic.Image({
 				x: col * TILE_SIZE,
 				y: row * TILE_SIZE,
