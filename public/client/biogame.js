@@ -47,16 +47,16 @@ window.onload = function() {
         // Test tile loading
         biogame.initGame({
             "map": [
-                [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
-                [ 1, 1, 2, 1, 1, 1, 1, 2, 1, 1 ],
-                [ 1, 1, 2, 1, 1, 1, 1, 2, 1, 1 ],
-                [ 1, 1, 2, 1, 1, 1, 1, 2, 1, 1 ],
-                [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
-                [ 1, 2, 1, 1, 1, 1, 1, 1, 2, 1 ],
-                [ 1, 1, 2, 1, 1, 1, 1, 2, 1, 1 ],
-                [ 1, 1, 1, 2, 2, 2, 2, 1, 1, 1 ],
-                [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
-                [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
+                [ "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass" ],
+                [ "grass", "grass", "rock", "grass", "grass", "grass", "grass", "rock", "grass", "grass" ],
+                [ "grass", "grass", "rock", "grass", "grass", "grass", "grass", "rock", "grass", "grass" ],
+                [ "grass", "grass", "rock", "grass", "grass", "grass", "grass", "rock", "grass", "grass" ],
+                [ "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass" ],
+                [ "grass", "water", "grass", "grass", "grass", "grass", "grass", "grass", "water", "grass" ],
+                [ "grass", "grass", "water", "grass", "grass", "grass", "grass", "water", "grass", "grass" ],
+                [ "grass", "grass", "grass", "sand", "sand", "sand", "sand", "grass", "grass", "grass" ],
+                [ "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass" ],
+                [ "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass" ]
             ],
             "creatureClasses": [
         {

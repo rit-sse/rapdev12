@@ -2,18 +2,6 @@
 
 TILE_SIZE = 64;
 
-function tileType(id) {
-	switch (id) {
-		case 1:
-			return 'sand';
-			break;
-		case 2:
-		default:
-			return 'sand';
-			break;
-	}
-}
-
 /**
  * Initializes a Map object
  * @param {Kinetic.Layer} viewport The Kinetic layer in which to draw the map
@@ -39,7 +27,7 @@ Map.prototype.loadTileData = function(tileData) {
 		for (var col in tileData[row]) {
 			// Create a rectangle to represent the tile
 			var imgObj = new Image();
-			imgObj.src = "assets/images/tiles/" + tileType(tileData[row][col]) + ".png";
+			imgObj.src = "assets/images/tiles/" + tileData[row][col] + ".png";
 			var image = new Kinetic.Image({
 				x: col * TILE_SIZE,
 				y: row * TILE_SIZE,
