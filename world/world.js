@@ -190,3 +190,4 @@ var worldjson = {
 }
 
 var world = new World( worldjson );
+exports.worldjson = worldjson;
