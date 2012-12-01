@@ -25,7 +25,8 @@ MapCreatures.prototype.addCreatureClass = function(creatureClass){
 	image.src = "../assets/images/" + creatureClass.id + ".png";
 	image.height = TILE_SIZE;
 	image.width = TILE_SIZE;
-	this.creatureClasses[creatureClass.id] = image
+	this.creatureClasses[creatureClass.id] = creatureClass;
+	this.creatureClasses[creatureClass.id].assets.image = image;
 	$("#creature-classes").append("<li>" + creatureClass.name + "</li>");
 };
 
@@ -65,7 +66,7 @@ MapCreatures.prototype.loadCreatureData = function(data){
 			y: creature.y*TILE_SIZE,
 			height: TILE_SIZE,
 			width: TILE_SIZE,
-			image: this.creatureClasses[data[i].class],
+			image: this.creatureClasses[data[i].class].assets.image,
 			animations: animations,
 			animation: 'idle'
 		});
