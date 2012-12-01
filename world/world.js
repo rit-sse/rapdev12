@@ -1,6 +1,5 @@
 function World( jsonObject ) {
-	
-	
+
 	this.creatures = [];
 	
 	this.activeCreatures = [];
@@ -33,7 +32,8 @@ function World( jsonObject ) {
 };
 
 World.prototype.addCreature = function( creature ) {
-	this.creatures.append( creature );
+	this.creatures.push( creature );
+    this.activeCreatures.push( creature );
 	var randTile = this.getRandomValidTile()
 	randTile.inhabitant = this.creatures.length - 1;
 	creature.setId( this.creatures.length - 1 );
@@ -143,6 +143,8 @@ World.prototype.getCreaturePosition = function( creatureID ) {
 		return null;
 	}
 }
+
+
 
 // TODO: Make this read from world.json instead of hardcoding it
 var worldjson = {
