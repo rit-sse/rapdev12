@@ -1,3 +1,6 @@
+// require:
+// 	 utils/world-utils.js
+
 function World( jsonObject ) {
 
 	this.creatures = [];
@@ -135,10 +138,9 @@ World.prototype.isValidCreatureId = function( creatureID ) {
 World.prototype.getCreaturePosition = function( creatureID ) {
 	// TODO: This is an O(N) operation. Can it be made faster with some ease?
 	if ( this.isValidCreatureId( creatureID ) ) {
-		var tile = this.findInTiles( function( tile ) {
+		return this.findInTiles( function( tile ) {
 			return tile.inhabitant == creatureID;
 		})[0];
-		return { "row": tile.row, "col": tile.col };
 	} else {
 		return null;
 	}
@@ -150,15 +152,15 @@ World.prototype.getCreaturePosition = function( creatureID ) {
 var worldjson = {
   "terrain": [
     {
-      "name": "grass",
+      "name": Terrain.GRASS,
       "passable": true
     },
     {
-      "name": "water",
+      "name": Terrain.WATER,
       "passable": false
     },
     {
-      "name": "rock",
+      "name": Terrain.ROCK,
       "passable": false
     }
   ],
