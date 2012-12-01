@@ -1,7 +1,7 @@
 
 SCROLL_SPEED = 10;
 
-var BioGame = function BioGame(stage) {
+function BioGame(stage) {
 	this.viewport = new Kinetic.Layer();
 	this.viewport.setDraggable(true);
 	stage.add(this.viewport);

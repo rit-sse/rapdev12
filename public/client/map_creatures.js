@@ -1,5 +1,5 @@
 
-var MapCreatures = function MapCreatures(viewport) {
+function MapCreatures(viewport) {
 	this.creatureClasses = {};
 	this.viewport = viewport;
 	this.creatures = {};
