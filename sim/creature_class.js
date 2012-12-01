@@ -4,6 +4,9 @@ var c_core = require("./creature_core.js");
 var util = require("util");
 
 //CreatureClass
+module.exports = {
+  CreatureClass: CreatureClass
+}
 
 
 function CreatureClass(name, speed, pos) {
