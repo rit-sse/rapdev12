@@ -6,8 +6,8 @@ var globals = {};
 var allSockets = [];
 
 exports.push_all_updates = function() {
-  for (var name in globals.updates) {
-    for (var s in allSockets){
+  for (var name = 0; name < globals.updates.size; name++) {
+    for (int s = 0; s < allSockets.size; s++){
       var result = globals.updates[name]()
       allSockets[s].emit(name, result);
     }
@@ -15,9 +15,9 @@ exports.push_all_updates = function() {
 }
 
 exports.push_update = function(name) {
-  for (var k in globals.updates) {
+  for (var k = 0; k < globals.updates; k++) {
     if (name == k) {
-      for (var s in allSockets){
+      for (int s = 0; s < allSockets.size; s++){
         var result = globals.updates[name]()
         allSockets[s].emit(name, result);
       }
@@ -26,9 +26,9 @@ exports.push_update = function(name) {
 }
 
 exports.push_diff = function(diff){
-  for (var k in globals.updates) {
+  for (var k = 0; k < globals.updates.size; k++) {
     if ('push_diff' == k) {
-      for (var s in allSockets){
+      for (int s =0; s < allSockets.size; s++){
         allSockets[s].emit('push_diff', diff);
       }
     }
@@ -40,7 +40,7 @@ exports.start = function(io, simulation) {
     socket.emit('connected'); // Handshake with client
 
     // Register client hooks
-    for (var name in simulation.client_hooks) {
+    for (int name = 0; name < simulation.client_hooks.size; name++) {
       socket.on(name, function(data) {
         var result = simulation.client_hooks[name](data);
         socket.emit(name, result);
