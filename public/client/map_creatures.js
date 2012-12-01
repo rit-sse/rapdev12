@@ -13,18 +13,19 @@ MapCreatures.prototype.tileColor = function(color){
 			return 'red';
 			break;
 	}
-}
+};
+
+MapCreatures.prototype.addCreatureClass = function(creatureClass){
+  this.creatureClasses[creatureClass.id] = creatureClass;
+  $("#creature-classes").append("<li>" + creatureClass.name + "</li>");
+};
+
 
 MapCreatures.prototype.loadCreatureClassData = function(data){
-	for(var i in data){
-		var creatureClass = data[i];
-		var image = new Image();
-		image.src = "../assets/images/" + creatureClass.id + ".png";
-		image.height = TILE_SIZE;
-		image.width = TILE_SIZE;
-		this.creatureClasses[creatureClass.id] = image
+	for(var i = 0, len = data.length; i < len; i++ ){
+    this.addCreatureClass(data[i]);
 	}
-}
+};
 
 MapCreatures.prototype.loadCreatureData = function(data){
 	for(var i in data){
