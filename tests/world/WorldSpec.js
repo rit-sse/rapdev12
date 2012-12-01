@@ -1,5 +1,5 @@
 describe( "world.js suite", function() {
-  var testWorldJSON = {
+  var testWorld = {
     "terrain": [
       {
         "name": "grass",
@@ -23,16 +23,33 @@ describe( "world.js suite", function() {
       [ 0, 1, 0, 0, 0, 2 ]
     ]
   }
+  var smallTestWorld = {
+    "terrain": [
+      {
+        "name": "grass",
+        "passable": true
+      }
+    ],
+    "map": [
+      [ 0, 0 ],
+      [ 0, 0 ]
+    ]
+  }
   var world;
+  var smallWorld;
   var aCreature;
 
   beforeEach( function() {
-    world = new World( testWorldJSON );
+    world = new World( testWorld );
+    smallWorld = new World( smallTestWorld );
     aCreature = {
       "id": 0,
       "name": "yacht",
       getId: function() {
         return this.id;
+      },
+      setId: function( id ) {
+        this.id = id;
       }
     };
   });
@@ -110,6 +127,13 @@ describe( "world.js suite", function() {
 
     expect( world.getCreaturePosition( aCreature.getId() ) )
       .toEqual( { "row": tile.row, "col": tile.col } );
+  });
+
+  it( "correctly represents the map in JSON", function() {
+    var smallWorldMapJSON = smallWorld.getMapJSON();
+    var smallWorldMap = JSON.parse( smallWorldMapJSON );
+
+    expect( smallWorldMap ).toEqual( [["grass","grass"],["grass","grass"]] );
   });
 
 } );
