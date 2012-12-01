@@ -1,4 +1,5 @@
 var Creature = require("../../creature/Creature.js").Creature;
+var World = require("../../world/world.js").World;
 
 describe("Make a creature", function(){
 	var testWorldJSON = {
