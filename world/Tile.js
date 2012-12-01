@@ -4,3 +4,5 @@ function Tile(occupant,terrain,row,column){
     this.row = row;
     this.column = column;
 };
+
+exports.Tile = Tile;

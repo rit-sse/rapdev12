@@ -2,6 +2,19 @@
 // 	 utils/world-utils.js
 
 var Terrain = require('../utils/world-utils').Terrain;
+var Tile = require('../world/Tile.js').Tile;
+
+
+exports.worldjson = worldjson;
+exports.World = World;
+
+var comm;
+exports.use_comm = function(c) {
+  comm = c;
+}
+
+exports.client_hooks = {};
+exports.updates = {};
 
 function World( jsonObject ) {
 
@@ -15,10 +28,10 @@ function World( jsonObject ) {
 	
 	this.map = [];
 	for(var i=0; i<jsonObject.map.length; i++){
-		currentRow = jsonObject.map[i];
+		var currentRow = jsonObject.map[i];
 		this.map.push([]);
 		for(var j=0; j < currentRow.length; j++){
-			currentCol = currentRow[j];
+			var currentCol = currentRow[j];
 			var currentTile = new Tile(null,(this.terrain[jsonObject.map[i][j]]),i,j);
 			this.map[i].push(  currentTile  );
 			if (currentTile.terrain.passable == true){
@@ -214,14 +227,3 @@ var worldjson = {
 }
 
 var world = new World( worldjson );
-exports.worldjson = worldjson;
-
-exports.World = World;
-
-var comm;
-exports.use_comm = function(c) {
-  comm = c;
-}
-
-exports.client_hooks = {};
-exports.updates = {};
