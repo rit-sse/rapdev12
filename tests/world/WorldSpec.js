@@ -1,3 +1,5 @@
+var World = require('../../world/world.js').World;
+
 describe( "world.js suite", function() {
   var testWorld = {
     "terrain": [

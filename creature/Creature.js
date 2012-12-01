@@ -131,3 +131,5 @@ Adds the given amount of health to the given creature.
 Creature.prototype.heal = function(healAmount){
 	this.health+=healAmount
 };
+
+exports.Creature = Creature;
