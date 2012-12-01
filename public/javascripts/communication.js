@@ -4,7 +4,8 @@ $(document).ready(function() {
   socket = io.connect('http://localhost:3000');
 
   socket.on('connected', function(data) {
-    socket.emit('echo', 'echo-successful'); // Provoke test message
+    console.log(data);
+    //socket.emit('get_map');
   });
 
   // Test message

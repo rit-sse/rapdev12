@@ -37,7 +37,7 @@ exports.push_diff = function(diff){
 
 exports.start = function(io, simulation) {
   io.sockets.on('connection', function (socket) {
-    socket.emit('connected'); // Handshake with client
+    socket.emit('connected', {}); // Handshake with client
 
     // Register client hooks
     for (var name in simulation.client_hooks) {
@@ -55,6 +55,5 @@ exports.start = function(io, simulation) {
     var id = socket.id;
     console.log(id + " connected");
     allSockets.push(socket);
-
   });
 }
