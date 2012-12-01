@@ -13,19 +13,23 @@ exports.push_all_updates = function() {
 }
 
 exports.push_update = function(name) {
-  // for (var k in globals.updates) {
-  //   if (name == k) {
-  //     var result = globals.updates[name]()
+  for (var k in globals.updates) {
+    if (name == k) {
+      var result = globals.updates[name]()
 
-  //     globals.socket.emit(name, result);
-  //   }
-  // }
-  var result = globals.updates[name]()
-  globals.socket.emit(name, result);
+      globals.socket.emit(name, result);
+    }
+  }
+  // var result = globals.updates[name]()
+  // globals.socket.emit(name, result);
 }
 
 exports.push_diff = function(diff){
-  globals.socket.emit('push_diff', diff);
+  for (var k in globals.updates) {
+    if ('push_diff' == k) {
+      globals.socket.emit('push_diff', diff);
+    }
+  }
 }
 
 exports.start = function(io, simulation) {
