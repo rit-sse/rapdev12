@@ -46,6 +46,7 @@ Creature.prototype.lookAround = function(){
 Sets how long the creature will sleep for. Note: The creature can wake up eary if attacked or hungry. 
 */
 Creature.prototype.sleepFor = function(time){
+	this.timeLeftToSleep = time;
 };
 
 /*
@@ -83,12 +84,18 @@ Creature.prototype.onDeath = function(){
 An API defined event that counts down to when your creature sould wake up or wakes you up if your creature gets hungry.
 */
 Creature.prototype.onSleepTurn = function(){
+	if(this.timeLeftToSleep > 0){
+		this.timeLeftToSleep-=1;
+	}else{
+		act();
+	}
 };
 
 /*
 Will make your creature pass out for the rest of the turn.
 */
 Creature.prototype.onNoEnergy = function(){
+	this.passedOut = true;
 };
 
 /*
@@ -117,12 +124,12 @@ Creature.prototype.setPos(row,col){
 Removes the given amount of health from the creature.
 */
 Creature.prototype.removeHealth(damage){
-
+	this.health-=damage;
 }
 
 /*
 Adds the given amount of health to the given creature.
 */
-Creature.prototype.heal(healAmmount){
-
+Creature.prototype.heal(healAmount){
+	this.health+=healAmount
 }
