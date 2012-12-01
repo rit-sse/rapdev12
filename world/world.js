@@ -21,8 +21,8 @@ function World( jsonObject ) {
 				"item":null
 			};
 			this.map[i].push(  currentTile  );
-			if (currentTile.passable == true){
-				this.passableTiles.push( currentTile )
+			if (currentTile.terrain.passable == true){
+				this.passableTiles.push( [i,j] )
 			};
 		};
 	};
