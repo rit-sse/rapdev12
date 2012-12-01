@@ -5,6 +5,7 @@
 var express = require('express')
   , routes = require('./routes')
   , sim = require('./sim')
+  , world = require('./world/world')
   , comm = require('./comm')
   , user = require('./routes/user')
   , http = require('http')
@@ -43,5 +44,7 @@ server.listen(app.get('port'), function() {
 // Set up comm module and socket.io
 var io = require('socket.io').listen(server);
 sim.use_comm(comm);
+world.use_comm(comm);
 sim.startSim();
 comm.start(io, sim);
+comm.start(io, world);

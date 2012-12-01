@@ -19,5 +19,14 @@ $(document).ready(function() {
   socket.on('push_diff', function(data){
     console.log(data);
   });
+
+  socket.on('get_map', function(data){
+    console.log(data);
+  });
+
+  $('#sendRequest').click(function(){
+    socket.emit('get_map');
+  });
+
 });
 
