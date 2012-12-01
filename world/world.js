@@ -1,4 +1,15 @@
 var world = {
+	
+	creatures:{},
+	
+	activeCreatures:{},
+	
+	map:{},
+	
+	terrain:{},
+	
+	items:{},
+	
 	init:function(){
 		
 	},
