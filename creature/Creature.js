@@ -1,40 +1,45 @@
 //The Creature API
 
-function move(direction){
-}
+var Creature = Class.create();
 
-function sprint(direction){
-}
+Creature.prototype = {
 
-function attack(direction){
-}
+	move: function(direction){
+	},
 
-function lookAround(){
-}
+	sprint: function(direction){
+	},
 
-function sleepFor(time){
-}
+	attack: function(direction){
+	},
 
-function act(){
-}
+	lookAround: function(){
+	},
 
-function onBirth(){
-}
+	sleepFor: function(time){
+	},
 
-function onCollision(object){
-}
+	act: function(){
+	},
 
-function onHit(direction){
-}
+	initialize: function(){
+	},
 
-function onWakeUp(reason){
-}
+	onCollision: function(object){
+	},
 
-function onDeath(){
-}
+	onHit: function(direction){
+	},
 
-function onSleepTurn(){
-}
+	onWakeUp: function(reason){
+	},
 
-function onNoEnergy(){
-}
+	onDeath: function(){
+	},
+
+	onSleepTurn: function(){
+	},
+
+	onNoEnergy: function(){
+	}
+};
