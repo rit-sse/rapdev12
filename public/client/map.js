@@ -20,8 +20,8 @@ function tileType(id) {
  */
 function Map(viewport) {
 	this.viewport = viewport;
-	this.tiles = []
-}
+	this.tiles = [];
+};
 
 /**
  * Populates the tiles array with Objects containing Kinetic Images, the node
@@ -61,4 +61,4 @@ Map.prototype.loadTileData = function(tileData) {
 	}
 
 	this.viewport.draw();
-}
+};
