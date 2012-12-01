@@ -1,6 +1,9 @@
 
+SCROLL_SPEED = 10;
+
 var BioGame = function BioGame(stage) {
 	this.viewport = new Kinetic.Layer();
+	this.viewport.setDraggable(true);
 	stage.add(this.viewport);
 
 	this.map = new Map(this.viewport);
@@ -32,7 +35,7 @@ window.onload = function() {
         height: 600
     });
 
-    var biogame = new BioGame(stage);
+    biogame = new BioGame(stage);
 
     // Test tile loading
     biogame.initGame({
@@ -48,5 +51,36 @@ window.onload = function() {
 			[ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
 			[ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
 		]
+	});
+
+	// Add keyboard input to the map
+	$(document).keydown(function(e) {
+		switch (e.keyCode) {
+			case 87:	// w
+			case 38: 	// up
+				biogame.viewport.setY(biogame.viewport.getY() + SCROLL_SPEED);
+				break;
+
+			case 65:	// a
+			case 37:	// left
+				biogame.viewport.setX(biogame.viewport.getX() + SCROLL_SPEED);
+				break;
+
+			case 83:	// s
+			case 40:	// down
+				biogame.viewport.setY(biogame.viewport.getY() - SCROLL_SPEED);
+				break;
+
+			case 68:	// d
+			case 39:	// right
+				biogame.viewport.setX(biogame.viewport.getX() - SCROLL_SPEED);
+				break;
+
+			default:
+				return;
+		}
+
+		biogame.viewport.draw();
+		e.preventDefault();
 	});
 }
