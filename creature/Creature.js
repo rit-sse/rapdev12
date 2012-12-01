@@ -112,3 +112,17 @@ Creature.prototype.setPos(row,col){
 	this.row = row;
 	this.col = col;
 }
+
+/*
+Removes the given amount of health from the creature.
+*/
+Creature.prototype.removeHealth(damage){
+
+}
+
+/*
+Adds the given amount of health to the given creature.
+*/
+Creature.prototype.heal(healAmmount){
+
+}
