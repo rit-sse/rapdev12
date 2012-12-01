@@ -4,7 +4,6 @@
 var Terrain = require('../utils/world-utils').Terrain;
 var Tile = require('../world/Tile.js').Tile;
 
-
 exports.worldjson = worldjson;
 exports.World = World;
 
@@ -27,8 +26,9 @@ function World( jsonObject ) {
 	this.passableTiles = [];
 	
 	this.map = [];
+	var currentRow; var currentCol;
 	for(var i=0; i<jsonObject.map.length; i++){
-		var currentRow = jsonObject.map[i];
+		currentRow = jsonObject.map[i];
 		this.map.push([]);
 		for(var j=0; j < currentRow.length; j++){
 			var currentCol = currentRow[j];
@@ -163,7 +163,6 @@ World.prototype.getActiveCreatures = function() {
     return this.activeCreatures;
 }
 
-
 World.prototype.toJSON = function() {
 	return JSON.stringify( {
 		"map": this.getMapJSON(),
@@ -190,19 +189,20 @@ World.prototype.getCreatureClassesJSON = function() {
 World.prototype.getCreaturesJSON = function() {
 	return null;
 }
+
 // TODO: Make this read from world.json instead of hardcoding it
 var worldjson = {
   "terrain": [
     {
-      "name": "grass",
+      "name": Terrain.GRASS,
       "passable": true
     },
     {
-      "name": "water",
+      "name": Terrain.WATER,
       "passable": false
     },
     {
-      "name": "rock",
+      "name": Terrain.ROCK,
       "passable": false
     }
   ],
@@ -227,3 +227,4 @@ var worldjson = {
 }
 
 var world = new World( worldjson );
+
