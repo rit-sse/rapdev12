@@ -1,10 +1,9 @@
 
 var BioGame = function BioGame(stage) {
-	this.stage = stage;
-	this.viewport = new Viewport(stage);
+	this.viewport = new Kinetic.Layer();
+	stage.add(this.viewport);
 
-	this.mapGroup = new Kinetic.Group();
-	this.map = new Map(this.mapGroup);
+	this.map = new Map(this.viewport);
 }
 
 
@@ -15,7 +14,6 @@ var BioGame = function BioGame(stage) {
 BioGame.prototype.initGame = function(data) {
 	// Create a map with the provided tile data
 	this.map.loadTileData(data.map);
-	this.viewport.draw();
 }
 
 
@@ -40,13 +38,13 @@ window.onload = function() {
     biogame.initGame({
 		"map": [
 			[ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
+			[ 1, 1, 2, 1, 1, 1, 1, 2, 1, 1 ],
+			[ 1, 1, 2, 1, 1, 1, 1, 2, 1, 1 ],
+			[ 1, 1, 2, 1, 1, 1, 1, 2, 1, 1 ],
 			[ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
-			[ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
-			[ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
-			[ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
-			[ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
-			[ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
-			[ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
+			[ 1, 2, 1, 1, 1, 1, 1, 1, 2, 1 ],
+			[ 1, 1, 2, 1, 1, 1, 1, 2, 1, 1 ],
+			[ 1, 1, 1, 2, 2, 2, 2, 1, 1, 1 ],
 			[ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
 			[ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
 		]
