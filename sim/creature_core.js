@@ -22,8 +22,8 @@ function CreatureCore(x, y) {
 //Changes position based on given list of movements
 //@param direction (array) : number of movements in the x and y directions
 CreatureCore.prototype.move = function(direction) {
-  x = x + direction[0];
-  y = y + direction[1];
+  this.x = this.x + direction[0];
+  this.y = this.y + direction[1];
 };
 
 //Returns whether or not the creature is able to move in the given direction
