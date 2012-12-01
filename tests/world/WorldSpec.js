@@ -29,6 +29,13 @@ describe( "world.js suite", function() {
     world = new World( testWorldJSON );
   });
 
+  it( "loads the correct terrain", function() {
+    expect( world.terrain[0] ).toEqual( {"name": "grass", "passable": true} );
+    expect( world.terrain[1] ).toEqual( {"name": "water", "passable": false} );
+    expect( world.terrain[2] ).toEqual( {"name": "rock", "passable": false} );
+    
+  });
+  
   it( "returns the correct tile", function() {
     var tile = world.getTile( 5, 5 );
 
