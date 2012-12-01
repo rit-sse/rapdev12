@@ -2,7 +2,6 @@
   "name": "BioGrid-communication",
   "version": "0.0.1",
   "description": "Biogrid web communication and relay module",
-  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/rit-sse/rapdev12.git"
