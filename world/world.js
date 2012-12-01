@@ -55,12 +55,12 @@ World.prototype.addCreature = function( creature ) {
 			"name": creature.name,
 			"speed": creature.speed,
 			"attack": creature.attack
-		});
+		} );
 	}
 	this.creatures.push( creature );
-  this.activeCreatures.push( creature );
 	var randTile = this.getRandomValidTile();
 	creature.setId( this.creatures.length - 1 );
+	this.activeCreatures.push( creature );
 	randTile.occupant = creature.getId();
 };
 
@@ -202,7 +202,8 @@ World.prototype.getCreatureClassesForClient = function() {
 
 World.prototype.getCreaturesForClient = function() {
 	var clientCreatures = [];
-	for ( var c in this.activeCreatures ) {
+	for ( var i = 0; i < this.activeCreatures.length; i++ ) {
+		var c = this.activeCreatures[i];
 		var creatureTile = this.getCreaturePosition( c.getId() );
 		clientCreatures.push( {
 			"id": c.getId(),
