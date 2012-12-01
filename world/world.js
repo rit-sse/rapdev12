@@ -1,3 +1,5 @@
+exports.World = World;
+
 function World( jsonObject ) {
 
 	this.creatures = [];
@@ -148,7 +150,7 @@ World.prototype.getCreaturePosition = function( creatureID ) {
  * Returns all active creatures.
  */
 World.prototype.getActiveCreatures = function() {
-    return activeCreatures;
+    return this.activeCreatures;
 }
 
 // TODO: Make this read from world.json instead of hardcoding it
