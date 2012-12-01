@@ -1,4 +1,4 @@
-function World() {
+function World( jsonObject ) {
 	
 	this.creatures = {};
 	
@@ -36,4 +36,4 @@ World.prototype.getItemAtTile = function(x, y){
 	
 };
 
-var world = new World();
+var world = new World( /*my favorite json object*/ );
