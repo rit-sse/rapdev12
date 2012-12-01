@@ -13,11 +13,11 @@ function World( jsonObject ) {
 	for(var i=0; i<jsonObject.map.length; i++){
 		currentRow = jsonObject.map[i];
 		this.map.push([]);
-		for(var j=0; j < curretnRow.length; j++){
+		for(var j=0; j < currentRow.length; j++){
 			currentCol = currentRow[j];
 			currentTile = {
 				"inhabitant":null,
-				"terrain":jsonObject.map[i][j],
+				"terrain":this.terrain[jsonObject.map[i][j]],
 				"item":null
 			};
 			this.map[i].push(  currentTile  );
@@ -40,7 +40,7 @@ World.prototype.populateWithItems = function(){
 };
 
 World.prototype.getTile = function( row, col ){
-	return map[row][col];
+	return this.map[row][col];
 };
 
 World.prototype.getTerrainAtTile = function( row, col ){
@@ -58,8 +58,8 @@ World.prototype.getItemAtTile = function( row, col ){
 World.prototype.getRandomValidTile = function() {
 	// TODO: Make sure the tile is valid before returning
 	// "valid" tile is passable and has no inhabitant
-	return this.getTile( Math.floor(Math.random()*map[0].length),
-											 Math.floor(Math.random()*map.length) );
+	return this.getTile( Math.floor(Math.random()*this.map[0].length),
+											 Math.floor(Math.random()*this.map.length) );
 };
 
 // TODO: Make this read from world.json instead of hardcoding it
