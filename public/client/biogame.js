@@ -41,94 +41,107 @@ window.onload = function() {
     console.log($(stage.getDOM()).height());
 
     biogame = new BioGame(stage);
+    
+    biogame.splash = new Splash(stage, function() {
+        // Test tile loading
+        biogame.initGame({
+            "map": [
+                [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
+                [ 1, 1, 2, 1, 1, 1, 1, 2, 1, 1 ],
+                [ 1, 1, 2, 1, 1, 1, 1, 2, 1, 1 ],
+                [ 1, 1, 2, 1, 1, 1, 1, 2, 1, 1 ],
+                [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
+                [ 1, 2, 1, 1, 1, 1, 1, 1, 2, 1 ],
+                [ 1, 1, 2, 1, 1, 1, 1, 2, 1, 1 ],
+                [ 1, 1, 1, 2, 2, 2, 2, 1, 1, 1 ],
+                [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
+                [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
+            ],
+            "creatureClasses": [
+        {
+          "id": 1,
+          "name": "Redshirt",
+          "speed": 2,
+          "strength": 1,
+          "assets": {
+            "color": "red",
+          }
+        },
+        {
+          "id": 2,
+          "name": "Officer",
+          "speed": 10,
+          "strength": 10,
+          "assets": {
+            "color": "gold",
+          }
+        }
+      ],
+      "creatures": [
+        {
+          "id": 1,
+          "class": 2,
+          "name": "Kirk",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "id": 2,
+          "class": 1,
+          "name": "Bob",
+          "x": 2,
+          "y": 2
+        },
+        {
+          "id": 3,
+          "class": 1,
+          "name": "Joe",
+          "x": 7,
+          "y": 2
+        }
+      ]
+        });
 
-    // Test tile loading
-    biogame.initGame({
-		"map": [
-            [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
-            [ 1, 1, 2, 1, 1, 1, 1, 2, 1, 1 ],
-            [ 1, 1, 2, 1, 1, 1, 1, 2, 1, 1 ],
-            [ 1, 1, 2, 1, 1, 1, 1, 2, 1, 1 ],
-            [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
-            [ 1, 2, 1, 1, 1, 1, 1, 1, 2, 1 ],
-            [ 1, 1, 2, 1, 1, 1, 1, 2, 1, 1 ],
-            [ 1, 1, 1, 2, 2, 2, 2, 1, 1, 1 ],
-            [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
-            [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
-        ],
-        "creatureClasses": [
-    {
-      "id": 1,
-      "name": "Redshirt",
-      "speed": 2,
-      "strength": 1,
-      "assets": {
-        "color": "red",
-      }
-    },
-    {
-      "id": 2,
-      "name": "Officer",
-      "speed": 10,
-      "strength": 10,
-      "assets": {
-        "color": "gold",
-      }
-    }
-  ],
-  "creatures": [
-    {
-      "id": 1,
-      "class": 2,
-      "name": "Kirk",
-      "x": 5,
-      "y": 5
-    },
-    {
-      "id": 2,
-      "class": 1,
-      "name": "Bob",
-      "x": 2,
-      "y": 2
-    },
-    {
-      "id": 3,
-      "class": 1,
-      "name": "Joe",
-      "x": 7,
-      "y": 2
-    }
-  ]
+        // Add keyboard input to the map
+        $(document).keydown(function(e) {
+            switch (e.keyCode) {
+                case 87:	// w
+                case 38: 	// up
+                    biogame.viewport.setY(biogame.viewport.getY() + SCROLL_SPEED);
+                    break;
+
+                case 65:	// a
+                case 37:	// left
+                    biogame.viewport.setX(biogame.viewport.getX() + SCROLL_SPEED);
+                    break;
+
+                case 83:	// s
+                case 40:	// down
+                    biogame.viewport.setY(biogame.viewport.getY() - SCROLL_SPEED);
+                    break;
+
+                case 68:	// d
+                case 39:	// right
+                    biogame.viewport.setX(biogame.viewport.getX() - SCROLL_SPEED);
+                    break;
+
+                default:
+                    return;
+            }
+
+            biogame.viewport.draw();
+            e.preventDefault();
+        });
     });
-
-	// Add keyboard input to the map
-	$(document).keydown(function(e) {
-		switch (e.keyCode) {
-			case 87:	// w
-			case 38: 	// up
-				biogame.viewport.setY(biogame.viewport.getY() + SCROLL_SPEED);
-				break;
-
-			case 65:	// a
-			case 37:	// left
-				biogame.viewport.setX(biogame.viewport.getX() + SCROLL_SPEED);
-				break;
-
-			case 83:	// s
-			case 40:	// down
-				biogame.viewport.setY(biogame.viewport.getY() - SCROLL_SPEED);
-				break;
-
-			case 68:	// d
-			case 39:	// right
-				biogame.viewport.setX(biogame.viewport.getX() - SCROLL_SPEED);
-				break;
-
-			default:
-				return;
-		}
-
-		biogame.viewport.draw();
-		e.preventDefault();
-	});
+    
+    var per = 0.0;
+    var slowness = 500;
+    var fakeLoad = function() {
+        per+=0.1;
+        biogame.splash.SetPercent(per);
+        if (biogame.splash && per <=1) {
+            setTimeout(fakeLoad,slowness)
+        }
+    }
+    fakeLoad();
 }
