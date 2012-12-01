@@ -22,15 +22,32 @@ BioGame.prototype.initGame = function(data) {
     this.mapCreatures.loadCreatureData(data.creatures);
 }
 
+var socket;
 
 /*
  * Create a websocket to the server and request
  * the game state when loading the window.
  */
-window.onload = function() {
-    //TODO: send websockets request to server API
-    //  to get the initail game state (send to initGame)
-    //
+$(document).ready(function() {
+  socket = io.connect('http://localhost:3000');
+
+  socket.on('connected', function(data) {
+    socket.emit('echo', 'echo-successful'); // Provoke test message
+  });
+
+  // Test message
+  socket.on('echo', function(data) {
+    console.log(data);
+  });
+
+  socket.on('count', function(data) {
+    console.log(data);
+  });
+
+  socket.on('push_diff', function(data){
+    console.log(data);
+    $("#output").html(data.name + "<br/>" + data.data.rand);
+  });
 
 
     var wrapper = $("#biogame");
@@ -145,7 +162,7 @@ window.onload = function() {
         }
     }
     fakeLoad();
-}
+});
 
 
 /* Updates the canvas's size when the window size changes
@@ -174,3 +191,5 @@ var waitForFinalEvent = (function () {
     timers[uniqueId] = setTimeout(callback, ms);
   };
 })();
+
+
