@@ -1,3 +1,5 @@
+var World = require('../../world/world.js').World;
+
 describe( "world.js suite", function() {
   var testWorld = {
     "terrain": [
@@ -95,7 +97,7 @@ describe( "world.js suite", function() {
     for( var i = 0; i < 50 && validTiles; i++ ) {
       var tile = world.getRandomValidTile();
 
-      validTiles = (tile.inhabitant == null) || tile.terrain.passable;
+      validTiles = (tile.occupant == null) || tile.terrain.passable;
     }
     expect( validTiles ).toBe( true );
   });
@@ -123,11 +125,10 @@ describe( "world.js suite", function() {
   it( "correctly gets a creature's position", function() {
     world.creatures.push( aCreature );
     var tile = world.getRandomValidTile();
-    tile.inhabitant = aCreature.getId();
+    tile.occupant = aCreature.getId();
 
-    var creatureTile = world.getCreaturePosition( aCreature.getId() );
-    expect( creatureTile.row ).toEqual( tile.row );
-    expect( creatureTile.col ).toEqual( tile.col );
+    expect( world.getCreaturePosition( aCreature.getId() ) )
+      .toEqual( tile );
   });
 
   it( "correctly represents the map in JSON", function() {
