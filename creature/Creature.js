@@ -1,9 +1,11 @@
 //The Creature API
 
-function Creature(){
+function Creature(world){
+	this.world = world;
 };
 
 Creature.prototype.move = function(direction){
+	
 };
 
 Creature.prototype.sprint = function(direction){
