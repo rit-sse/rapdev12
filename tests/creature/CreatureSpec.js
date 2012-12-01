@@ -38,5 +38,15 @@ describe("Make a creature", function(){
 		expect('north').toEqual(creature1.move(Direction.NORTH));
 		expect('south').toEqual(creature1.move(Direction.SOUTH));
 	});
+	it('sleeping test', function(){
+		creature1.sleepFor(2);
+		expect(2).toEqual(creature1.getTimeToSleep());
+		creature1.onSleepTurn();
+		expect(1).toEqual(creature1.getTimeToSleep());
+		creature1.onSleepTurn();
+		expect(0).toEqual(creature1.getTimeToSleep());
+		creature1.onSleepTurn();
+		expect(0).toEqual(creature1.getTimeToSleep());
+	});
 });
 

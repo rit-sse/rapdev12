@@ -46,8 +46,15 @@ Creature.prototype.lookAround = function(){
 Sets how long the creature will sleep for. Note: The creature can wake up eary if attacked or hungry. 
 */
 Creature.prototype.sleepFor = function(time){
+	this.timeLeftToSleep = time;
 };
 
+/*
+Returns the amount of time left for the creature to sleep
+*/
+Creature.prototype.getTimeToSleep = function(){
+	return this.timeLeftToSleep;
+};
 /*
 Main method that will be called that the maker of the creature will implement.
 */
@@ -83,12 +90,18 @@ Creature.prototype.onDeath = function(){
 An API defined event that counts down to when your creature sould wake up or wakes you up if your creature gets hungry.
 */
 Creature.prototype.onSleepTurn = function(){
+	if(this.timeLeftToSleep > 0){
+		this.timeLeftToSleep-=1;
+	}else{
+		act();
+	}
 };
 
 /*
 Will make your creature pass out for the rest of the turn.
 */
 Creature.prototype.onNoEnergy = function(){
+	this.passedOut = true;
 };
 
 /*
@@ -96,33 +109,33 @@ Allows the board to set the creatures id
 */
 Creature.prototype.setId = function(id){
 	this.id = id;
-}
+};
 
 /*
 Returns the given creatures id
 */
 Creature.prototype.getId = function(){
 	return this.id;
-}
+};
 
 /*
 This is not needed? The world should know this.
 */
-Creature.prototype.setPos(row,col){
+Creature.prototype.setPos = function(row,col){
 	this.row = row;
 	this.col = col;
-}
+};
 
 /*
 Removes the given amount of health from the creature.
 */
-Creature.prototype.removeHealth(damage){
-
-}
+Creature.prototype.removeHealth = function(damage){
+	this.health-=damage;
+};
 
 /*
 Adds the given amount of health to the given creature.
 */
-Creature.prototype.heal(healAmmount){
-
-}
+Creature.prototype.heal = function(healAmount){
+	this.health+=healAmount
+};
