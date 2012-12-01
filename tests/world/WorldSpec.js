@@ -78,7 +78,7 @@ describe( "world.js suite", function() {
     for( var i = 0; i < 50 && validTiles; i++ ) {
       var tile = world.getRandomValidTile();
 
-      validTiles = (tile.inhabitant == null) || tile.terrain.passable;
+      validTiles = (tile.occupant == null) || tile.terrain.passable;
     }
     expect( validTiles ).toBe( true );
   });
@@ -106,7 +106,7 @@ describe( "world.js suite", function() {
   it( "correctly gets a creature's position", function() {
     world.creatures.push( aCreature );
     var tile = world.getRandomValidTile();
-    tile.inhabitant = aCreature.getId();
+    tile.occupant = aCreature.getId();
 
     expect( world.getCreaturePosition( aCreature.getId() ) )
       .toEqual( { "row": tile.row, "col": tile.col } );

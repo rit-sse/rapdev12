@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="786bc3a6-ed44-44b9-8041-dce3d9aeb431" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/jasmine-standalone-1.3.0/SpecRunner.html" afterPath="$PROJECT_DIR$/lib/jasmine-standalone-1.3.0/SpecRunner.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utils/world-utils.js" afterPath="$PROJECT_DIR$/utils/world-utils.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/world/WorldSpec.js" afterPath="$PROJECT_DIR$/tests/world/WorldSpec.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/world/world.js" afterPath="$PROJECT_DIR$/world/world.js" />
     </list>
     <ignored path="rapdev12.iws" />
@@ -24,10 +25,30 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Creature.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Creature.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/creature/Creature.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="108" column="2" selection-start="3213" selection-end="3213" vertical-scroll-proportion="0.5">
+            <state line="108" column="2" selection-start="3213" selection-end="3213" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="world.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/world/world.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="78" column="42" selection-start="2045" selection-end="2045" vertical-scroll-proportion="0.84615386">
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WorldSpec.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/world/WorldSpec.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="108" column="17" selection-start="3097" selection-end="3097" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -36,7 +57,7 @@
       <file leaf-file-name="SpecRunner.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/jasmine-standalone-1.3.0/SpecRunner.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="52" selection-start="457" selection-end="457" vertical-scroll-proportion="0.0">
+            <state line="17" column="2" selection-start="907" selection-end="907" vertical-scroll-proportion="-6.5384617">
               <folding />
             </state>
           </provider>
@@ -66,6 +87,9 @@
       <list>
         <option value="$PROJECT_DIR$/tests/creature/CreatureSpec.js" />
         <option value="$PROJECT_DIR$/creature/Creature.js" />
+        <option value="$PROJECT_DIR$/world/world.js" />
+        <option value="$PROJECT_DIR$/lib/jasmine-standalone-1.3.0/SpecRunner.html" />
+        <option value="$PROJECT_DIR$/tests/world/WorldSpec.js" />
       </list>
     </option>
   </component>
@@ -129,6 +153,38 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="tests" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rapdev12" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rapdev12" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tests" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="world" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rapdev12" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rapdev12" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="lib" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -178,6 +234,24 @@
     <list size="0" />
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false" cleanupOnStartRun="false">
+    <option name="USER" value="" />
+    <option name="PASSWORD" value="" />
+    <option name="mySSHConnectionTimeout" value="30000" />
+    <option name="mySSHReadTimeout" value="30000" />
+    <option name="LAST_MERGED_REVISION" />
+    <option name="MERGE_DRY_RUN" value="false" />
+    <option name="MERGE_DIFF_USE_ANCESTRY" value="true" />
+    <option name="UPDATE_LOCK_ON_DEMAND" value="false" />
+    <option name="IGNORE_SPACES_IN_MERGE" value="false" />
+    <option name="DETECT_NESTED_COPIES" value="true" />
+    <option name="CHECK_NESTED_FOR_QUICK_MERGE" value="false" />
+    <option name="IGNORE_SPACES_IN_ANNOTATE" value="true" />
+    <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
+    <option name="FORCE_UPDATE" value="false" />
+    <option name="IGNORE_EXTERNALS" value="false" />
+    <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="786bc3a6-ed44-44b9-8041-dce3d9aeb431" name="Default" comment="" />
@@ -193,6 +267,7 @@
       <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32960895" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32960895" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32960895" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24984147" sideWeight="0.6703911" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -203,7 +278,6 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -284,13 +358,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/jasmine-standalone-1.3.0/SpecRunner.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="52" selection-start="457" selection-end="457" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/creature/CreatureSpec.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="46" column="0" selection-start="1137" selection-end="1137" vertical-scroll-proportion="0.0">
@@ -300,8 +367,31 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/creature/Creature.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="108" column="2" selection-start="3213" selection-end="3213" vertical-scroll-proportion="0.5">
+        <state line="108" column="2" selection-start="3213" selection-end="3213" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/jasmine-standalone-1.3.0/SpecRunner.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="2" selection-start="907" selection-end="907" vertical-scroll-proportion="-6.5384617">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/world/WorldSpec.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="108" column="17" selection-start="3097" selection-end="3097" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/world/world.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="78" column="42" selection-start="2045" selection-end="2045" vertical-scroll-proportion="0.84615386">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

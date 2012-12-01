@@ -17,7 +17,7 @@ function World( jsonObject ) {
 		this.map.push([]);
 		for(var j=0; j < currentRow.length; j++){
 			currentCol = currentRow[j];
-			var currentTile = new Tile(null,this.terrain[jsonObject.map[i][j]],i,j);
+			var currentTile = new Tile(null,(this.terrain[jsonObject.map[i][j]]),i,j);
 			this.map[i].push(  currentTile  );
 			if (currentTile.terrain.passable == true){
 				this.passableTiles.push( [i,j] )
