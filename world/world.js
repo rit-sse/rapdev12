@@ -1,11 +1,13 @@
 function World( jsonObject ) {
 	
 	
-	this.creatures = {};
+	this.creatures = [];
 	
-	this.activeCreatures = {};
+	this.activeCreatures = [];
 	
 	this.terrain = jsonObject.terrain;
+	
+	this.passableTiles = [];
 	
 	this.map = [];
 	for(var i=0; i<jsonObject.map.length; i++){
@@ -13,11 +15,15 @@ function World( jsonObject ) {
 		this.map.push([]);
 		for(var j=0; j < curretnRow.length; j++){
 			currentCol = currentRow[j];
-			this.map[i].push(  jsonObject.map[i][j]  );
+			currentTile = jsonObject.map[i][j]
+			this.map[i].push(  currentTile  );
+			if (currentTile.passable == true){
+				this.passableTiles.push( currentTile )
+			};
 		};
 	};
 	
-	this.items = {};
+	this.items = [];
 	
 };
 
