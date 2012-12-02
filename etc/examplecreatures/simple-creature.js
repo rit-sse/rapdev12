@@ -6,6 +6,11 @@ exports.monster = function(creature, Direction){ // TEMPLATE
     /* Simple Creature needs to inherit from the creature class */
     SimpleCreature.prototype = creature;
 
+    creature.name = "My Awesome Name";
+    creature.offense = 100;
+    creature.defence = 100;
+    creature.speed = 100;
+
     /* Very own creature logic! */
     var next_dir = [
         Direction.SOUTH,
