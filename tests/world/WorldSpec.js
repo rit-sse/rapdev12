@@ -1,10 +1,7 @@
 var World = require('../../world/world.js').World;
 var Creature = require('../../creature/Creature.js').Creature;
-<<<<<<< HEAD
 var MiniGrid = require('../../world/MiniGrid.js').MiniGrid;
-=======
 var Tile = require('../../world/Tile.js').Tile;
->>>>>>> attack
 
 describe( "world.js suite", function() {
 
@@ -240,7 +237,12 @@ describe( "world.js suite", function() {
 
   });
   it("finds impassable objects in miniGrid", function(){
-
+        world.addCreature(aCreature,new Tile(null,null,0,2));
+        var miniGrid = world.createMiniGrid(aCreature.id);
+        var tiles = miniGrid.getAllImpassableObjects();
+        for(var i = 0; i < tiles.length; i++){
+            expect(tiles[i].terrain.passable);
+        }
   });
   
   it( "correctly places a creature in a given tile, Part1", function() {

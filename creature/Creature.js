@@ -47,15 +47,12 @@ Attacks the given direction. If a creature is there the hit creature will be giv
 you do not have enough energy.
 */
 Creature.prototype.attack = function(direction){
-<<<<<<< HEAD
     if(this.energy >= 5 && this.health > 0  && this.timeLeftToSleep == 0){
         this.energy-=5;
-        //TODO needs to actually attack
+        this.world.attackCreature(this.id, direction);
     }
     this.energyRemaining();
-=======
-    this.world.attackCreature(this.id, direction);
->>>>>>> attack
+
 };
 
 /*
@@ -66,7 +63,6 @@ Creature.prototype.lookAround = function(){
     if(this.health > 0  && this.timeLeftToSleep == 0){
         return this.world.createMiniGrid();
     }
-    //TODO implement a function in world that creates a minimap and returns it.
 };
 
 /*
@@ -194,8 +190,7 @@ Creature.prototype.heal = function(healAmount){
     }
 };
 
-<<<<<<< HEAD
-=======
+
 /*
 Returns the creature's name.
 */
@@ -207,5 +202,4 @@ Creature.prototype.toString = function() {
     return "to String";
 }
 
->>>>>>> attack
 exports.Creature = Creature;
