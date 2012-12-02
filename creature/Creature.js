@@ -4,7 +4,7 @@
 Initiates the creatures health, energy, attack, defence, speed, the world the creature is in, its classId and its
 minHitDamage and its name.
 */
-function Creature(name, classId, world,offense,defence,speed){
+function Creature(world){
 	this.world = world;
 	this.health = 100;
 	this.energy = 100;
@@ -94,6 +94,7 @@ it is a rock, water or the grid boarder then they will be given a string with it
 that can be called any number of times.
 */
 Creature.prototype.onCollision = function(object){
+  console.log( this.name + ".onCollision called." );
 };
 
 /*
@@ -101,6 +102,7 @@ A User defined method of what you creature will do when they get hit by another 
 direction that they need to attack for them to attack the creature.
 */
 Creature.prototype.onHit = function(direction){
+  console.log( this.name + ".onHit called." );
 };
 
 /*
@@ -108,6 +110,7 @@ A user defined method that defines what a user's creature should do on wakeup. T
  reason is attacked onHit will be called as a second event after onWakeUp.
 */
 Creature.prototype.onWakeUp = function(reason){
+  console.log( this.name + ".onWakeUp called." );
 };
 
 /*
@@ -133,6 +136,7 @@ Creature.prototype.onSleepTurn = function(){
 Will make your creature pass out for the rest of the turn.
 */
 Creature.prototype.onNoEnergy = function(){
+  console.log( this.name + ".onNoEnergy called." );
 	this.passedOut = true;
     this.timeLeftToSleep = 1;
 };

@@ -1,35 +1,41 @@
-var c = require('../../creature/creature');
-var Direction = require('../../utils/simulation-utils').Direction;
-var Creature = c.Creature;
-var world = require('../../sim').world;
+exports.monster = function(creature, Direction){ // TEMPLATE
 
-// END TEMPLATE CODE
-
-var SimpleCreature = function SimpleCreature(){};
-SimpleCreature.prototype = new Creature("my_name", 1, world, 100, 100, 100);
-
-var next_dir = [
-    Direction.SOUTH,
-    Direction.EAST,
-    Direction.NORTH,
-    Direction.WEST,
-    Direction.NORTHEAST,
-    Direction.SOUTHWEST,
-    Direction.SOUTHEAST,
-    Direction.NORTHWEST
-];
-var direction = 0;
+    /* Set up your very own simple creature! */
+    var SimpleCreature = function SimpleCreature(){
+        this.direction = 0;
+    };
 
 
-/*
-This creature moves in each of the eight cardinal directions and nothing else.
- */
-SimpleCreature.prototype.act = function() {
-	console.log("Now moving \"" + this.getName() + "\"");
 
-    this.move(next_dir[direction]);
-    direction = ( direction + 1 ) % next_dir.length;
-    this.attack(Direction.NORTH);
-};
+    /* Simple Creature needs to inherit from the creature class */
+    SimpleCreature.prototype = creature;
 
-exports.monster = SimpleCreature;
+    this.name = "My Awesome Name";
+    this.offense = 100;
+    this.defence = 100;
+    this.speed = 452;
+
+    /* Very own creature logic! */
+    var next_dir = [
+        Direction.SOUTH,
+        Direction.EAST,
+        Direction.NORTH,
+        Direction.WEST,
+
+    ];
+
+    /*
+    This creature moves in each of the eight cardinal directions.
+     */
+    SimpleCreature.prototype.act = function()
+    {
+        console.log("Now moving \"" + this.getName() + "\"");
+
+        this.move(next_dir[this.direction]);
+        this.direction = ( this.direction + 1 ) % next_dir.length;
+        this.attack(Direction.NORTH);
+    };
+
+    /* We need to return the creature we created so that we can have our own instances */
+    return SimpleCreature;
+} // TEMPLATE

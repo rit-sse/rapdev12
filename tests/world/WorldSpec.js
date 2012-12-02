@@ -74,17 +74,6 @@ describe( "world.js suite", function() {
     expect( tile.item ).toEqual( null );
   });
   
-  it( "returns the correct passable tiles", function() {
-    
-    expect( world.getTerrainAtTile( 0, 3).passable ).toEqual( false )
-    
-    expect( world.passableTiles ).toEqual([
-      [0,0],[0,1],[0,2],[0,4],[0,5],[1,0],[1,3],[1,5],
-      [2,3],[2,4],[3,0],[3,3],[3,5],[4,2],[4,4],
-      [4,5],[5,0],[5,2],[5,3],[5,4]
-    ]);
-  });
-  
   it( "returns the correct terrain at a tile", function() {
     expect( world.getTerrainAtTile( 0, 0)).toEqual(
       {"name": "grass", "passable": true})
@@ -201,8 +190,8 @@ describe( "world.js suite", function() {
       "creatureClasses": [ {
         "id": aCreature.classId,
         "name": aCreature.name,
-        "speed": 10,
-        "attack": 10
+        "speed": aCreature.speed,
+        "attack": aCreature.attack
       }],
       "creatures": [ {
         "id": aCreature.getId(),
@@ -266,6 +255,21 @@ describe( "world.js suite", function() {
     var comTile = world.getCreaturePosition( aCreature.id );
     expect(creTile).toEqual(comTile);
     
+  });
+
+  it( "adds one creature class on duplicate creatures added", function() {
+    world.addCreature( aCreature );
+    world.addCreature( aCreature );
+    var creatureClasses = world.getCreatureClassesForClient();
+
+    expect( creatureClasses ).toEqual( [
+      {
+        "id": aCreature.classId,
+        "name": aCreature.name,
+        "speed": aCreature.speed,
+        "attack": aCreature.attack
+      }
+    ]);
   });
 
 } );

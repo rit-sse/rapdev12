@@ -11,7 +11,10 @@ var express = require('express')
   , http = require('http')
   , path = require('path')
   , uploads = require('./routes/file_upload')
-  , fs = require('fs');
+  , fs = require('fs')
+  , argv = require('optimist').argv
+  , optimist = require('optimist');
+
 
 var app = express();
 
@@ -39,11 +42,29 @@ app.get('/file_upload', uploads.index);
 app.post('/file_upload', uploads.post);
 
 var server = http.createServer(app)
-var arguments = process.argv.splice(2);
+
+/* Argument processing */
+optimist.usage("Usage: $0 <flags> <filename>")
+        .options('c',
+          {
+            alias: 'count',
+            describe: 'The number of creatures of type [filename] to include on the world'
+          })
+        .options('h',
+          {
+            alias: 'help',
+            describe: 'Returns the ussage message'
+          });
+
+if(argv.h || argv.help){
+  console.log(optimist.help());
+  process.exit(0);
+}
+
 
 var creature_file = null
-if(arguments.size != 0){
-  creature_file = path.join(__dirname, arguments[0]);
+if(argv._.length != 0){
+  creature_file = path.join(__dirname, argv._[0]);
   if(!fs.existsSync(creature_file)){
     throw {
       name : "File Error",
@@ -51,6 +72,10 @@ if(arguments.size != 0){
     }
   }
 }
+
+var creature_count = 1;
+creature_count = argv.c ? argv.c : creature_count;
+creature_count = argv.count ? argv.count : creature_count;
 
 server.listen(app.get('port'), function() {
   console.log("Express server listening on port " + app.get('port'));
@@ -61,5 +86,5 @@ sim = require('./sim')
 var io = require('socket.io').listen(server);
 sim.use_comm(comm);
 world.use_comm(comm);
-sim.startSim(creature_file);
+sim.startSim(creature_file, creature_count);
 comm.start(io, sim);
