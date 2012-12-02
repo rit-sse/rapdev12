@@ -73,7 +73,8 @@ window.onload = function() {
   });
 
   socket.on('push_diff', function(data){
-    $("#output").html(data.name + "<br/>" + data.data.rand);
+    console.log(data);
+    biogame.applyDelta(data);
   });
 
   socket.on('get_map', function(data){

@@ -73,6 +73,7 @@ World.prototype.getTile = function( row, col ) {
 };
 
 World.prototype.getTerrainAtTile = function( row, col ) {
+	console.log( "(" + row + ", " + col + ")" );
 	return this.getTile(row, col).terrain;
 };
 
@@ -114,28 +115,28 @@ World.prototype.findInTiles = function( condition ) {
 World.prototype.moveCreature = function( id, direction ) {
 	var modPos;
 	if (direction == Direction.NORTH){
-		modPos = [0,-1];
-	}else if (direction == Direction.SOUTH){
-		modPos = [0,+1];
-	}else if (direction == Direction.EAST){
-		modPos = [+1,0];
-	}else if (direction == Direction.WEST){
 		modPos = [-1,0];
+	}else if (direction == Direction.SOUTH){
+		modPos = [1,0];
+	}else if (direction == Direction.EAST){
+		modPos = [0,1];
+	}else if (direction == Direction.WEST){
+		modPos = [0,-1];
 	}else if (direction == Direction.NORTHWEST){
 		modPos = [-1,-1];
 	}else if (direction == Direction.NORTHEAST){
-		modPos = [+1,-1];
+		modPos = [-1,1];
 	}else if (direction == Direction.SOUTHWEST){
-		modPos = [-1,+1];
+		modPos = [1,-1];
 	}else if (direction == Direction.SOUTHEAST){
-		modPos = [+1,+1];
+		modPos = [1,1];
 	}
 	
 	var creaturePosition = this.getCreaturePosition(id);
 	var newPos = [creaturePosition.row + modPos[0], creaturePosition.col + modPos[1]];
 	if (newPos[0] < 0 || newPos[1] < 0 ||
-		newPos[0] > this.map.length || newPos[1] > this.map[0].length){
-		this.creatures.onCollision();
+		newPos[0] >= this.map.length || newPos[1] >= this.map[0].length){
+		this.creatures[id].onCollision();
 	}
 	var tileCheck = this.getTerrainAtTile(newPos[0],newPos[1]).passable == true
 							&& this.getInhabitantAtTile(newPos[0],newPos[1]);
@@ -145,7 +146,7 @@ World.prototype.moveCreature = function( id, direction ) {
 		this.getTile(newPos[0], newPos[1]).occupant = id;
 	}
 	else {
-		this.creatures.onCollision();
+		this.creatures[id].onCollision();
 	}
 	return tileCheck;
 }
