@@ -17,7 +17,8 @@
   "dependencies": {
     "socket.io": "0.9.11",
     "express": "3.x",
-    "jade": "*"
+    "jade": "*",
+    "optimist": "*"
   },
   "devDependencies": {
     "mocha": "1.7.x"
