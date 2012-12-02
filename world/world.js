@@ -50,7 +50,14 @@ function World( jsonObject ) {
 	this.items = [];
 };
 
-World.prototype.addCreature = function( creature ) {
+/* addCreature - puts a creature on the board
+ * creature - creature instance that is being added
+ * tile - OPTIONAL parameter which places the creature on the board
+ * if tile is not included, it places the creature into a random valid tile
+ *
+ * returns the tile the creature was added to
+ */
+World.prototype.addCreature = function( creature, tile ) {
 	if ( this.creatureClasses.indexOf( creature.classId ) == -1 ) {
 		this.creatureClasses.push( {
 			"id": creature.classId,
@@ -60,10 +67,18 @@ World.prototype.addCreature = function( creature ) {
 		} );
 	}
 	this.creatures.push( creature );
-	var randTile = this.getRandomValidTile();
 	creature.setId( this.creatures.length - 1 );
 	this.activeCreatures.push( creature );
-	randTile.occupant = creature.getId();
+	
+	var creTile;
+	if (arguments.length == 2 ){
+		creTile = this.getTile(tile.row, tile.col);
+	}
+	else{
+		creTile = this.getRandomValidTile();
+	}
+	creTile.occupant = creature.getId();
+	return creTile;
 };
 
 World.prototype.populateWithItems = function() {
@@ -93,7 +108,10 @@ World.prototype.getTile = function( row, col ) {
  * returns the given tile
  */
 World.prototype.getAdjacentTile = function(tile, direction) {
-	var tRow = tile.row; var tCol = tile.col; var modPos;
+	var tRow = tile.row;
+    var tCol = tile.col;
+    var modPos;
+
 	if (direction == Direction.NORTH){
 		modPos = [-1,0];
 	}else if (direction == Direction.SOUTH){
@@ -155,6 +173,28 @@ World.prototype.findInTiles = function( condition ) {
 		}
 	}
 	return valid;
+}
+
+/*
+* Enables a creature to attack another location. If a creature is at a location, then attack the creature.
+* attackerId - The creature that is initiating the attack.
+* direction - The direction that the initiating creature is attacking in.
+*/
+World.prototype.attackCreature = function(attackerId, direction) {
+    var attackerPosition = this.getCreaturePosition(attackerId);
+    console.log("attacker position " + attackerPosition);
+    var locationToAttack = this.getAdjacentTile(attackerPosition, direction);
+
+    //if this tile is valid, grab the occupant
+    if (locationToAttack){
+        var occupant = locationToAttack.occupant;
+        if (occupant){
+            occupant.onHit();
+            console.log("Creature is attacking to the " + direction + "!");
+        } else {
+            console.log("Creature tried to attack an empty location (location " + locationToAttack + ").");
+        }
+    }
 }
 
 

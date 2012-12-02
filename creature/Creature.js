@@ -4,11 +4,11 @@
 Initiates the creatures health, energy, attack, defence, speed, the world the creature is in, its classId and its
 minHitDamage and its name.
 */
-function Creature(name, classId, world,attack,defence,speed){
+function Creature(name, classId, world,offense,defence,speed){
 	this.world = world;
 	this.health = 100;
 	this.energy = 100;
-	this.attack = attack;
+	this.offence = offense;
 	this.defence = defence;
 	this.speed = speed;
     this.classId = classId;
@@ -47,11 +47,15 @@ Attacks the given direction. If a creature is there the hit creature will be giv
 you do not have enough energy.
 */
 Creature.prototype.attack = function(direction){
+<<<<<<< HEAD
     if(this.energy >= 5 && this.health > 0  && this.timeLeftToSleep == 0){
         this.energy-=5;
         //TODO needs to actually attack
     }
     this.energyRemaining();
+=======
+    this.world.attackCreature(this.id, direction);
+>>>>>>> attack
 };
 
 /*
@@ -190,4 +194,18 @@ Creature.prototype.heal = function(healAmount){
     }
 };
 
+<<<<<<< HEAD
+=======
+/*
+Returns the creature's name.
+*/
+Creature.prototype.getName = function() {
+    return this.name;
+}
+
+Creature.prototype.toString = function() {
+    return "to String";
+}
+
+>>>>>>> attack
 exports.Creature = Creature;
