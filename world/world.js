@@ -145,6 +145,7 @@ World.prototype.findInTiles = function( condition ) {
 	return valid;
 }
 
+
 World.prototype.moveCreature = function( id, direction ) {
 	var creaturePosition = this.getCreaturePosition(id);
 	var nextTile = this.getAdjacentTile(creaturePosition, direction);
