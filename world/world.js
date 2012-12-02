@@ -51,7 +51,7 @@ function World( jsonObject ) {
  *
  * returns the tile the creature was added to
  */
-World.prototype.addCreature = function( creature ) {
+World.prototype.addCreature = function( creature, tile ) {
 	if ( ! this.creatureClassExists( creature.classId ) ) {
 		this.creatureClasses.push( {
 			"id": creature.classId,
@@ -60,6 +60,7 @@ World.prototype.addCreature = function( creature ) {
 			"attack": creature.attack
 		} );
 	}
+    creature.world = this;
 	this.creatures.push( creature );
 	creature.setId( this.creatures.length - 1 );
 	this.activeCreatures.push( creature );
@@ -212,6 +213,7 @@ World.prototype.attackCreature = function(attackerId, direction) {
 
 
 World.prototype.moveCreature = function( id, direction ) {
+    console.log("moving Creature")
 	var creaturePosition = this.getCreaturePosition(id);
 	var nextTile = this.getAdjacentTile(creaturePosition, direction);
 	
@@ -287,10 +289,12 @@ World.prototype.getMapForClient = function() {
 			clientMap[row][col] = this.map[row][col].terrain.name;
 		}
 	}
+    console.log("map")
 	return clientMap;
 }
 
 World.prototype.getCreatureClassesForClient = function() {
+    console.log("creatureClasses")
 	return this.creatureClasses;
 }
 
@@ -323,6 +327,7 @@ World.prototype.getCreaturesForClient = function() {
 			"col": creatureTile.col
 		});
 	}
+    console.log("client")
 	return clientCreatures;
 }
 

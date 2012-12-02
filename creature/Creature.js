@@ -4,7 +4,7 @@
 Initiates the creatures health, energy, attack, defence, speed, the world the creature is in, its classId and its
 minHitDamage and its name.
 */
-function Creature(world){
+function Creature(name, classId, world,offense,defence,speed){
 	this.world = world;
 	this.health = 100;
 	this.energy = 100;
@@ -14,6 +14,7 @@ function Creature(world){
     this.classId = classId;
     this.name = name;
     this.minHitDamage = 1;
+    this.timeLeftToSleep = 0;
 };
 
 /*

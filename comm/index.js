@@ -41,7 +41,7 @@ exports.start = function(io, simulation) {
     socket.emit('connected');
     console.log("sending world");
     socket.emit('get_map', simulation.world.toClientDump());
-
+    console.log("for")
     // Register client hooks
     for (var name in simulation.client_hooks) {
       socket.on(name, function(data) {
@@ -49,11 +49,11 @@ exports.start = function(io, simulation) {
         socket.emit(name, result);
       });
     }
-
+    console.log("updates")
     // Register update hooks
     simulation.updates.push_diff = function(){ return; }
     globals.updates = simulation.updates;
-
+    console.log("save")
     // Save socket
     var id = socket.id;
     console.log(id + " connected");
