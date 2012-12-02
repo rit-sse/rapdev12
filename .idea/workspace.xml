@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="786bc3a6-ed44-44b9-8041-dce3d9aeb431" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tests/world/MiniGridSpec.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/world/WorldSpec.js" afterPath="$PROJECT_DIR$/tests/world/WorldSpec.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/world/MiniGrid.js" afterPath="$PROJECT_DIR$/world/MiniGrid.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/world/world.js" afterPath="$PROJECT_DIR$/world/world.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/creature/Creature.js" afterPath="$PROJECT_DIR$/creature/Creature.js" />
     </list>
     <list id="73ad94d8-b7b1-45e1-8094-84cf637bc637" name="Failed commit: Default" comment="Merge branch 'simulation' of https://github.com/rit-sse/rapdev12 into simulation&#10;&#10;Conflicts:&#10;&#9;world/world.js&#10;" />
     <ignored path="rapdev12.iws" />
@@ -27,10 +23,10 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Creature.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Creature.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/creature/Creature.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="17" selection-start="228" selection-end="228" vertical-scroll-proportion="0.0">
+            <state line="114" column="25" selection-start="3750" selection-end="3750" vertical-scroll-proportion="0.42625368">
               <folding />
             </state>
           </provider>
@@ -54,10 +50,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WorldSpec.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="WorldSpec.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/world/WorldSpec.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="225" column="30" selection-start="7110" selection-end="7110" vertical-scroll-proportion="0.5325615">
+            <state line="228" column="51" selection-start="7282" selection-end="7282" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="e#6405#6583#0" expanded="false" />
               </folding>
@@ -117,10 +113,10 @@
         <option value="$PROJECT_DIR$/lib/jasmine-standalone-1.3.0/SpecRunner.html" />
         <option value="$PROJECT_DIR$/world/Tile.js" />
         <option value="$PROJECT_DIR$/tests/creature/CreatureSpec.js" />
-        <option value="$PROJECT_DIR$/creature/Creature.js" />
         <option value="$PROJECT_DIR$/world/MiniGrid.js" />
         <option value="$PROJECT_DIR$/world/world.js" />
         <option value="$PROJECT_DIR$/tests/world/WorldSpec.js" />
+        <option value="$PROJECT_DIR$/creature/Creature.js" />
       </list>
     </option>
   </component>
@@ -375,13 +371,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/creature/Creature.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="17" selection-start="228" selection-end="228" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/world/MiniGrid.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="7" column="12" selection-start="181" selection-end="181" vertical-scroll-proportion="0.0">
@@ -412,10 +401,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/world/WorldSpec.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="225" column="30" selection-start="7110" selection-end="7110" vertical-scroll-proportion="0.5325615">
+        <state line="228" column="51" selection-start="7282" selection-end="7282" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="e#6405#6583#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/creature/Creature.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="114" column="25" selection-start="3750" selection-end="3750" vertical-scroll-proportion="0.42625368">
+          <folding />
         </state>
       </provider>
     </entry>

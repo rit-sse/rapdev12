@@ -112,6 +112,7 @@ An API defined event that counts down to when your creature sould wake up or wak
 Creature.prototype.onSleepTurn = function(){
     if (this.timeLeftToSleep > 0) {
         this.timeLeftToSleep--;
+        this.energy += 5;
     } else {
         this.wakeUp('time');
     }
