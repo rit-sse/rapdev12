@@ -2,6 +2,7 @@ var world_lib = require('../world/world')
   , world
   , comm
   , running = true;
+var Delta = require('../sim/Delta').Delta;
 
 exports.use_comm = function(c) {
   comm = c;
@@ -29,6 +30,7 @@ exports.startSim = function(creature_file) {
 	var a_turn = function(){	
 		turn++;
 		console.log("INFO - Taking Turn: " + turn);
+
 		var creatures = world.getActiveCreatures();
 		for(var i = 0; i < creatures.length; i++){
 			creatures[i].act();

@@ -174,4 +174,11 @@ Creature.prototype.heal = function(healAmount){
     }
 };
 
+/*
+Returns the creature's name.
+*/
+Creature.prototype.getName = function() {
+    return this.name;
+}
+
 exports.Creature = Creature;
