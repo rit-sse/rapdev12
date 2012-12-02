@@ -141,4 +141,8 @@ Creature.prototype.getName = function() {
     return this.name;
 }
 
+Creature.prototype.toString = function() {
+    return "to String";
+}
+
 exports.Creature = Creature;
