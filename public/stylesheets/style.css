@@ -10,8 +10,9 @@ body {
     overflow: hidden;
 }
 
-aside {
+aside, article, section {
     display: block;
+    margin: 0; padding: 0;
 }
 
 a {
@@ -32,4 +33,43 @@ a {
     position: absolute;
     top: 0; right: 0;
     height: 100%;
+}
+
+.creature-class {
+    position: relative;
+    padding-left: 80px;
+}
+
+.creature-preview {
+    position: absolute;
+    left: 8px; top: 0;
+    clip: rect(0 64px 64px 0);
+}
+
+.creature-class h1 {
+    margin: 0; padding: 0.4em 0 0.6em 0;
+}
+
+.creature-class dl {
+    margin: 0; padding: 0;
+}
+
+.creature-class dt {
+    margin: 0; padding: 0;
+    float: left;
+    clear: left;
+}
+
+.creature-class dt:after {
+    content: ": ";
+}
+
+.creature-class dd {
+    margin: 0; padding: 0;
+    float: left;
+}
+
+#upload-ui {
+    position: absolute;
+    left: 0; bottom: 0;
 }

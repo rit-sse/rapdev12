@@ -200,8 +200,8 @@ describe( "world.js suite", function() {
       "creatureClasses": [ {
         "id": aCreature.classId,
         "name": aCreature.name,
-        "speed": 10,
-        "attack": 10
+        "speed": aCreature.speed,
+        "attack": aCreature.attack
       }],
       "creatures": [ {
         "id": aCreature.getId(),
@@ -234,6 +234,21 @@ describe( "world.js suite", function() {
     var comTile = world.getCreaturePosition( aCreature.id );
     expect(creTile).toEqual(comTile);
     
+  });
+
+  it( "adds one creature class on duplicate creatures added", function() {
+    world.addCreature( aCreature );
+    world.addCreature( aCreature );
+    var creatureClasses = world.getCreatureClassesForClient();
+
+    expect( creatureClasses ).toEqual( [
+      {
+        "id": aCreature.classId,
+        "name": aCreature.name,
+        "speed": aCreature.speed,
+        "attack": aCreature.attack
+      }
+    ]);
   });
 
 } );

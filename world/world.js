@@ -56,8 +56,8 @@ function World( jsonObject ) {
  *
  * returns the tile the creature was added to
  */
-World.prototype.addCreature = function( creature, tile ) {
-	if ( this.creatureClasses.indexOf( creature.classId ) == -1 ) {
+World.prototype.addCreature = function( creature ) {
+	if ( ! this.creatureClassExists( creature.classId ) ) {
 		this.creatureClasses.push( {
 			"id": creature.classId,
 			"name": creature.name,
@@ -79,6 +79,16 @@ World.prototype.addCreature = function( creature, tile ) {
 	creTile.occupant = creature.getId();
 	return creTile;
 };
+
+World.prototype.creatureClassExists = function( classId ) {
+	var classFoundFlag = false;
+	for( var i = 0; i < this.creatureClasses.length && !classFoundFlag; i++ ) {
+		if ( this.creatureClasses[i].id == classId ) {
+			classFoundFlag = true;
+		}
+	}
+	return classFoundFlag;
+}
 
 World.prototype.populateWithItems = function() {
 	
@@ -214,7 +224,7 @@ World.prototype.moveCreature = function( id, direction ) {
 		this.passableTiles.push(creaturePosition);
 		this.getTile(newPos[0], newPos[1]).occupant = id;
 		console.log( "Creature has moved to: row " + newPos[0] + ", col " + newPos[1] );
-		delta = new Delta([{type:"creature", action: "move", data: {id: 0, x:newPos[0], y:newPos[1]}}]);
+		delta = new Delta([{type:"creature", action: "move", data: {id: id, x:newPos[0], y:newPos[1]}}]);
 		comm.push_diff(delta);
 	}
 	else {
