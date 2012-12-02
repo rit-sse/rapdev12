@@ -107,7 +107,10 @@ World.prototype.getTile = function( row, col ) {
  * returns the given tile
  */
 World.prototype.getAdjacentTile = function(tile, direction) {
-	var tRow = tile.row; var tCol = tile.col; var modPos;
+	var tRow = tile.row;
+    var tCol = tile.col;
+    var modPos;
+
 	if (direction == Direction.NORTH){
 		modPos = [-1,0];
 	}else if (direction == Direction.SOUTH){
@@ -169,6 +172,28 @@ World.prototype.findInTiles = function( condition ) {
 		}
 	}
 	return valid;
+}
+
+/*
+* Enables a creature to attack another location. If a creature is at a location, then attack the creature.
+* attackerId - The creature that is initiating the attack.
+* direction - The direction that the initiating creature is attacking in.
+*/
+World.prototype.attackCreature = function(attackerId, direction) {
+    var attackerPosition = this.getCreaturePosition(attackerId);
+    console.log("attacker position " + attackerPosition);
+    var locationToAttack = this.getAdjacentTile(attackerPosition, direction);
+
+    //if this tile is valid, grab the occupant
+    if (locationToAttack){
+        var occupant = locationToAttack.occupant;
+        if (occupant){
+            occupant.onHit();
+            console.log("Creature is attacking to the " + direction + "!");
+        } else {
+            console.log("Creature tried to attack an empty location (location " + locationToAttack + ").");
+        }
+    }
 }
 
 

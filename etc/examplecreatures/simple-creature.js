@@ -26,6 +26,7 @@ monster.act = function() {
 
     this.move(next_dir[direction]);
     direction = ( direction + 1 ) % next_dir.length;
+    this.attack(Direction.NORTH);
 };
 
 
