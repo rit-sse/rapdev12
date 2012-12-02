@@ -73,11 +73,11 @@ window.onload = function() {
   });
 
   socket.on('push_diff', function(data){
-    console.log(data);
     $("#output").html(data.name + "<br/>" + data.data.rand);
   });
 
   socket.on('get_map', function(data){
+    console.log(data);
     biogame.initGame(data);
     biogame.splash.SetPercent(1);
   });
