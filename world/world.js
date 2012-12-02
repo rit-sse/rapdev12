@@ -73,9 +73,15 @@ World.prototype.populateWithItems = function() {
  * if outside the bounds of the board; returns null
  */
 World.prototype.getTile = function( row, col ) {
+	var resTile;
 	if ( row < 0 || col < 0 ||
-		row > this.map.length || col > this.map[0].length)
-	return this.map[row][col];
+		row > this.map.length || col > this.map[0].length) {
+		resTile = null
+	}
+	else {
+		resTile = this.map[row][col]
+	}
+	return resTile;
 };
 
 /*
