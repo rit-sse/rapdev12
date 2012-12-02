@@ -115,21 +115,21 @@ World.prototype.findInTiles = function( condition ) {
 World.prototype.moveCreature = function( id, direction ) {
 	var modPos;
 	if (direction == Direction.NORTH){
-		modPos = [0,-1];
-	}else if (direction == Direction.SOUTH){
-		modPos = [0,+1];
-	}else if (direction == Direction.EAST){
-		modPos = [+1,0];
-	}else if (direction == Direction.WEST){
 		modPos = [-1,0];
+	}else if (direction == Direction.SOUTH){
+		modPos = [1,0];
+	}else if (direction == Direction.EAST){
+		modPos = [0,1];
+	}else if (direction == Direction.WEST){
+		modPos = [0,-1];
 	}else if (direction == Direction.NORTHWEST){
 		modPos = [-1,-1];
 	}else if (direction == Direction.NORTHEAST){
-		modPos = [+1,-1];
+		modPos = [-1,1];
 	}else if (direction == Direction.SOUTHWEST){
-		modPos = [-1,+1];
+		modPos = [1,-1];
 	}else if (direction == Direction.SOUTHEAST){
-		modPos = [+1,+1];
+		modPos = [1,1];
 	}
 	
 	creaturePosition = this.getCreaturePosition(id);
