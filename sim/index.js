@@ -15,15 +15,20 @@ exports.client_hooks = {
 
 exports.updates = {};
 
-exports.startSim = function() {
+exports.startSim = function(creature_file) {
 	world = new world_lib.World(world_lib.worldjson);
+
+	if(creature_file){
+		var creature = require(creature_file);
+		world.addCreature(creature.monster);
+	}
 	var turn = 0;
 	var a_turn = function(){	
 		turn++;
 		console.log("INFO - Taking Turn: " + turn);
 		var creatures = world.getActiveCreatures();
-		for(var i = 0; i < creatures.size; i++){
-			creatures[i].act()		
+		for(var i = 0; i < creatures.length; i++){
+			creatures[i].act();
 		}
 		if(running){
 			setTimeout(a_turn, 2000);
