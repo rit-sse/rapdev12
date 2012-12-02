@@ -187,7 +187,7 @@ World.prototype.attackCreature = function(attackerId, direction) {
     var attackerPosition = this.getCreaturePosition(attackerId);
     console.log("attacker position " + attackerPosition);
     var locationToAttack = this.getAdjacentTile(attackerPosition, direction);
-
+	
     //if this tile is valid, grab the occupant
     if (locationToAttack){
         var occupant = locationToAttack.occupant;
@@ -206,11 +206,12 @@ World.prototype.moveCreature = function( id, direction ) {
 	var nextTile = this.getAdjacentTile(creaturePosition, direction);
 	
 	var newPos = [nextTile.row, nextTile.col]
-	if (newPos[0] < 0 || newPos[1] < 0 ||
-		newPos[0] >= this.map.length || newPos[1] >= this.map[0].length){
+	
+	if (!nextTile){
 		this.creatures[id].onCollision();
 		return;
 	}
+	
 	var desiredTile = this.getTile( newPos[0], newPos[1] );
 	var tileCheck = desiredTile.terrain.passable && desiredTile.occupant == null;
 	if ( tileCheck ) {
