@@ -1,3 +1,6 @@
+var Creature = require("../../creature/Creature.js").Creature;
+var World = require("../../world/world.js").World;
+
 describe("Make a creature", function(){
 	var testWorldJSON = {
     "terrain": [
@@ -28,19 +31,16 @@ describe("Make a creature", function(){
 	var creature2;
 	beforeEach(function() {
 		world = new World(testWorldJSON);
-		creature1 = new Creature(world,100,100,100);
-		creature2 = new Creature(world,100,100,100);
+		creature1 = new Creature('jack',0,world,100,100,100);
+		creature2 = new Creature('diane',1,world,100,100,100);
 	});
 	it('calls onDeath',function(){
 		expect('You Died').toEqual(creature1.onDeath());
 	});
-	/*it('calls move', function(){
+	it('calls move', function(){
 		expect('north').toEqual(creature1.move(Direction.NORTH));
 		expect('south').toEqual(creature1.move(Direction.SOUTH));
-	});*/
-    it('creature acts', function(){
-        expect('creature acts').toEqual(creature1.act());
-    });
+	});
 	it('sleeping test', function(){
 		creature1.sleepFor(2);
 		expect(2).toEqual(creature1.getTimeToSleep());
