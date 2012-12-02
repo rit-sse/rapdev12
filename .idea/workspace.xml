@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="786bc3a6-ed44-44b9-8041-dce3d9aeb431" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/creature/Creature.js" afterPath="$PROJECT_DIR$/creature/Creature.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/world/WorldSpec.js" afterPath="$PROJECT_DIR$/tests/world/WorldSpec.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/world/MiniGrid.js" afterPath="$PROJECT_DIR$/world/MiniGrid.js" />
     </list>
     <list id="73ad94d8-b7b1-45e1-8094-84cf637bc637" name="Failed commit: Default" comment="Merge branch 'simulation' of https://github.com/rit-sse/rapdev12 into simulation&#10;&#10;Conflicts:&#10;&#9;world/world.js&#10;" />
     <ignored path="rapdev12.iws" />
@@ -24,10 +25,10 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Creature.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Creature.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/creature/Creature.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="186" column="22" selection-start="5369" selection-end="5369" vertical-scroll-proportion="0.38494936">
+            <state line="191" column="0" selection-start="5459" selection-end="5459" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -36,7 +37,7 @@
       <file leaf-file-name="world.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/world/world.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="59" column="52" selection-start="1551" selection-end="1551" vertical-scroll-proportion="0.0">
+            <state line="317" column="7" selection-start="8874" selection-end="8882" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -45,16 +46,36 @@
       <file leaf-file-name="MiniGrid.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/world/MiniGrid.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="40" column="41" selection-start="1067" selection-end="1067" vertical-scroll-proportion="0.0">
+            <state line="31" column="9" selection-start="912" selection-end="912" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WorldSpec.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="WorldSpec.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tests/world/WorldSpec.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="249" column="55" selection-start="8048" selection-end="8048" vertical-scroll-proportion="0.0">
+            <state line="243" column="45" selection-start="7844" selection-end="7844" vertical-scroll-proportion="0.18813314">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="simulation-utils.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/utils/simulation-utils.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="world-utils.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/utils/world-utils.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -113,9 +134,9 @@
         <option value="$PROJECT_DIR$/tests/creature/CreatureSpec.js" />
         <option value="$PROJECT_DIR$/world/world.js" />
         <option value="$PROJECT_DIR$/world/Tile.js" />
+        <option value="$PROJECT_DIR$/creature/Creature.js" />
         <option value="$PROJECT_DIR$/world/MiniGrid.js" />
         <option value="$PROJECT_DIR$/tests/world/WorldSpec.js" />
-        <option value="$PROJECT_DIR$/creature/Creature.js" />
       </list>
     </option>
   </component>
@@ -151,7 +172,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -162,6 +182,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -298,20 +319,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/lib/jasmine-standalone-1.3.0/SpecRunner.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="17" selection-start="344" selection-end="344" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/creature/CreatureSpec.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="12" selection-start="606" selection-end="606" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/world/Tile.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="44" selection-start="44" selection-end="44" vertical-scroll-proportion="0.0">
@@ -366,30 +373,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/world/world.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="52" selection-start="1551" selection-end="1551" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/world/Tile.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="7" column="10" selection-start="198" selection-end="198" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/world/MiniGrid.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="41" selection-start="1067" selection-end="1067" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/world/WorldSpec.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="249" column="55" selection-start="8048" selection-end="8048" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -403,7 +389,44 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/creature/Creature.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="186" column="22" selection-start="5369" selection-end="5369" vertical-scroll-proportion="0.38494936">
+        <state line="191" column="0" selection-start="5459" selection-end="5459" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/world/MiniGrid.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="9" selection-start="912" selection-end="912" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/simulation-utils.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/world-utils.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/world/world.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="317" column="7" selection-start="8874" selection-end="8882" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/world/WorldSpec.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="243" column="45" selection-start="7844" selection-end="7844" vertical-scroll-proportion="0.18813314">
           <folding />
         </state>
       </provider>

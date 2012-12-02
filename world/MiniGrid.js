@@ -25,9 +25,9 @@ Gives back all impassable objects on the miniGrid
 MiniGrid.prototype.getAllImpassableObjects = function(){
     var impassableList = [];
     for(var i =0; i < this.tiles.length; i++){
-        if(tiles[i].terrain == null){
+        if(this.tiles[i].terrain == null){
             impassableList[impassableList.length] = this.tiles[i];
-        }else if(tiles[i].terrain.passable == false){
+        }else if(this.tiles[i].terrain.passable == false){
             impassableList[impassableList.length] = this.tiles[i];
         }
     }

@@ -241,7 +241,7 @@ describe( "world.js suite", function() {
         var miniGrid = world.createMiniGrid(aCreature.id);
         var tiles = miniGrid.getAllImpassableObjects();
         for(var i = 0; i < tiles.length; i++){
-            expect(tiles[i].terrain.passable);
+            expect( tiles[i].terrain == null || tiles[i].terrain.passable == false);
         }
   });
   
