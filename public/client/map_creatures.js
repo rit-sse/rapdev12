@@ -20,10 +20,10 @@ MapCreatures.prototype.getAnimations = function(classId) {
 	}
 
 	// Load the walk animation from the appropriate sprite sheet
-	$.ajax({
+	$.ajax({ //You're aware we do this like 128 times, right?
 		url: "assets/images/creatures/walk-" + classId + ".txt",
 		dataType: "text",
-		async: false,
+		async: true, 
 		success: function (data) {
 			// Create animation frames from the file
 			var lines = data.split('\n');
@@ -54,6 +54,7 @@ MapCreatures.prototype.addCreatureClass = function(creatureClass) {
 	image.height = TILE_SIZE;
 	image.width = TILE_SIZE;
 
+    console.log(creatureClass);
 	this.creatureClasses[creatureClass.id] = creatureClass;
 	this.creatureClasses[creatureClass.id].image = image;
 	this.creatureClasses[creatureClass.id].animations = this.getAnimations(creatureClass.id);
@@ -71,25 +72,28 @@ MapCreatures.prototype.loadCreatureClassData = function(data) {
 
 
 MapCreatures.prototype.loadCreatureData = function(data) {
-	for (var i in data) {
+	for (var i=0;i<data.length;i++) {
+        console.log(data[i])
 		var creature = data[i];
-
+        
 		// Create the sprite and add it to the viewport
 		var sprite = new Kinetic.Sprite({
-			x: creature.x * TILE_SIZE,
-			y: creature.y * TILE_SIZE,
+			x: creature.col * TILE_SIZE,
+			y: creature.row * TILE_SIZE,
 			height: TILE_SIZE,
 			width: TILE_SIZE,
 			image: this.creatureClasses[creature.class].image,
 			animations: this.creatureClasses[creature.class].animations,
 			animation: 'idle'
 		});
-		this.viewport.add(sprite);
+        var spritegrp = new Kinetic.Group();
+        spritegrp.add(sprite);
+		this.viewport.add(spritegrp);
 		sprite.start();
 
 		// Save the creature for later reference
 		creature.sprite = sprite;
-		this.creatures[creature.id] = creature;
+        creature.spritegrp = spritegrp;
 	}
 
 	this.viewport.draw();
@@ -97,9 +101,22 @@ MapCreatures.prototype.loadCreatureData = function(data) {
 
 
 MapCreatures.prototype.moveCreature = function(creatureId, x, y) {
-	var sprite = this.creatures[creatureId].sprite;
-	sprite.setX(x * TILE_SIZE);
-	sprite.setY(y * TILE_SIZE);
+    console.log(this.creatures,creatureId);
+	var sprite = this.creatures[creatureId].spritegrp;
+    
+
+    sprite.setAnimation('walk')
+    sprite.transitionTo({
+        x: (x * TILE_SIZE),
+        y: (y * TILE_SIZE),
+        duration: 1,
+        callback: function() {
+            console.log("I went to "+x+", "+y);
+            sprite.setIndex(0);
+            sprite.setAnimation('idle');
+        }
+    });
+
 
 	this.viewport.draw();
 }
