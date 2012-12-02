@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="786bc3a6-ed44-44b9-8041-dce3d9aeb431" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tests/world/MiniGridSpec.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/world/WorldSpec.js" afterPath="$PROJECT_DIR$/tests/world/WorldSpec.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/world/MiniGrid.js" afterPath="$PROJECT_DIR$/world/MiniGrid.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/world/world.js" afterPath="$PROJECT_DIR$/world/world.js" />
     </list>
@@ -27,16 +30,16 @@
       <file leaf-file-name="Creature.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/creature/Creature.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="27" selection-start="676" selection-end="676" vertical-scroll-proportion="0.0">
+            <state line="9" column="17" selection-start="228" selection-end="228" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="world.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="world.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/world/world.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="225" column="20" selection-start="6247" selection-end="6247" vertical-scroll-proportion="0.7702703">
+            <state line="240" column="53" selection-start="6502" selection-end="6502" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -45,17 +48,19 @@
       <file leaf-file-name="MiniGrid.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/world/MiniGrid.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="27" selection-start="702" selection-end="702" vertical-scroll-proportion="0.0">
+            <state line="7" column="12" selection-start="181" selection-end="181" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WorldSpec.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="WorldSpec.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tests/world/WorldSpec.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="202" column="20" selection-start="6315" selection-end="6315" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="225" column="30" selection-start="7110" selection-end="7110" vertical-scroll-proportion="0.5325615">
+              <folding>
+                <element signature="e#6405#6583#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -72,7 +77,16 @@
       <file leaf-file-name="Tile.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/world/Tile.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="43" selection-start="43" selection-end="43" vertical-scroll-proportion="0.0">
+            <state line="1" column="9" selection-start="53" selection-end="61" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MiniGridSpec.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/world/MiniGridSpec.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -102,11 +116,11 @@
       <list>
         <option value="$PROJECT_DIR$/lib/jasmine-standalone-1.3.0/SpecRunner.html" />
         <option value="$PROJECT_DIR$/world/Tile.js" />
-        <option value="$PROJECT_DIR$/tests/world/WorldSpec.js" />
         <option value="$PROJECT_DIR$/tests/creature/CreatureSpec.js" />
         <option value="$PROJECT_DIR$/creature/Creature.js" />
         <option value="$PROJECT_DIR$/world/MiniGrid.js" />
         <option value="$PROJECT_DIR$/world/world.js" />
+        <option value="$PROJECT_DIR$/tests/world/WorldSpec.js" />
       </list>
     </option>
   </component>
@@ -149,62 +163,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="rapdev12" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rapdev12" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rapdev12" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rapdev12" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rapdev12" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="world" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rapdev12" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rapdev12" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="lib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rapdev12" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rapdev12" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="lib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jasmine-standalone-1.3.0" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -267,14 +225,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32960895" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22447686" sideWeight="0.6703911" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22447686" sideWeight="0.32681563" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22447686" sideWeight="0.6634078" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32960895" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -341,28 +299,16 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="2" />
+      <option name="time" value="3" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/creature/Creature.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="23" selection-start="114" selection-end="114" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/world/world.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="124" column="20" selection-start="3219" selection-end="3219" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/world/WorldSpec.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="42" column="0" selection-start="745" selection-end="745" vertical-scroll-proportion="0.0">
-          <folding />
+          <folding>
+            <element signature="e#6405#6583#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -422,38 +368,54 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/world/WorldSpec.js">
+    <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="202" column="20" selection-start="6315" selection-end="6315" vertical-scroll-proportion="0.0">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/creature/Creature.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="27" selection-start="676" selection-end="676" vertical-scroll-proportion="0.0">
+        <state line="9" column="17" selection-start="228" selection-end="228" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/world/MiniGrid.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="27" selection-start="702" selection-end="702" vertical-scroll-proportion="0.0">
+        <state line="7" column="12" selection-start="181" selection-end="181" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/world/Tile.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="43" selection-start="43" selection-end="43" vertical-scroll-proportion="0.0">
+        <state line="1" column="9" selection-start="53" selection-end="61" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/world/MiniGridSpec.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/world/world.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="225" column="20" selection-start="6247" selection-end="6247" vertical-scroll-proportion="0.7702703">
+        <state line="240" column="53" selection-start="6502" selection-end="6502" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/world/WorldSpec.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="225" column="30" selection-start="7110" selection-end="7110" vertical-scroll-proportion="0.5325615">
+          <folding>
+            <element signature="e#6405#6583#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

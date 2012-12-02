@@ -1,5 +1,6 @@
 var World = require('../../world/world.js').World;
 var Creature = require('../../creature/Creature.js').Creature;
+var MiniGrid = require('../../world/MiniGrid.js').MiniGrid;
 
 describe( "world.js suite", function() {
 
@@ -210,6 +211,28 @@ describe( "world.js suite", function() {
         "col": creatureTile.col
       }]
     });
+
+
+  });
+  it("makes a miniGrid for a creature" ,function(){
+      world.addCreature(aCreature);
+      var miniGrid = world.createMiniGrid(aCreature.id);
+      expect(25).toEqual(miniGrid.tiles.length);
+      expect(miniGrid.tiles.length != 26).toBe(true);
+      var tile = world.getCreaturePosition(aCreature.id);
+      console.log(tile.occupant);
+      for(var i = 0; i < miniGrid.tiles.length; i++){
+          if(miniGrid.tiles[i].col == tile.col && miniGrid.tiles[i].row == tile.row){
+              if(miniGrid.tiles[i].occupant != null){
+                expect(miniGrid.tiles[i].occupant).toEqual(aCreature.id);
+              } else {
+                expect("creature id").toEqual("null");
+              }
+          }else{
+              expect(miniGrid.tiles[i].occupant).toEqual(null);
+          }
+      }
+
   });
 
 } );

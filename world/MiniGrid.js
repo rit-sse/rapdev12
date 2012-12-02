@@ -1,5 +1,5 @@
 function MiniGrid(){
-    this.tiles = null;
+    this.tiles = [];
 }
 
 MiniGrid.prototype.getAllCreatures = function(){
@@ -26,9 +26,7 @@ MiniGrid.prototype.getAllImpassableObjects = function(){
 }
 
 MiniGrid.prototype.addTile = function(tile){
-    if(this.tiles == null){
-        this.tiles[0] = tile;
-    } else {
-        this.tiles[this.tiles.length] = tile;
-    }
+    this.tiles[this.tiles.length] = tile;
 }
+
+exports.MiniGrid = MiniGrid;

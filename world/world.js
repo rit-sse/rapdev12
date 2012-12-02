@@ -5,6 +5,7 @@ var Terrain = require('../utils/world-utils').Terrain;
 var Tile = require('../world/Tile.js').Tile;
 var Direction = require('../utils/simulation-utils').Direction;
 var Delta = require('../sim/Delta').Delta;
+var MiniGrid = require('../world/MiniGrid.js').MiniGrid;
 
 exports.World = World;
 
@@ -75,7 +76,7 @@ World.prototype.populateWithItems = function() {
 World.prototype.getTile = function( row, col ) {
 	var resTile;
 	if ( row < 0 || col < 0 ||
-		row > this.map.length || col > this.map[0].length) {
+		row >= this.map.length || col >= this.map[0].length) {
 		resTile = null
 	}
 	else {
@@ -246,6 +247,7 @@ World.prototype.createMiniGrid = function(creatureId){
             if(tile == null){
                 tile = new Tile(null,null,creatureLocation.row + i, creatureLocation.col + j);
             }
+
             miniGrid.addTile(tile);
         }
     }
