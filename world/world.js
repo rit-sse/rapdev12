@@ -49,7 +49,14 @@ function World( jsonObject ) {
 	this.items = [];
 };
 
-World.prototype.addCreature = function( creature ) {
+/* addCreature - puts a creature on the board
+ * creature - creature instance that is being added
+ * tile - OPTIONAL parameter which places the creature on the board
+ * if tile is null, it places the creature into a random valid tile
+ *
+ * returns the tile the creature was added to
+ */
+World.prototype.addCreature = function( creature, tile ) {
 	if ( this.creatureClasses.indexOf( creature.classId ) == -1 ) {
 		this.creatureClasses.push( {
 			"id": creature.classId,
@@ -59,18 +66,72 @@ World.prototype.addCreature = function( creature ) {
 		} );
 	}
 	this.creatures.push( creature );
-	var randTile = this.getRandomValidTile();
 	creature.setId( this.creatures.length - 1 );
 	this.activeCreatures.push( creature );
-	randTile.occupant = creature.getId();
+	
+	var creTile;
+	if (arguments.length == 2 ){
+		creTile = tile;
+	}
+	else{
+		creTile = this.getRandomValidTile();
+	}
+	creTile.occupant = creature.getId();
+	return creTile;
 };
 
 World.prototype.populateWithItems = function() {
 	
 };
 
+/* getTile - returns a tile on the map
+ * if outside the bounds of the board; returns null
+ */
 World.prototype.getTile = function( row, col ) {
-	return this.map[row][col];
+	var resTile;
+	if ( row < 0 || col < 0 ||
+		row > this.map.length || col > this.map[0].length) {
+		resTile = null
+	}
+	else {
+		resTile = this.map[row][col]
+	}
+	return resTile;
+};
+
+/*
+ * getAdjacentTile - returns an adjacent tile based on a direction
+ *
+ * tile - the initial tile
+ * direction - which adjacent tile to look at [NORTH | SOUTH][EAST | WEST]
+ * returns the given tile
+ */
+World.prototype.getAdjacentTile = function(tile, direction) {
+	var tRow = tile.row;
+    var tCol = tile.col;
+    var modPos;
+
+	if (direction == Direction.NORTH){
+		modPos = [-1,0];
+	}else if (direction == Direction.SOUTH){
+		modPos = [1,0];
+	}else if (direction == Direction.EAST){
+		modPos = [0,1];
+	}else if (direction == Direction.WEST){
+		modPos = [0,-1];
+	}else if (direction == Direction.NORTHWEST){
+		modPos = [-1,-1];
+	}else if (direction == Direction.NORTHEAST){
+		modPos = [-1,1];
+	}else if (direction == Direction.SOUTHWEST){
+		modPos = [1,-1];
+	}else if (direction == Direction.SOUTHEAST){
+		modPos = [1,1];
+	}
+	nRow = tRow + modPos[1];
+	nCol = tCol + modPos[0];
+	
+	return this.getTile(nRow, nCol);
 };
 
 World.prototype.getTerrainAtTile = function( row, col ) {
@@ -113,29 +174,34 @@ World.prototype.findInTiles = function( condition ) {
 	return valid;
 }
 
+/*
+* Enables a creature to attack another location. If a creature is at a location, then attack the creature.
+* attackerId - The creature that is initiating the attack.
+* direction - The direction that the initiating creature is attacking in.
+*/
+World.prototype.attackCreature = function(attackerId, direction) {
+    var attackerPosition = this.getCreaturePosition(attackerId);
+    console.log("attacker position " + attackerPosition);
+    var locationToAttack = this.getAdjacentTile(attackerPosition, direction);
+
+    //if this tile is valid, grab the occupant
+    if (locationToAttack){
+        var occupant = locationToAttack.occupant;
+        if (occupant){
+            occupant.onHit();
+            console.log("Creature is attacking to the " + direction + "!");
+        } else {
+            console.log("Creature tried to attack an empty location (location " + locationToAttack + ").");
+        }
+    }
+}
+
 
 World.prototype.moveCreature = function( id, direction ) {
-	var modPos;
-	if (direction == Direction.NORTH){
-		modPos = [0,-1];
-	}else if (direction == Direction.SOUTH){
-		modPos = [0,1];
-	}else if (direction == Direction.EAST){
-		modPos = [1,0];
-	}else if (direction == Direction.WEST){
-		modPos = [-1,0];
-	}else if (direction == Direction.NORTHWEST){
-		modPos = [-1,-1];
-	}else if (direction == Direction.NORTHEAST){
-		modPos = [1,-1];
-	}else if (direction == Direction.SOUTHWEST){
-		modPos = [-1,1];
-	}else if (direction == Direction.SOUTHEAST){
-		modPos = [1,1];
-	}
-	
 	var creaturePosition = this.getCreaturePosition(id);
-	var newPos = [creaturePosition.row + modPos[0], creaturePosition.col + modPos[1]];
+	var nextTile = this.getAdjacentTile(creaturePosition, direction);
+	
+	var newPos = [nextTile.row, nextTile.col]
 	if (newPos[0] < 0 || newPos[1] < 0 ||
 		newPos[0] >= this.map.length || newPos[1] >= this.map[0].length){
 		this.creatures[id].onCollision();
