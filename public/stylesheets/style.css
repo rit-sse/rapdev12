@@ -28,26 +28,37 @@ a {
 }
 
 .sidebar {
-    margin: 0; padding: 0;
-    width: 350px;
+    margin: 0; padding: 8px;
+    width: 334px;
     position: absolute;
     top: 0; right: 0;
-    height: 100%;
+    height: 97%;
+    background: #e0e0e0;
 }
 
 .creature-class {
+    padding: 0 0 12px 80px;
     position: relative;
-    padding-left: 80px;
+    border: 2px solid transparent;
+    width: 250px;
+    display: block;
+    background: #e0e0e0;
+
+    border-radius: 4px;
 }
 
 .creature-preview {
     position: absolute;
-    left: 8px; top: 0;
+    left: 8px; top: 4px;
     clip: rect(0 64px 64px 0);
 }
 
 .creature-class h1 {
-    margin: 0; padding: 0.4em 0 0.6em 0;
+    margin: 0; padding: 0.5em 0 0.6em 0;
+}
+
+.creature-class:hover {
+    border-color: #222;
 }
 
 .creature-class dl {
@@ -72,4 +83,26 @@ a {
 #upload-ui {
     position: absolute;
     left: 0; bottom: 0;
+}
+
+
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+ 
+.clearfix {
+	display: inline-block;
+}
+ 
+html[xmlns] .clearfix {
+	display: block;
+}
+ 
+* html .clearfix {
+	height: 1%;
 }

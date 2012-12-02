@@ -66,9 +66,10 @@ MapCreatures.prototype.addCreatureClass = function(creatureClass) {
  */
 MapCreatures.prototype.addCreatureClassToSidebar = function(creatureClass){
   var content = 
-    '<article class="creature-class" id="creature-class-' + creatureClass.id + '">' +
+    '<article class="creature-class clearfix" id="creature-class-' + creatureClass.id + '" draggable="true">' +
       '<img src="' + creatureClass.image.src +
-        '" alt="' + creatureClass.name + '" class="creature-preview" />' +
+        '" alt="' + creatureClass.name + 
+        '" class="creature-preview" draggable="false" />' +
       '<h1>' + creatureClass.name + '</h1>' +
       '<dl>' + 
         '<dt>Attack</dt><dd>' + creatureClass.attack + '</dd>' + 
