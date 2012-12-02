@@ -28,9 +28,6 @@ function World( jsonObject ) {
 	//list of terrain accessed via index
 	this.terrain = jsonObject.terrain;
 	
-	//list of tiles that are passable
-	this.passableTiles = [];
-	
 	this.map = [];
 	var currentRow; var currentCol;
 	for(var i=0; i<jsonObject.map.length; i++){
@@ -40,9 +37,6 @@ function World( jsonObject ) {
 			var currentCol = currentRow[j];
 			var currentTile = new Tile(null,(this.terrain[jsonObject.map[i][j]]),i,j);
 			this.map[i].push(  currentTile  );
-			if (currentTile.terrain.passable == true){
-				this.passableTiles.push( [i,j] );
-			};
 		};
 	};
 	
@@ -221,7 +215,6 @@ World.prototype.moveCreature = function( id, direction ) {
 	var tileCheck = desiredTile.terrain.passable && desiredTile.occupant == null;
 	if ( tileCheck ) {
 		this.getTile(creaturePosition.row, creaturePosition.col).occupant = null;
-		this.passableTiles.push(creaturePosition);
 		this.getTile(newPos[0], newPos[1]).occupant = id;
 		console.log( "Creature has moved to: row " + newPos[0] + ", col " + newPos[1] );
 		delta = new Delta([{type:"creature", action: "move", data: {id: id, x:newPos[0], y:newPos[1]}}]);
