@@ -68,16 +68,17 @@ var Splash = function Splash(stage,onkill) {
     /** 
     * This sets the percentage of the loadingbar, provided it's been setup, 
     * and also cleans up and disperses the splash screen when it's passed a value >=1.
+    * REMOVED, JUST Disperse
     * @param per a number between 0 and 1 indicating the percent loaded
     * @see Splash.Disperse
     */
     this.SetPercent = function SetPercent(per) {
-        if (lexical.loader && lexical.loader.ready) {
+        /*if (lexical.loader && lexical.loader.ready) {
             lexical.loader.setAdjustedWidth(per);
             if (per>=1) {
-                lexical.Disperse(function() {lexical.Kill()});
+                lexical.Disperse();
             }
-        }
+        }*/
     }
     
     //Background gradient
@@ -139,6 +140,17 @@ var Splash = function Splash(stage,onkill) {
         logoGroup.add(logoImg);
         logoGroup.add(subtext);
         
+        logoGroup.on('mouseover', function() {
+            document.body.style.cursor = 'pointer';
+        });
+        logoGroup.on('mouseout', function() {
+            document.body.style.cursor = 'default';
+        });
+        //Make the subtitle change when the logo is clicked
+        logoGroup.on('mousedown', function() {
+            subtext.setText(getRandomSubTitle());
+        });
+        
         splash.layers.logo.add(logoGroup);
         
         //configuration variables for the motion of the logo
@@ -189,7 +201,7 @@ var Splash = function Splash(stage,onkill) {
                 colorStops: [0, '#ffffff', 1, 'transparent']
             }
         }); 
-        loadingBarFG.setCornerRadius(lineSize/2);
+        loadingBarFG.setCornerRadius(lineSize/8);
         loadingBarFG.setShadow({ 
                 color: '#ffffff',
                 blur: 3,
@@ -203,68 +215,86 @@ var Splash = function Splash(stage,onkill) {
             width: imgWidth,
             x: stage.getWidth() / 2 - imgWidth/2,
             y: stage.getHeight() / 2 + imgHeight/2,
-            fill: '#006699'
+            opacity: 0.6,
+            fill: {
+                start: {
+                    x: stage.getWidth() / 2 + imgWidth/2 + lineSize,
+                    y: lineSize/2,
+                    radius: lineSize*10
+                },
+                end: {
+                    x: stage.getWidth() / 2 + imgWidth/2 + lineSize,
+                    y: 0,
+                    radius: 0
+                },
+                colorStops: [0, '#ffffff', 1, 'transparent']
+            }
         });
-        loadingBarBG.setCornerRadius(lineSize/2);
+        loadingBarBG.setCornerRadius(lineSize/8);
         
         var loadingBarUnder = new Kinetic.Rect({
             height: lineSize-(lineSize/4),
-            width: imgWidth-(lineSize/4),
-            x: stage.getWidth() / 2 - imgWidth/2 + (lineSize/8),
+            width: imgWidth,
+            x: stage.getWidth() / 2 - imgWidth/2,
             y: stage.getHeight() / 2 + imgHeight/2 + (lineSize/8),
-            fill: '#004466'
-        });
-        loadingBarUnder.setCornerRadius((lineSize-(lineSize/4))/2);
-        
-        var loading = new Kinetic.Rect({
-            height: lineSize-(lineSize/4),
-            width: lineSize,
-            x: stage.getWidth() / 2 - imgWidth/2 + (lineSize/8),
-            y: stage.getHeight() / 2 + imgHeight/2 + (lineSize/8),
-            fill: '#006699'
-        });
-        loading.setShadow({
-            color: '#000000',
-            blur: 0.8,
-            offset: [-1,0],
-            opacity: 0.8
-        });
-        loading.setCornerRadius((lineSize-(lineSize/4))/2);
-        loading.minimum = lineSize;
-        
-        /** 
-        * Internally used function to set the width of the loading bar based on its percentage
-        * @param percent A number between 0 and 1 used to determine the percentage of the bar to draw
-        * @see Splash.SetPercentage
-        */
-        loading.setAdjustedWidth = function(percent) {
-            //0 to 1 mapped to lineSize to imgWidth-(lineSize/4)
-            var percent = Math.min(Math.max(percent,0),1)
-            
-            loading.transitionTo({
-                width:lineSize+percent*(imgWidth-(lineSize/4)-lineSize),
-                duration: 0.5
-            });
-            
-            if (Math.random()>=0.2) {
-                subtext.setText(getRandomSubTitle());
+            fill: {
+                start: {
+                    x: 0,
+                    y: 0
+                },
+                end: {
+                    x: imgWidth,
+                    y: 0
+                },
+                colorStops: [0, 'transparent', 0.15, '#004466', 0.85, '#004466', 1, 'transparent']
             }
+        });
+        //loadingBarUnder.setCornerRadius((lineSize-(lineSize/4))/2);
+        var dotcol = ['#006699','#99ddff','004466','#ffffff'];
+        var loading = [];
+        for (var i=0; i<5; i++) {
+            loading[i] = new Kinetic.Circle({
+                radius: 3*(lineSize/8),
+                x: stage.getWidth() / 2 - imgWidth/2 + (lineSize/8),
+                y: stage.getHeight() / 2 + imgHeight/2 + (lineSize/2),
+                fill: '#006699'
+            });
+            loading[i].setShadow({
+                color: '#000000',
+                blur: 0.8,
+                offset: [-1,0],
+                opacity: 0.8
+            });
+            loading[i].setCornerRadius((lineSize-(lineSize/4))/2);
+            var inc = 1;
+            loading[i].on('mousedown', function() {
+                this.setFill(dotcol[inc]);
+                inc++;
+                if (inc>4) {
+                    inc=0;
+                }
+            });
         }
- 
+
         var loadingBar = new Kinetic.Group();
         loadingBar.add(loadingBarBG);
         loadingBar.add(loadingBarFG);
         loadingBar.add(loadingBarUnder);
-        loadingBar.add(loading);
+        for (var i=0; i<(loading.length); i++) {
+            loadingBar.add(loading[i]);
+        }
         
         splash.loader = loading;
         splash.loader.ready = true;
         
-        //Animates the gradient in the background of the loading bar
+        //Animates the gradient in the background of the loading bar AND the motion of the bar itself
         var amp1 = lineSize;
         var amp2 = lineSize*2;
         var period1 = 2500; //in ms
         var period2 = 4750;
+        var movePeriod = 5750;
+        var maxX = lineSize+(imgWidth-(lineSize/4)-lineSize);
+        var maxW = maxX-(stage.getWidth() / 2 - imgWidth/2 + (lineSize/8));
         var gradientFlare = new Kinetic.Animation(function(frame) {
             var start = (-lineSize*2) + amp1 * Math.sin(frame.time * 2 * Math.PI / period1) + amp2*Math.sin(frame.time * 2 * Math.PI / period2)
             
@@ -282,7 +312,12 @@ var Splash = function Splash(stage,onkill) {
                 colorStops: [0, '#ffffff', 1, 'transparent']
             });
             
+            for (var orb=0; orb<(loading.length); orb++) {
+                var cycle = (Math.tan((frame.time + (orb*100)) * 2 * Math.PI / movePeriod)+1)/2;
+                loading[orb].setX(stage.getWidth() / 2 - imgWidth/2 + (lineSize/8) + maxX*cycle + orb*lineSize); 
+            }     
         },splash.layers.loader);
+        lexical.loadAnimCircles = gradientFlare;
         
         gradientFlare.start();
         
@@ -295,25 +330,29 @@ var Splash = function Splash(stage,onkill) {
     
     /** 
     * This transitions the splashscreen into full transparency and off the screen.
-    * @param callback A function to be called when the transition is finished (eg. to remove it)
+    * @param duration time (in seconds) to send dispersing
     * @see Splash.Kill
     */
-    this.Disperse = function Disperse(callback) {
-        lexical.logoAnim.stop();
-        lexical.layers.logo.transitionTo({
-            y: -lexical.stage.getHeight(),
-            opacity: 0,
-            duration: 0.75
-        });
-        lexical.cbtrans = lexical.layers.bg.transitionTo({
-            opacity: 0,
-            duration: 0.75,
-            callback: callback
-        });
-        lexical.layers.loader.transitionTo({
-            y: lexical.stage.getHeight()*(3/2),
-            opacity: 0,
-            duration: 0.75
-        });
+    this.Disperse = function Disperse(duration) {
+        if (!lexical.dispersed) {
+            lexical.dispersed = true;
+            lexical.logoAnim.stop();
+            lexical.loadAnimCircles.stop();
+            lexical.layers.logo.transitionTo({
+                y: -lexical.stage.getHeight(),
+                opacity: 0,
+                duration: duration
+            });
+            lexical.cbtrans = lexical.layers.bg.transitionTo({
+                opacity: 0,
+                duration: duration,
+                callback: function() {lexical.Kill()}
+            });
+            lexical.layers.loader.transitionTo({
+                y: lexical.stage.getHeight()*(3/2),
+                opacity: 0,
+                duration: duration
+            });
+        }
     }
 }
