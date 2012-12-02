@@ -135,7 +135,7 @@ World.prototype.getAdjacentTile = function(tile, direction) {
 	nRow = tRow + modPos[0];
 	nCol = tCol + modPos[1];
 
-	return ( isOutOfBounds( [nRow,nCol] ) ) ? null : this.getTile(nRow, nCol);
+	return ( this.isOutOfBounds( [nRow,nCol] ) ) ? null : this.getTile(nRow, nCol);
 };
 
 World.prototype.isOutOfBounds = function( coords ) {
