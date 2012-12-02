@@ -26,7 +26,7 @@ exports.monster = function(creature, Direction){ // TEMPLATE
 
 
     /*
-    This creature moves in each of the eight cardinal directions and nothing else.
+    This creature moves in each of the eight cardinal directions.
      */
     SimpleCreature.prototype.act = function() {
         console.log("Now moving \"" + this.getName() + "\"");
