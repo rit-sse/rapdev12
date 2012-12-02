@@ -54,15 +54,34 @@ MapCreatures.prototype.addCreatureClass = function(creatureClass) {
 	image.height = TILE_SIZE;
 	image.width = TILE_SIZE;
 
-	this.creatureClasses[creatureClass.id] = creatureClass;
-	this.creatureClasses[creatureClass.id].image = image;
-	this.creatureClasses[creatureClass.id].animations = this.getAnimations(creatureClass.id);
+  creatureClass.image = image;
+  creatureClass.animations = this.getAnimations(creatureClass.id);
 
-	// Add the creature to the side bar
-	$("#creature-classes").append("<li>" + creatureClass.name + "</li>");
+	this.creatureClasses[creatureClass.id] = creatureClass;
+  this.addCreatureClassToSidebar(creatureClass);
 };
 
 
+/* Adds the creature class to the displayed list
+ */
+MapCreatures.prototype.addCreatureClassToSidebar = function(creatureClass){
+  var content = 
+    '<article class="creature-class" id="creature-class-' + creatureClass.id + '">' +
+      '<img src="' + creatureClass.image.src +
+        '" alt="' + creatureClass.name + '" class="creature-preview" />' +
+      '<h1>' + creatureClass.name + '</h1>' +
+      '<dl>' + 
+        '<dt>Attack</dt><dd>' + creatureClass.attack + '</dd>' + 
+        '<dt>Speed</dt><dd>' + creatureClass.speed + '</dd>' + 
+      '</dl>' +
+    '</article>';
+
+	$("#creature-classes").append(content);
+}
+
+
+/* Loads all creature classes into the client
+ */
 MapCreatures.prototype.loadCreatureClassData = function(data) {
 	for(var i = 0, len = data.length; i < len; i++ ){
     	this.addCreatureClass(data[i]);
