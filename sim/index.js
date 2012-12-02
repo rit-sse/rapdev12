@@ -1,9 +1,10 @@
+var path = require('path')
 var world_lib = require('../world/world')
   , world
   , comm
   , running = true;
-var c = require(require('path').join(require('path').dirname(require.main.filename), "creature", "Creature"));
-var Direction = require(require('path').join(require('path').dirname(require.main.filename), "utils", "simulation-utils")).Direction;
+var c = require(path.join(path.dirname(require.main.filename), "creature", "Creature"));
+var Direction = require(path.join(path.dirname(require.main.filename), "utils", "simulation-utils")).Direction;
 var Creature = c.Creature;
 
 exports.use_comm = function(c) {
