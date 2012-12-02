@@ -38,7 +38,8 @@ exports.push_diff = function(diff){
 exports.start = function(io, simulation) {
   io.sockets.on('connection', function (socket) {
     socket.emit('connected');
-    socket.emit('get_map', simulation.world);
+    console.log("sending world");
+    socket.emit('get_map', simulation.world.toClientDump());
 
     // Register client hooks
     for (var name in simulation.client_hooks) {
