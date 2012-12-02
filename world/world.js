@@ -137,13 +137,15 @@ World.prototype.moveCreature = function( id, direction ) {
 	if (newPos[0] < 0 || newPos[1] < 0 ||
 		newPos[0] >= this.map.length || newPos[1] >= this.map[0].length){
 		this.creatures[id].onCollision();
+		return;
 	}
-	var tileCheck = this.getTerrainAtTile(newPos[0],newPos[1]).passable == true
-							&& this.getInhabitantAtTile(newPos[0],newPos[1]);
-	if (tileCheck) {
+	var desiredTile = this.getTile( newPos[0], newPos[1] );
+	var tileCheck = desiredTile.terrain.passable && desiredTile.occupant == null;
+	if ( tileCheck ) {
 		this.getTile(creaturePosition.row, creaturePosition.col).occupant = null;
 		this.passableTiles.push(creaturePosition);
 		this.getTile(newPos[0], newPos[1]).occupant = id;
+		console.log( "Creature has moved to: row " + newPos[0] + ", col " + newPos[1] );
 	}
 	else {
 		this.creatures[id].onCollision();
