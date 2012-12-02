@@ -7,8 +7,9 @@ document.getElementById('js_file').addEventListener('change', function(evt) {
 
 document.getElementById('upload_go').addEventListener('click', function() {
     var fileIn = document.getElementById('js_file');
-    console.log("Trying to send file!");
-    if (fileIn && fileIn.files) {
+    console.log("Trying to send file "+fileIn.files[0].name);
+    var fileExt = fileIn.files[0].name.split('.')[1];
+    if (fileIn && fileIn.files && (fileExt == 'js' || fileExt == 'JS')) {
         console.log("Sending file!");
         var reader = new FileReader();
         reader.readAsText(fileIn.files[0]);
@@ -19,5 +20,7 @@ document.getElementById('upload_go').addEventListener('click', function() {
                 contents: e.target.result
             });
         }
+    } else {
+        console.log("Failed upload of "+fileIn.files[0].name);
     }
 });
