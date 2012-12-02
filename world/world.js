@@ -196,9 +196,10 @@ World.prototype.attackCreature = function(attackerId, direction) {
     //if this tile is valid, grab the occupant
     if (locationToAttack){
         var occupant = locationToAttack.occupant;
-        if (occupant){
-            occupant.onHit();
-            console.log("Creature is attacking to the " + direction + "!");
+        console.log(this.creatures[attackerId].name+" is attacking to the " + direction + "!");
+		if (occupant){
+            console.log(occupant + " was hit!");
+			this.creatures[occupant].onHit();
         } else {
             console.log("Creature tried to attack an empty location (location " + locationToAttack + ").");
         }
