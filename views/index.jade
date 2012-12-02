@@ -16,6 +16,6 @@ block content
   aside.sidebar
     ul#creature-classes
     div#upload-ui
-      form(action="/file_upload",method="POST",enctype="multipart/form-data")
-        input(type="file",name="js_file")
-        input(type="submit")
+      input(type="file",id="js_file",name="js_file")
+      input(type="button", id="upload_go",name="upload_go",value="Upload")
+      script(src='/client/upload.js')

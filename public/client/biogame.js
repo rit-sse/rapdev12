@@ -58,7 +58,8 @@ window.onload = function() {
   });
 
   var socket = io.connect('http://localhost:3000');
-
+  biogame.socket = socket;
+  
   socket.on('connected', function(data) {
     //biogame.splash.SetPercent(0.5);
   });
