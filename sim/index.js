@@ -34,8 +34,6 @@ exports.startSim = function(creature_file) {
 		var creatures = world.getActiveCreatures();
 		for(var i = 0; i < creatures.length; i++){
 			creatures[i].act();
-			delta = new Delta([{id: 0, x:turn%16, y:turn%16}]);
-			comm.push_diff(delta);
 		}
 		if(running){
 			setTimeout(a_turn, 2000);
