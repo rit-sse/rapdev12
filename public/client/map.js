@@ -27,7 +27,7 @@ Map.prototype.loadTileData = function(tileData) {
 		for (var col in tileData[row]) {
 			// Create a rectangle to represent the tile
 			var imgObj = new Image();
-			imgObj.src = "assets/images/tiles/" + tileData[row][col] + ".png";
+			imgObj.src = "assets/images/tiles/" + tileData[row][col].terrain.name + ".png";
 			imgObj.onload = function () {
 				biogame.viewport.draw();
 			}

@@ -15,8 +15,10 @@ exports.client_hooks = {
 
 exports.updates = {};
 
+
 exports.startSim = function() {
 	world = new world_lib.World(world_lib.worldjson);
+	exports.world = world;
 	var turn = 0;
 	var a_turn = function(){	
 		turn++;
