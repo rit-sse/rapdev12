@@ -138,7 +138,7 @@ World.prototype.getAdjacentTile = function(tile, direction) {
 	return ( isOutOfBounds( [nRow,nCol] ) ) ? null : this.getTile(nRow, nCol);
 };
 
-World.prototype.isOutOfBounds( coords ) {
+World.prototype.isOutOfBounds = function( coords ) {
 	return ( nRow < 0 || nRow >= this.map.length ||
 					 nCol < 0 || nCol >= this.map[0].length );
 }
