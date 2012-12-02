@@ -1,7 +1,8 @@
  //The Creature API
 
 /*
-Initiates the creatures health, energy, attack, defence, speed.
+Initiates the creatures health, energy, attack, defence, speed, the world the creature is in, its classId and its
+minHitDamage and its name.
 */
 function Creature(name, classId, world,attack,defence,speed){
 	this.world = world;
@@ -16,7 +17,8 @@ function Creature(name, classId, world,attack,defence,speed){
 };
 
 /*
-Moves the creature in the given direction, calls onCollision it hits collision.
+Moves the creature in the given direction, calls onCollision it hits collision. Will not move if you are asleep or have
+ no energy.
 */
 Creature.prototype.move = function(direction){
 	if(this.energy > 0 && this.health > 0 && this.timeLeftToSleep == 0){
@@ -27,7 +29,8 @@ Creature.prototype.move = function(direction){
 };
 
 /*
-Moves the creature in the given direction two tiles. If there is a collision on the first step onCollision will be called an the second step will not be taken.
+Moves the creature in the given direction two tiles. If there is a collision on the first step onCollision will be
+called an the second step will not be taken. Will do nothing if the creature does not have any energy remaining.
 */
 Creature.prototype.sprint = function(direction){
 	if(this.energy >= 5 && this.health > 0  && this.timeLeftToSleep == 0){
@@ -40,7 +43,8 @@ Creature.prototype.sprint = function(direction){
 };
 
 /*
-Attacks the given direction. If a creature is there the hit creature will be given a onHit event.
+Attacks the given direction. If a creature is there the hit creature will be given a onHit event. Will do nothing if
+you do not have enough energy.
 */
 Creature.prototype.attack = function(direction){
     if(this.energy >= 5 && this.health > 0  && this.timeLeftToSleep == 0){
@@ -51,11 +55,12 @@ Creature.prototype.attack = function(direction){
 };
 
 /*
-Will return the player a mini grid representing a 2 radi around the creature. The mini grid will have methods to find the location of all the creatures and objects in the area.
+Will return the player a mini grid representing a 2 radi around the creature. The mini grid will have methods to find
+the location of all the creatures and objects in the area.
 */
 Creature.prototype.lookAround = function(){
     if(this.health > 0  && this.timeLeftToSleep == 0){
-
+        return this.world.createMiniGrid();
     }
     //TODO implement a function in world that creates a minimap and returns it.
 };
@@ -83,19 +88,24 @@ Creature.prototype.act = function(){
 };
 
 /*
-A User defined method of what there creature should do when they collide with an impassable object. The user will be given an identification of what the object is. If the object is another creature it will be the id of the creature. If it is a rock, water or the grid boarder then they will be given a string with its name. On collision is the only event that can be called any number of times.
+A User defined method of what there creature should do when they collide with an impassable object. The user will be
+given an identification of what the object is. If the object is another creature it will be the id of the creature. If
+it is a rock, water or the grid boarder then they will be given a string with its name. On collision is the only event
+that can be called any number of times.
 */
 Creature.prototype.onCollision = function(object){
 };
 
 /*
-A User defined method of what you creature will do when they get hit by another creature. They will also be given the direction that they need to attack for them to attack the creature. 
+A User defined method of what you creature will do when they get hit by another creature. They will also be given the
+direction that they need to attack for them to attack the creature.
 */
 Creature.prototype.onHit = function(direction){
 };
 
 /*
-A user defined method that defines what a user's creature should do on wakeup. They are also given a reason. If the reason is attacked onHit will be called as a second event after onWakeUp.
+A user defined method that defines what a user's creature should do on wakeup. They are also given a reason. If the
+ reason is attacked onHit will be called as a second event after onWakeUp.
 */
 Creature.prototype.onWakeUp = function(reason){
 };
@@ -107,7 +117,8 @@ Creature.prototype.onDeath = function(){
 };
 
 /*
-An API defined event that counts down to when your creature sould wake up or wakes you up if your creature gets hungry.
+An API defined event that counts down to when your creature should wake up or wakes you up if your creature gets hungry
+ which is user defined.
 */
 Creature.prototype.onSleepTurn = function(){
     if (this.timeLeftToSleep > 0) {
@@ -140,6 +151,9 @@ Creature.prototype.getId = function(){
 	return this.id;
 };
 
+ /*
+ Looks to see if the creature has energy remaining. If it does not it will pass out.
+  */
  Creature.prototype.energyRemaining = function(){
      if(this.energy <= 0){
          this.onNoEnergy();
@@ -147,7 +161,8 @@ Creature.prototype.getId = function(){
  }
 
 /*
-Removes the given amount of health from the creature and calls the onHit event
+Deals the given damage given with damage reduction based on defence. There is a minimum amount of damage that can be
+done on a hit. Also calls wakeUp if the creature is asleep. Also will call onDeath if the damage kills you.
 */
 Creature.prototype.hit = function(damage,direction){
     var damageTaken = damage - this.defence;
@@ -167,19 +182,12 @@ Creature.prototype.hit = function(damage,direction){
 };
 
 /*
-Adds the given amount of health to the given creature.
+Adds the given amount of health to the given creature. Will not heal you if you are already dead.
 */
 Creature.prototype.heal = function(healAmount){
 	if(this.health > 0){
         this.health+=healAmount;
     }
 };
-
-/*
-Returns the creature's name.
-*/
-Creature.prototype.getName = function() {
-    return this.name;
-}
 
 exports.Creature = Creature;

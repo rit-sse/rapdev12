@@ -232,6 +232,10 @@ describe( "world.js suite", function() {
               expect(miniGrid.tiles[i].occupant).toEqual(null);
           }
       }
+      expect(1).toEqual(miniGrid.getAllCreatures().length);
+
+  });
+  it("finds impassable objects in miniGrid", function(){
 
   });
 
