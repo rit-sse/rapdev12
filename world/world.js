@@ -52,7 +52,7 @@ function World( jsonObject ) {
 /* addCreature - puts a creature on the board
  * creature - creature instance that is being added
  * tile - OPTIONAL parameter which places the creature on the board
- * if tile is null, it places the creature into a random valid tile
+ * if tile is not included, it places the creature into a random valid tile
  *
  * returns the tile the creature was added to
  */
@@ -71,7 +71,7 @@ World.prototype.addCreature = function( creature, tile ) {
 	
 	var creTile;
 	if (arguments.length == 2 ){
-		creTile = tile;
+		creTile = this.getTile(tile.row, tile.col);
 	}
 	else{
 		creTile = this.getRandomValidTile();
