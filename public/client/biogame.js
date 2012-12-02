@@ -1,5 +1,5 @@
 
-SCROLL_SPEED = 10;
+SCROLL_SPEED = 30;
 
 function BioGame(stage) {
 	this.viewport = new Kinetic.Layer();
@@ -17,9 +17,12 @@ function BioGame(stage) {
  */
 BioGame.prototype.initGame = function(data) {
     // Create a map with the provided tile data
-    this.map.loadTileData(data.map);
-    this.mapCreatures.loadCreatureClassData(data.creatureClasses);
-    this.mapCreatures.loadCreatureData(data.creatures);
+    if (!this.initialized) {
+        this.initialized=true;
+        this.map.loadTileData(data.map);
+        this.mapCreatures.loadCreatureClassData(data.creatureClasses);
+        this.mapCreatures.loadCreatureData(data.creatures);
+    }
 }
 
 /*
@@ -51,7 +54,7 @@ window.onload = function() {
       height: wrapper.height()
   });
   
-  var socket = io.connect('http://wawlaptop.student.rit.edu:3000');
+  var socket = io.connect('http://localhost:3000');
 
   biogame = new BioGame(stage);
   

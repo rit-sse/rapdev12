@@ -16,7 +16,10 @@ function preloadImage(location,waiter) {
         }
     } else {
         if (preloadedImages[location].loaded) {
-            waiter(preloadedImages[location]);
+            if (waiter) {
+                waiter(preloadedImages[location]);
+            }
+            return preloadedImages[location];
         } else {
             preloadedImages[location].waiters.push(waiter);
         }
@@ -31,3 +34,8 @@ preloadImage("/assets/images/tiles/grass.png");
 preloadImage("/assets/images/tiles/rock.png");
 preloadImage("/assets/images/tiles/sand.png");
 preloadImage("/assets/images/tiles/water.png");
+preloadImage("/assets/images/misc_animations/attack1.png");
+preloadImage("/assets/images/misc_animations/death1.png");
+preloadImage("/assets/images/misc_animations/effect01.png");
+preloadImage("/assets/images/misc_animations/effect2.png");
+preloadImage("/assets/images/misc_animations/zzz.png");
