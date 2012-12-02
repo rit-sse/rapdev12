@@ -50,7 +50,7 @@ function World( jsonObject ) {
 };
 
 World.prototype.addCreature = function( creature ) {
-	if ( this.creatureClasses.indexOf( creature.classId ) == -1 ) {
+	if ( ! this.creatureClassExists( creature.classId ) ) {
 		this.creatureClasses.push( {
 			"id": creature.classId,
 			"name": creature.name,
@@ -64,6 +64,16 @@ World.prototype.addCreature = function( creature ) {
 	this.activeCreatures.push( creature );
 	randTile.occupant = creature.getId();
 };
+
+World.prototype.creatureClassExists = function( classId ) {
+	var classFoundFlag = false;
+	for( var i = 0; i < this.creatureClasses.length && !classFoundFlag; i++ ) {
+		if ( this.creatureClasses[i].id == classId ) {
+			classFoundFlag = true;
+		}
+	}
+	return classFoundFlag;
+}
 
 World.prototype.populateWithItems = function() {
 	
