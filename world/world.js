@@ -211,6 +211,21 @@ World.prototype.getCreatureClassesForClient = function() {
 	return this.creatureClasses;
 }
 
+World.prototype.createMiniGrid = function(creatureId){
+    var miniGrid = new MiniGrid();
+    var creatureLocation = this.getCreaturePosition(creatureId);
+    for(var i = -2; i <= 2; i++){
+        for(var j = -2; j <= 2; j++){
+            var tile = this.getTile(creatureLocation.row + i, creatureLocation.col + j);
+            if(tile == null){
+                tile = new Tile(null,null,creatureLocation.row + i, creatureLocation.col + j);
+            }
+            miniGrid.addTile(tile);
+        }
+    }
+    return miniGrid;
+}
+
 World.prototype.getCreaturesForClient = function() {
 	var clientCreatures = [];
 	for ( var i = 0; i < this.activeCreatures.length; i++ ) {
