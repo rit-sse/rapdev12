@@ -3,13 +3,15 @@
 /*
 Initiates the creatures health, energy, attack, defence, speed.
 */
-function Creature(world,attack,defence,speed){
+function Creature(name, classId, world,attack,defence,speed){
 	this.world = world;
 	this.health = 100;
 	this.energy = 100;
 	this.attack = attack;
 	this.defence = defence;
 	this.speed = speed;
+  this.classId = classId;
+  this.name = name;
 };
 
 /*
@@ -59,7 +61,6 @@ Creature.prototype.getTimeToSleep = function(){
 Main method that will be called that the maker of the creature will implement.
 */
 Creature.prototype.act = function(){
-    return 'creature acts';
 };
 
 /*
@@ -120,14 +121,6 @@ Creature.prototype.getId = function(){
 };
 
 /*
-This is not needed? The world should know this.
-*/
-Creature.prototype.setPos = function(row,col){
-	this.row = row;
-	this.col = col;
-};
-
-/*
 Removes the given amount of health from the creature.
 */
 Creature.prototype.removeHealth = function(damage){
@@ -140,3 +133,5 @@ Adds the given amount of health to the given creature.
 Creature.prototype.heal = function(healAmount){
 	this.health+=healAmount
 };
+
+exports.Creature = Creature;

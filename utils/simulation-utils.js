@@ -2,7 +2,7 @@
  * Used by creatures to indicate moving on the map.
  * North is up on the screen, east is right.
  */
-var Direction = {
+exports.Direction = {
     NORTH: 0,
     NORTHEAST: 1,
     EAST: 2,

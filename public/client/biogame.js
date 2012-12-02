@@ -1,7 +1,7 @@
 
 SCROLL_SPEED = 10;
 
-var BioGame = function BioGame(stage) {
+function BioGame(stage) {
 	this.viewport = new Kinetic.Layer();
 	this.viewport.setDraggable(true);
 	stage.add(this.viewport);
@@ -22,130 +22,104 @@ BioGame.prototype.initGame = function(data) {
     this.mapCreatures.loadCreatureData(data.creatures);
 }
 
+/*
+ * Applies game state changes from the server to the client
+ */
+BioGame.prototype.applyDelta = function(delta) {
+	for (var i = 0; i < delta.operations.length; i++) {
+		var operation = delta.operations[i];
+
+		if (operation.type == "creature") {
+			this.mapCreatures.applyOperation(operation.action, operation.data);
+		} else if (operation.type == "creatureclass") {
+			//TODO
+		}
+	}
+}
+
 
 /*
  * Create a websocket to the server and request
  * the game state when loading the window.
  */
 window.onload = function() {
-    //TODO: send websockets request to server API
-    //  to get the initail game state (send to initGame)
-    //
+  
+  var wrapper = $("#biogame");
+  window.stage = new Kinetic.Stage({
+      container: 'biogame',
+      width: wrapper.width(),
+      height: wrapper.height()
+  });
 
+  biogame = new BioGame(stage);
+  
+  biogame.splash = new Splash(stage, function() {
+    biogame.viewport.draw();
+  });
 
-    var wrapper = $("#biogame");
+  var socket = io.connect('http://localhost:3000');
 
-    window.stage = new Kinetic.Stage({
-        container: 'biogame',
-        width: wrapper.width(),
-        height: wrapper.height()
-    });
+  socket.on('connected', function(data) {
+    biogame.splash.SetPercent(0.5);
+  });
 
-    biogame = new BioGame(stage);
-    
-    biogame.splash = new Splash(stage, function() {
-        // Test tile loading
-        biogame.initGame({
-            "map": [
-                [ "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass" ],
-                [ "grass", "grass", "rock", "grass", "grass", "grass", "grass", "rock", "grass", "grass" ],
-                [ "grass", "grass", "rock", "grass", "grass", "grass", "grass", "rock", "grass", "grass" ],
-                [ "grass", "grass", "rock", "grass", "grass", "grass", "grass", "rock", "grass", "grass" ],
-                [ "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass" ],
-                [ "grass", "water", "grass", "grass", "grass", "grass", "grass", "grass", "water", "grass" ],
-                [ "grass", "grass", "water", "grass", "grass", "grass", "grass", "water", "grass", "grass" ],
-                [ "grass", "grass", "grass", "sand", "sand", "sand", "sand", "grass", "grass", "grass" ],
-                [ "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass" ],
-                [ "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass" ]
-            ],
-            "creatureClasses": [
-        {
-          "id": 1,
-          "name": "Redshirt",
-          "speed": 2,
-          "strength": 1,
-          "assets": {
-            "color": "red",
-          }
-        },
-        {
-          "id": 2,
-          "name": "Officer",
-          "speed": 10,
-          "strength": 10,
-          "assets": {
-            "color": "gold",
-          }
-        }
-      ],
-      "creatures": [
-        {
-          "id": 1,
-          "class": 2,
-          "name": "Kirk",
-          "x": 5,
-          "y": 5
-        },
-        {
-          "id": 2,
-          "class": 1,
-          "name": "Bob",
-          "x": 2,
-          "y": 2
-        },
-        {
-          "id": 3,
-          "class": 1,
-          "name": "Joe",
-          "x": 7,
-          "y": 2
-        }
-      ]
-        });
+  // Test message
+  socket.on('echo', function(data) {
+    console.log(data);
+  });
 
-        // Add keyboard input to the map
-        $(document).keydown(function(e) {
-            switch (e.keyCode) {
-                case 87:	// w
-                case 38: 	// up
-                    biogame.viewport.setY(biogame.viewport.getY() + SCROLL_SPEED);
-                    break;
+  socket.on('count', function(data) {
+    console.log(data);
+  });
 
-                case 65:	// a
-                case 37:	// left
-                    biogame.viewport.setX(biogame.viewport.getX() + SCROLL_SPEED);
-                    break;
+  socket.on('push_diff', function(data){
+    console.log(data);
+    biogame.applyDelta(data);
+  });
 
-                case 83:	// s
-                case 40:	// down
-                    biogame.viewport.setY(biogame.viewport.getY() - SCROLL_SPEED);
-                    break;
+  socket.on('get_map', function(data){
+    console.log(data);
+    biogame.initGame(data);
+    biogame.splash.SetPercent(1);
+  });
 
-                case 68:	// d
-                case 39:	// right
-                    biogame.viewport.setX(biogame.viewport.getX() - SCROLL_SPEED);
-                    break;
+  $('#sendRequest').click(function(){
+    socket.emit('get_map');
+  });
 
-                default:
-                    return;
-            }
+  // Add keyboard input to the map
+  $(document).keydown(function(e) {
+    switch (e.keyCode) {
+      case 87:	// w
+      case 38: 	// up
+        biogame.viewport.setY(biogame.viewport.getY() + SCROLL_SPEED);
+        break;
 
-            biogame.viewport.draw();
-            e.preventDefault();
-        });
-    });
-    
-    var per = 0.0;
-    var slowness = 500;
-    var fakeLoad = function() {
-        per+=0.1;
-        biogame.splash.SetPercent(per);
-        if (biogame.splash && per <=1) {
-            setTimeout(fakeLoad,slowness)
-        }
+      case 65:	// a
+      case 37:	// left
+        biogame.viewport.setX(biogame.viewport.getX() + SCROLL_SPEED);
+        break;
+
+      case 83:	// s
+      case 40:	// down
+        biogame.viewport.setY(biogame.viewport.getY() - SCROLL_SPEED);
+        break;
+
+      case 68:	// d
+      case 39:	// right
+        biogame.viewport.setX(biogame.viewport.getX() - SCROLL_SPEED);
+        break;
+
+      default:
+        return;
     }
-    fakeLoad();
+
+    biogame.viewport.draw();
+    e.preventDefault();
+
+  });
 }
+    
 
 
 /* Updates the canvas's size when the window size changes

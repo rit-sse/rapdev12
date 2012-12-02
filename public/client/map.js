@@ -3,8 +3,8 @@
 TILE_SIZE = 64;
 
 /**
- * Initializes a Map object
- * @param {Kinetic.Layer} viewport The Kinetic layer in which to draw the map
+ * Initializes a Map object, the map terrain layer
+ * @param {Kinetic.Layer} viewport - The Kinetic layer in which to draw the terrain
  */
 function Map(viewport) {
 	this.viewport = viewport;
@@ -15,7 +15,7 @@ function Map(viewport) {
  * Populates the tiles array with Objects containing Kinetic Images, the node
  * IDs, and the tile types, adds the Images to the viewport, and tells the
  * viewport to draw.
- * @param {Array<Array<String>>} tileData Each map tile's type in the grid
+ * @param {Array<Array<String>>} tileData - Each map tile's type in the grid
  */
 Map.prototype.loadTileData = function(tileData) {
 	this.tiles = [];
@@ -28,6 +28,10 @@ Map.prototype.loadTileData = function(tileData) {
 			// Create a rectangle to represent the tile
 			var imgObj = new Image();
 			imgObj.src = "assets/images/tiles/" + tileData[row][col] + ".png";
+			imgObj.onload = function () {
+				biogame.viewport.draw();
+			}
+
 			var image = new Kinetic.Image({
 				x: col * TILE_SIZE,
 				y: row * TILE_SIZE,

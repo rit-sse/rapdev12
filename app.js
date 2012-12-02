@@ -4,11 +4,14 @@
 
 var express = require('express')
   , routes = require('./routes')
+  , sim = require('./sim')
+  , world = require('./world/world')
   , comm = require('./comm')
   , user = require('./routes/user')
   , http = require('http')
   , path = require('path')
-  , uploads = require('./routes/file_upload');
+  , uploads = require('./routes/file_upload')
+  , fs = require('fs');
 
 var app = express();
 
@@ -36,14 +39,27 @@ app.get('/file_upload', uploads.index);
 app.post('/file_upload', uploads.post);
 
 var server = http.createServer(app)
+var arguments = process.argv.splice(2);
+
+var creature_file = null
+if(arguments.size != 0){
+  creature_file = path.join(__dirname, arguments[0]);
+  if(!fs.existsSync(creature_file)){
+    throw {
+      name : "File Error",
+      message : "File provided does not exist"
+    }
+  }
+}
 
 server.listen(app.get('port'), function() {
   console.log("Express server listening on port " + app.get('port'));
 });
 
-// Set up testing module
-sim = require('./tests/comm')
+sim = require('./sim')
 // Set up comm module and socket.io
 var io = require('socket.io').listen(server);
 sim.use_comm(comm);
+world.use_comm(comm);
+sim.startSim(creature_file);
 comm.start(io, sim);
