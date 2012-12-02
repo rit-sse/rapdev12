@@ -188,6 +188,10 @@ World.prototype.attackCreature = function(attackerId, direction) {
     //if this tile is valid, grab the occupant
     if (locationToAttack){
         var occupant = locationToAttack.occupant;
+        delta = new Delta({type:"creature", action: "attack",
+            data: {attackerX: attackerPosition.col, attackerY: attackerPosition.row,
+                   targetX: locationToAttack.col, targetY: attackerPosition.row}});
+        comm.push_diff(delta);
         if (occupant){
             occupant.onHit();
             console.log("Creature is attacking to the " + direction + "!");
@@ -202,7 +206,7 @@ World.prototype.moveCreature = function( id, direction ) {
 	var creaturePosition = this.getCreaturePosition(id);
 	var nextTile = this.getAdjacentTile(creaturePosition, direction);
 	
-	var newPos = [nextTile.row, nextTile.col]
+	var newPos = [nextTile.col, nextTile.row]
 	if (newPos[0] < 0 || newPos[1] < 0 ||
 		newPos[0] >= this.map.length || newPos[1] >= this.map[0].length){
 		this.creatures[id].onCollision();
