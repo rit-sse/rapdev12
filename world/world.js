@@ -132,8 +132,8 @@ World.prototype.getAdjacentTile = function(tile, direction) {
 	}else if (direction == Direction.SOUTHEAST){
 		modPos = [1,1];
 	}
-	nRow = tRow + modPos[0];
-	nCol = tCol + modPos[1];
+	nRow = tRow + modPos[1];
+	nCol = tCol + modPos[0];
 
 	return ( this.isOutOfBounds( [nRow,nCol] ) ) ? null : this.getTile(nRow, nCol);
 };
