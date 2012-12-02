@@ -49,7 +49,14 @@ function World( jsonObject ) {
 	this.items = [];
 };
 
-World.prototype.addCreature = function( creature ) {
+/* addCreature - puts a creature on the board
+ * creature - creature instance that is being added
+ * tile - OPTIONAL parameter which places the creature on the board
+ * if tile is null, it places the creature into a random valid tile
+ *
+ * returns the tile the creature was added to
+ */
+World.prototype.addCreature = function( creature, tile ) {
 	if ( this.creatureClasses.indexOf( creature.classId ) == -1 ) {
 		this.creatureClasses.push( {
 			"id": creature.classId,
@@ -59,10 +66,18 @@ World.prototype.addCreature = function( creature ) {
 		} );
 	}
 	this.creatures.push( creature );
-	var randTile = this.getRandomValidTile();
 	creature.setId( this.creatures.length - 1 );
 	this.activeCreatures.push( creature );
-	randTile.occupant = creature.getId();
+	
+	var creTile;
+	if (arguments.length == 2 ){
+		creTile = tile;
+	}
+	else{
+		creTile = this.getRandomValidTile();
+	}
+	creTile.occupant = creature.getId();
+	return creTile;
 };
 
 World.prototype.populateWithItems = function() {
