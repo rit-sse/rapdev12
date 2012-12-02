@@ -133,6 +133,10 @@ World.prototype.moveCreature = function( id, direction ) {
 	
 	creaturePosition = this.getCreaturePosition(id);
 	newPos = [creaturePosition.row + modPos[0], creaturePosition.col + modPos[1]];
+	if (newPos[0] < 0 || newPos[1] < 0 ||
+		newPos[0] > this.map.length || newPos[1] > this.map[0].length){
+		this.creatures.onCollision();
+	}
 	tileCheck = this.getTerrainAtTile(newPos[0],newPos[1]).passable == true
 							&& this.getInhabitantAtTile(newPos[0],newPos[1]);
 	if (tileCheck) {
