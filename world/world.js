@@ -28,9 +28,6 @@ function World( jsonObject ) {
 	//list of terrain accessed via index
 	this.terrain = jsonObject.terrain;
 	
-	//list of tiles that are passable
-	this.passableTiles = [];
-	
 	this.map = [];
 	var currentRow; var currentCol;
 	for(var i=0; i<jsonObject.map.length; i++){
@@ -40,9 +37,6 @@ function World( jsonObject ) {
 			var currentCol = currentRow[j];
 			var currentTile = new Tile(null,(this.terrain[jsonObject.map[i][j]]),i,j);
 			this.map[i].push(  currentTile  );
-			if (currentTile.terrain.passable == true){
-				this.passableTiles.push( [i,j] );
-			};
 		};
 	};
 	
@@ -198,7 +192,7 @@ World.prototype.attackCreature = function(attackerId, direction) {
     var attackerPosition = this.getCreaturePosition(attackerId);
     console.log("attacker position " + attackerPosition);
     var locationToAttack = this.getAdjacentTile(attackerPosition, direction);
-
+	
     //if this tile is valid, grab the occupant
     if (locationToAttack){
         var occupant = locationToAttack.occupant;
@@ -216,18 +210,17 @@ World.prototype.moveCreature = function( id, direction ) {
 	var creaturePosition = this.getCreaturePosition(id);
 	var nextTile = this.getAdjacentTile(creaturePosition, direction);
 	
-	var newPos = [nextTile.row, nextTile.col];
-	if (newPos[0] < 0 || newPos[1] < 0 ||
-		newPos[0] >= this.map.length || newPos[1] >= this.map[0].length){
-		console.log( "Creature with id " + id + " tried to move out of bounds" );
+	var newPos = [nextTile.row, nextTile.col]
+	
+	if (!nextTile){
 		this.creatures[id].onCollision();
 		return;
 	}
+	
 	var desiredTile = this.getTile( newPos[0], newPos[1] );
 	var tileCheck = desiredTile.terrain.passable && desiredTile.occupant == null;
 	if ( tileCheck ) {
 		this.getTile(creaturePosition.row, creaturePosition.col).occupant = null;
-		this.passableTiles.push(creaturePosition);
 		this.getTile(newPos[0], newPos[1]).occupant = id;
 		console.log( "Creature has moved to: row " + newPos[0] + ", col " + newPos[1] );
 		delta = new Delta([{type:"creature", action: "move", data: {id: id, x:newPos[0], y:newPos[1]}}]);
