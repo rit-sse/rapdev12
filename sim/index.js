@@ -42,10 +42,11 @@ exports.startSim = function(creature_file, creature_count) {
 	if(creature_file){
 		console.log(creature_file);
 		console.log("BITCHES: " + require(creature_file));
-		var creature = require(creature_file).monster(Creature,Direction,world);
+		var creature_class_instance = new Creature("my_name", 1, world, 100, 100, 100);
+		var creature = require(creature_file).monster(creature_class_instance , Direction);
     	console.log( creature );
     	for(var i = 0; i < creature_count; i++){
-			world.addCreature(creature);
+			world.addCreature(new creature());
 		}
 
 	}
