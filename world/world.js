@@ -131,13 +131,13 @@ World.prototype.moveCreature = function( id, direction ) {
 		modPos = [+1,+1];
 	}
 	
-	creaturePosition = this.getCreaturePosition(id);
-	newPos = [creaturePosition.row + modPos[0], creaturePosition.col + modPos[1]];
+	var creaturePosition = this.getCreaturePosition(id);
+	var newPos = [creaturePosition.row + modPos[0], creaturePosition.col + modPos[1]];
 	if (newPos[0] < 0 || newPos[1] < 0 ||
 		newPos[0] > this.map.length || newPos[1] > this.map[0].length){
 		this.creatures.onCollision();
 	}
-	tileCheck = this.getTerrainAtTile(newPos[0],newPos[1]).passable == true
+	var tileCheck = this.getTerrainAtTile(newPos[0],newPos[1]).passable == true
 							&& this.getInhabitantAtTile(newPos[0],newPos[1]);
 	if (tileCheck) {
 		this.getTile(creaturePosition.row, creaturePosition.col).occupant = null;
