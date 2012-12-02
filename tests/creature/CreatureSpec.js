@@ -43,13 +43,13 @@ describe("Make a creature", function(){
 	});
 	it('sleeping test', function(){
 		creature1.sleepFor(2);
-		expect(2).toEqual(creature1.getTimeToSleep());
+		expect(2).toEqual(creature1.timeLeftToSleep);
 		creature1.onSleepTurn();
-		expect(1).toEqual(creature1.getTimeToSleep());
+		expect(1).toEqual(creature1.timeLeftToSleep);
 		creature1.onSleepTurn();
-		expect(0).toEqual(creature1.getTimeToSleep());
+		expect(0).toEqual(creature1.timeLeftToSleep);
 		creature1.onSleepTurn();
-		expect(0).toEqual(creature1.getTimeToSleep());
+		expect(0).toEqual(creature1.timeLeftToSleep);
 	});
 });
 

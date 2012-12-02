@@ -10,52 +10,71 @@ function Creature(name, classId, world,attack,defence,speed){
 	this.attack = attack;
 	this.defence = defence;
 	this.speed = speed;
-  this.classId = classId;
-  this.name = name;
+    this.classId = classId;
+    this.name = name;
+    this.minHitDamage = 1;
 };
 
 /*
 Moves the creature in the given direction, calls onCollision it hits collision.
 */
 Creature.prototype.move = function(direction){
-	this.world.moveCreature(this.id,direction);
+	if(this.energy > 0 && this.health > 0 && this.timeLeftToSleep == 0){
+        this.energy-=1;
+        this.world.moveCreature(this.id,direction);
+    }
+    this.energyRemaining();
 };
 
 /*
 Moves the creature in the given direction two tiles. If there is a collision on the first step onCollision will be called an the second step will not be taken.
 */
 Creature.prototype.sprint = function(direction){
-	this.energy -= 5;
-	if(this.world.moveCreature(this.id,direction)){
-		this.world.moveCreature(this.id,direction);
-	}
+	if(this.energy >= 5 && this.health > 0  && this.timeLeftToSleep == 0){
+        this.energy -= 5;
+	    if(this.world.moveCreature(this.id,direction)){
+		    this.world.moveCreature(this.id,direction);
+	    }
+    }
+    this.energyRemaining();
 };
 
 /*
 Attacks the given direction. If a creature is there the hit creature will be given a onHit event.
 */
 Creature.prototype.attack = function(direction){
-
+    if(this.energy >= 5 && this.health > 0  && this.timeLeftToSleep == 0){
+        this.energy-=5;
+        //TODO needs to actually attack
+    }
+    this.energyRemaining();
 };
 
 /*
 Will return the player a mini grid representing a 2 radi around the creature. The mini grid will have methods to find the location of all the creatures and objects in the area.
 */
 Creature.prototype.lookAround = function(){
+    if(this.health > 0  && this.timeLeftToSleep == 0){
+
+    }
+    //TODO implement a function in world that creates a minimap and returns it.
 };
 
 /*
-Sets how long the creature will sleep for. Note: The creature can wake up eary if attacked or hungry. 
+Sets how long the creature will sleep for. Note: The creature can wake up early if attacked or hungry.
 */
 Creature.prototype.sleepFor = function(time){
-	this.timeLeftToSleep = time;
+    if(this.health > 0 &&this.timeLeftToSleep == 0){
+        this.timeLeftToSleep = time;
+    }
 };
 
 /*
-Returns the amount of time left for the creature to sleep
+Wakes the creature up from sleep and calls the onWakeUp event
 */
-Creature.prototype.getTimeToSleep = function(){
-	return this.timeLeftToSleep;
+Creature.prototype.wakeUp = function(reason){
+    this.timeLeftToSleep = 0;
+    this.onWakeUp(reason);
 };
 /*
 Main method that will be called that the maker of the creature will implement.
@@ -85,7 +104,6 @@ Creature.prototype.onWakeUp = function(reason){
 A user defined method that will let the user let out one last scream before they die.
 */
 Creature.prototype.onDeath = function(){
-	return 'You Died';
 };
 
 /*
@@ -93,9 +111,9 @@ An API defined event that counts down to when your creature sould wake up or wak
 */
 Creature.prototype.onSleepTurn = function(){
     if (this.timeLeftToSleep > 0) {
-        this.timeLeftToSleep -= 1;
+        this.timeLeftToSleep--;
     } else {
-        this.act();
+        this.wakeUp('time');
     }
 };
 
@@ -104,6 +122,7 @@ Will make your creature pass out for the rest of the turn.
 */
 Creature.prototype.onNoEnergy = function(){
 	this.passedOut = true;
+    this.timeLeftToSleep = 1;
 };
 
 /*
@@ -120,18 +139,39 @@ Creature.prototype.getId = function(){
 	return this.id;
 };
 
+ Creature.prototype.energyRemaining = function(){
+     if(this.energy <= 0){
+         this.onNoEnergy();
+     }
+ }
+
 /*
-Removes the given amount of health from the creature.
+Removes the given amount of health from the creature and calls the onHit event
 */
-Creature.prototype.removeHealth = function(damage){
-	this.health-=damage;
+Creature.prototype.hit = function(damage,direction){
+    var damageTaken = damage - this.defence;
+    if(damage>0){
+        this.health -= damage;
+    }else{
+        this.health -= this.minHitDamage;
+    }
+    if(this.timeLeftToSleep > 0){
+        this.wakeUp('hit');
+    }
+    if(this.health <= 0){
+        this.onDeath();
+    }else{
+        this.onHit(direction)
+    }
 };
 
 /*
 Adds the given amount of health to the given creature.
 */
 Creature.prototype.heal = function(healAmount){
-	this.health+=healAmount
+	if(this.health > 0){
+        this.health+=healAmount;
+    }
 };
 
 exports.Creature = Creature;
