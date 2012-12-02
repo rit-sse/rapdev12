@@ -3,7 +3,7 @@ var world_lib = require('../world/world')
   , comm
   , running = true;
 var Delta = require('../sim/Delta').Delta;
-var c = require(require('path').join(require('path').dirname(require.main.filename), "creature", "creature"));
+var c = require(require('path').join(require('path').dirname(require.main.filename), "creature", "Creature"));
 var Direction = require(require('path').join(require('path').dirname(require.main.filename), "utils", "simulation-utils")).Direction;
 var Creature = c.Creature;
 
