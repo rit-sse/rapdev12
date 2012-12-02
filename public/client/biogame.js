@@ -26,8 +26,8 @@ BioGame.prototype.initGame = function(data) {
  * Applies game state changes from the server to the client
  */
 BioGame.prototype.applyDelta = function(delta) {
-	for (var i = 0; i < delta.operation.length; i++) {
-		var operation = delta.operation[i];
+	for (var i = 0; i < delta.operations.length; i++) {
+		var operation = delta.operations[i];
 
 		if (operation.type == "creature") {
 			this.mapCreatures.applyOperation(operation.action, operation.data);
@@ -73,7 +73,8 @@ window.onload = function() {
   });
 
   socket.on('push_diff', function(data){
-    $("#output").html(data.name + "<br/>" + data.data.rand);
+    console.log(data);
+    biogame.applyDelta(data);
   });
 
   socket.on('get_map', function(data){

@@ -4,6 +4,7 @@
 var Terrain = require('../utils/world-utils').Terrain;
 var Tile = require('../world/Tile.js').Tile;
 var Direction = require('../utils/simulation-utils').Direction;
+var Delta = require('../sim/Delta').Delta;
 
 exports.World = World;
 
@@ -73,6 +74,7 @@ World.prototype.getTile = function( row, col ) {
 };
 
 World.prototype.getTerrainAtTile = function( row, col ) {
+	console.log( "(" + row + ", " + col + ")" );
 	return this.getTile(row, col).terrain;
 };
 
@@ -114,34 +116,42 @@ World.prototype.findInTiles = function( condition ) {
 World.prototype.moveCreature = function( id, direction ) {
 	var modPos;
 	if (direction == Direction.NORTH){
-		modPos = [0,-1];
-	}else if (direction == Direction.SOUTH){
-		modPos = [0,+1];
-	}else if (direction == Direction.EAST){
-		modPos = [+1,0];
-	}else if (direction == Direction.WEST){
 		modPos = [-1,0];
+	}else if (direction == Direction.SOUTH){
+		modPos = [1,0];
+	}else if (direction == Direction.EAST){
+		modPos = [0,1];
+	}else if (direction == Direction.WEST){
+		modPos = [0,-1];
 	}else if (direction == Direction.NORTHWEST){
 		modPos = [-1,-1];
 	}else if (direction == Direction.NORTHEAST){
-		modPos = [+1,-1];
+		modPos = [-1,1];
 	}else if (direction == Direction.SOUTHWEST){
-		modPos = [-1,+1];
+		modPos = [1,-1];
 	}else if (direction == Direction.SOUTHEAST){
-		modPos = [+1,+1];
+		modPos = [1,1];
 	}
 	
-	creaturePosition = this.getCreaturePosition(id);
-	newPos = [creaturePosition.row + modPos[0], creaturePosition.col + modPos[1]];
-	tileCheck = this.getTerrainAtTile(newPos[0],newPos[1]).passable == true
-							&& this.getInhabitantAtTile(newPos[0],newPos[1]);
-	if (tileCheck) {
+	var creaturePosition = this.getCreaturePosition(id);
+	var newPos = [creaturePosition.row + modPos[0], creaturePosition.col + modPos[1]];
+	if (newPos[0] < 0 || newPos[1] < 0 ||
+		newPos[0] >= this.map.length || newPos[1] >= this.map[0].length){
+		this.creatures[id].onCollision();
+		return;
+	}
+	var desiredTile = this.getTile( newPos[0], newPos[1] );
+	var tileCheck = desiredTile.terrain.passable && desiredTile.occupant == null;
+	if ( tileCheck ) {
 		this.getTile(creaturePosition.row, creaturePosition.col).occupant = null;
 		this.passableTiles.push(creaturePosition);
 		this.getTile(newPos[0], newPos[1]).occupant = id;
+		console.log( "Creature has moved to: row " + newPos[0] + ", col " + newPos[1] );
+		delta = new Delta([{type:"creature", action: "move", data: {id: 0, x:newPos[0], y:newPos[1]}}]);
+		comm.push_diff(delta);
 	}
 	else {
-		this.creatures.onCollision();
+		this.creatures[id].onCollision();
 	}
 	return tileCheck;
 }
