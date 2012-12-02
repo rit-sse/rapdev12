@@ -147,7 +147,7 @@ World.prototype.moveCreature = function( id, direction ) {
 		this.passableTiles.push(creaturePosition);
 		this.getTile(newPos[0], newPos[1]).occupant = id;
 		console.log( "Creature has moved to: row " + newPos[0] + ", col " + newPos[1] );
-		delta = new Delta([{id: 0, x:newPos[0], y:newPos[1]}]);
+		delta = new Delta([{type:"creature", action: "move", data: {id: 0, x:newPos[0], y:newPos[1]}}]);
 		comm.push_diff(delta);
 	}
 	else {
