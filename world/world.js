@@ -209,13 +209,14 @@ World.prototype.attackCreature = function(attackerId, direction) {
 World.prototype.moveCreature = function( id, direction ) {
 	var creaturePosition = this.getCreaturePosition(id);
 	var nextTile = this.getAdjacentTile(creaturePosition, direction);
-	
-	var newPos = [nextTile.row, nextTile.col]
-	
-	if (!nextTile){
+
+	if ( nextTile == null ){
+		console.log( "Creature with id " + id + " tried to move out of bounds." );
 		this.creatures[id].onCollision();
 		return;
 	}
+
+	var newPos = [nextTile.row, nextTile.col]
 	
 	var desiredTile = this.getTile( newPos[0], newPos[1] );
 	var tileCheck = desiredTile.terrain.passable && desiredTile.occupant == null;
