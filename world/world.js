@@ -69,14 +69,19 @@ World.prototype.populateWithItems = function() {
 	
 };
 
+/* getTile - returns a tile on the map
+ * if outside the bounds of the board; returns null
+ */
 World.prototype.getTile = function( row, col ) {
+	if ( row < 0 || col < 0 ||
+		row > this.map.length || col > this.map[0].length)
 	return this.map[row][col];
 };
 
 /*
  * getAdjacentTile - returns an adjacent tile based on a direction
  *
- * tile - the inital tile
+ * tile - the initial tile
  * direction - which adjacent tile to look at [NORTH | SOUTH][EAST | WEST]
  * returns the given tile
  */
