@@ -3,6 +3,7 @@
 
 var Terrain = require('../utils/world-utils').Terrain;
 var Tile = require('../world/Tile.js').Tile;
+var Direction = require('../utils/simulation-utils').Direction;
 
 exports.World = World;
 
