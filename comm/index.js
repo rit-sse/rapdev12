@@ -29,7 +29,7 @@ exports.push_diff = function(diff){
   for (var k in globals.updates) {
     if ('push_diff' == k) {
       for (var s = 0; s < allSockets.length; s++){
-        console.log(allSockets[s]);
+        //console.log(allSockets[s]);
         allSockets[s].emit('push_diff', diff);
       }
     }

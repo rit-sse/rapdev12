@@ -58,9 +58,10 @@ window.onload = function() {
   });
 
   var socket = io.connect('http://localhost:3000');
-
+  biogame.socket = socket;
+  
   socket.on('connected', function(data) {
-    biogame.splash.SetPercent(0.5);
+    //biogame.splash.SetPercent(0.5);
   });
 
   // Test message
@@ -79,8 +80,8 @@ window.onload = function() {
 
   socket.on('get_map', function(data){
     console.log(data);
-    biogame.initGame(data);
-    biogame.splash.SetPercent(1);
+    setTimeout(function() {biogame.initGame(data)},1000)
+    biogame.splash.Disperse(1);
   });
 
   $('#sendRequest').click(function(){

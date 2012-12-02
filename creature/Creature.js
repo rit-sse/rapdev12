@@ -3,11 +3,11 @@
 /*
 Initiates the creatures health, energy, attack, defence, speed.
 */
-function Creature(name, classId, world,attack,defence,speed){
+function Creature(name, classId, world,offense,defence,speed){
 	this.world = world;
 	this.health = 100;
 	this.energy = 100;
-	this.attack = attack;
+	this.offence = offense;
 	this.defence = defence;
 	this.speed = speed;
   this.classId = classId;
@@ -35,7 +35,7 @@ Creature.prototype.sprint = function(direction){
 Attacks the given direction. If a creature is there the hit creature will be given a onHit event.
 */
 Creature.prototype.attack = function(direction){
-
+    this.world.attackCreature(this.id, direction);
 };
 
 /*
@@ -139,6 +139,10 @@ Returns the creature's name.
 */
 Creature.prototype.getName = function() {
     return this.name;
+}
+
+Creature.prototype.toString = function() {
+    return "to String";
 }
 
 exports.Creature = Creature;
