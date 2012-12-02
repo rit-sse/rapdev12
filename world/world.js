@@ -118,8 +118,8 @@ World.prototype.getTile = function( row, col ) {
  */
 World.prototype.getAdjacentTile = function(tile, direction) {
 	var tRow = tile.row;
-    var tCol = tile.col;
-    var modPos;
+  var tCol = tile.col;
+  var modPos;
 
 	if (direction == Direction.NORTH){
 		modPos = [-1,0];
@@ -138,11 +138,16 @@ World.prototype.getAdjacentTile = function(tile, direction) {
 	}else if (direction == Direction.SOUTHEAST){
 		modPos = [1,1];
 	}
-	nRow = tRow + modPos[1];
-	nCol = tCol + modPos[0];
-	
-	return this.getTile(nRow, nCol);
+	nRow = tRow + modPos[0];
+	nCol = tCol + modPos[1];
+
+	return ( isOutOfBounds( [nRow,nCol] ) ) ? null : this.getTile(nRow, nCol);
 };
+
+World.prototype.isOutOfBounds( coords ) {
+	return ( nRow < 0 || nRow >= this.map.length ||
+					 nCol < 0 || nCol >= this.map[0].length );
+}
 
 World.prototype.getTerrainAtTile = function( row, col ) {
 	console.log( "(" + row + ", " + col + ")" );
@@ -211,9 +216,10 @@ World.prototype.moveCreature = function( id, direction ) {
 	var creaturePosition = this.getCreaturePosition(id);
 	var nextTile = this.getAdjacentTile(creaturePosition, direction);
 	
-	var newPos = [nextTile.row, nextTile.col]
+	var newPos = [nextTile.row, nextTile.col];
 	if (newPos[0] < 0 || newPos[1] < 0 ||
 		newPos[0] >= this.map.length || newPos[1] >= this.map[0].length){
+		console.log( "Creature with id " + id + " tried to move out of bounds" );
 		this.creatures[id].onCollision();
 		return;
 	}
