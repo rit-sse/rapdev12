@@ -71,6 +71,9 @@ MapCreatures.prototype.loadCreatureClassData = function(data) {
 
 
 MapCreatures.prototype.loadCreatureData = function(data) {
+    if (!this.loaded) {
+        this.loaded = true;
+    }
 	for (var i in data) {
 		var creature = data[i];
 
@@ -97,11 +100,13 @@ MapCreatures.prototype.loadCreatureData = function(data) {
 
 
 MapCreatures.prototype.moveCreature = function(creatureId, x, y) {
-	var sprite = this.creatures[creatureId].sprite;
-	sprite.setX(x * TILE_SIZE);
-	sprite.setY(y * TILE_SIZE);
+    if (this.loaded) {
+        var sprite = this.creatures[creatureId].sprite;
+        sprite.setX(x * TILE_SIZE);
+        sprite.setY(y * TILE_SIZE);
 
-	this.viewport.draw();
+        this.viewport.draw();
+    }
 }
 
 

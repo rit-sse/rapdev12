@@ -64,7 +64,7 @@ if(argv.h || argv.help){
 
 var creature_file = null
 if(argv._.length != 0){
-  creature_file = path.join(__dirname, arguments[0]);
+  creature_file = path.join(__dirname, argv._[0]);
   if(!fs.existsSync(creature_file)){
     throw {
       name : "File Error",
