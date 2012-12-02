@@ -12,5 +12,5 @@ monster.act = function() {
 };
 
 
-
+console.log( "Monster: " + monster );
 exports.monster = monster;

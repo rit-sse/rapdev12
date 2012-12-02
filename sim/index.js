@@ -21,6 +21,7 @@ exports.startSim = function(creature_file) {
 	exports.world = world;
 	if(creature_file){
 		var creature = require(creature_file);
+    console.log( creature );
 		world.addCreature(creature.monster);
 	}
 

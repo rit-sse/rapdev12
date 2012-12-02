@@ -73,6 +73,7 @@ World.prototype.getTile = function( row, col ) {
 };
 
 World.prototype.getTerrainAtTile = function( row, col ) {
+	console.log( "(" + row + ", " + col + ")" );
 	return this.getTile(row, col).terrain;
 };
 
@@ -134,8 +135,8 @@ World.prototype.moveCreature = function( id, direction ) {
 	creaturePosition = this.getCreaturePosition(id);
 	newPos = [creaturePosition.row + modPos[0], creaturePosition.col + modPos[1]];
 	if (newPos[0] < 0 || newPos[1] < 0 ||
-		newPos[0] > this.map.length || newPos[1] > this.map[0].length){
-		this.creatures.onCollision();
+		newPos[0] >= this.map.length || newPos[1] >= this.map[0].length){
+		this.creatures[id].onCollision();
 	}
 	tileCheck = this.getTerrainAtTile(newPos[0],newPos[1]).passable == true
 							&& this.getInhabitantAtTile(newPos[0],newPos[1]);
@@ -145,7 +146,7 @@ World.prototype.moveCreature = function( id, direction ) {
 		this.getTile(newPos[0], newPos[1]).occupant = id;
 	}
 	else {
-		this.creatures.onCollision();
+		this.creatures[id].onCollision();
 	}
 	return tileCheck;
 }
