@@ -113,6 +113,19 @@ World.prototype.findInTiles = function( condition ) {
 	return valid;
 }
 
+/*
+* Enables a creature to attack another location. If a creature is at a location, then
+* attackerId: The creature that is initiating the attack.
+* direction: The direction that the initiating creature is attacking in.
+*/
+World.prototype.attackCreature = function(attackerId, direction) {
+    var attackerPosition = this.getCreaturePosition(attackerId);
+    var locationToAttack = this.getAdjacentTile(attackerPosition, direction);
+    if (locationToAttack.occupant){
+
+    }
+}
+
 
 World.prototype.moveCreature = function( id, direction ) {
 	var modPos;

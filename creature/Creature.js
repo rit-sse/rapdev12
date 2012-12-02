@@ -35,7 +35,7 @@ Creature.prototype.sprint = function(direction){
 Attacks the given direction. If a creature is there the hit creature will be given a onHit event.
 */
 Creature.prototype.attack = function(direction){
-
+    world.attack(classId, direction);
 };
 
 /*
