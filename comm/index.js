@@ -6,8 +6,8 @@ var globals = {};
 var allSockets = [];
 
 exports.push_all_updates = function() {
-  for (var name = 0; name < globals.updates.size; name++) {
-    for (var s = 0; s < allSockets.size; s++){
+  for (var name = 0; name < globals.updates.length; name++) {
+    for (var s = 0; s < allSockets.length; s++){
       var result = globals.updates[name]()
       allSockets[s].emit(name, result);
     }
@@ -17,7 +17,7 @@ exports.push_all_updates = function() {
 exports.push_update = function(name) {
   for (var k in globals.updates) {
     if (name == k) {
-      for (var s = 0; s < allSockets.size; s++){
+      for (var s = 0; s < allSockets.length; s++){
         var result = globals.updates[name]()
         allSockets[s].emit(name, result);
       }
@@ -28,7 +28,8 @@ exports.push_update = function(name) {
 exports.push_diff = function(diff){
   for (var k in globals.updates) {
     if ('push_diff' == k) {
-      for (var s =0; s < allSockets.size; s++){
+      for (var s = 0; s < allSockets.length; s++){
+        console.log(allSockets[s]);
         allSockets[s].emit('push_diff', diff);
       }
     }
@@ -38,7 +39,8 @@ exports.push_diff = function(diff){
 exports.start = function(io, simulation) {
   io.sockets.on('connection', function (socket) {
     socket.emit('connected');
-    socket.emit('get_map', simulation.world);
+    console.log("sending world");
+    socket.emit('get_map', simulation.world.toClientDump());
 
     // Register client hooks
     for (var name in simulation.client_hooks) {
