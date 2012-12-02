@@ -15,13 +15,15 @@ exports.client_hooks = {
 
 exports.updates = {};
 
+
 exports.startSim = function(creature_file) {
 	world = new world_lib.World(world_lib.worldjson);
-
+	exports.world = world;
 	if(creature_file){
 		var creature = require(creature_file);
 		world.addCreature(creature.monster);
 	}
+
 	var turn = 0;
 	var a_turn = function(){	
 		turn++;
