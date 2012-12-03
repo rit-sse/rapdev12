@@ -1,5 +1,6 @@
 var World = require('../../world/world.js').World;
 var Creature = require('../../creature/Creature.js').Creature;
+var Tile = require('../../world/Tile.js').Tile;
 
 describe( "world.js suite", function() {
 
@@ -70,17 +71,6 @@ describe( "world.js suite", function() {
     expect( tile.terrain.passable ).toBe( false );
     expect( tile.terrain.name ).toEqual( "rock" );
     expect( tile.item ).toEqual( null );
-  });
-  
-  it( "returns the correct passable tiles", function() {
-    
-    expect( world.getTerrainAtTile( 0, 3).passable ).toEqual( false )
-    
-    expect( world.passableTiles ).toEqual([
-      [0,0],[0,1],[0,2],[0,4],[0,5],[1,0],[1,3],[1,5],
-      [2,3],[2,4],[3,0],[3,3],[3,5],[4,2],[4,4],
-      [4,5],[5,0],[5,2],[5,3],[5,4]
-    ]);
   });
   
   it( "returns the correct terrain at a tile", function() {
@@ -210,6 +200,29 @@ describe( "world.js suite", function() {
         "col": creatureTile.col
       }]
     });
+  });
+  
+  it( "correctly places a creature in a given tile, Part1", function() {
+    var tile = new Tile(null, world.terrain[0], 0, 0);
+    var creTile = world.addCreature( aCreature, tile );
+    wTile = world.getTile(tile.row, tile.col);
+    expect(wTile).toEqual(creTile);
+  });
+  
+  it( "correctly places a creature in a given tile, Part2", function() {
+    var tile = new Tile(null, world.terrain[0], 0, 0);
+    /* var creTile = */ world.addCreature( aCreature, tile );
+    var comTile = world.getCreaturePosition( aCreature.id );
+    var wTile = world.getTile(tile.row, tile.col);
+
+    expect(wTile).toEqual(comTile);
+  });
+  
+  it( "correctly places a creature in a random tile", function() {
+    var creTile = world.addCreature( aCreature );
+    var comTile = world.getCreaturePosition( aCreature.id );
+    expect(creTile).toEqual(comTile);
+    
   });
 
   it( "adds one creature class on duplicate creatures added", function() {

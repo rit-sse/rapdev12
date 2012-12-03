@@ -1,10 +1,10 @@
+var path = require('path')
 var world_lib = require('../world/world')
   , world
   , comm
   , running = true;
-var Delta = require('../sim/Delta').Delta;
-var c = require(require('path').join(require('path').dirname(require.main.filename), "creature", "creature"));
-var Direction = require(require('path').join(require('path').dirname(require.main.filename), "utils", "simulation-utils")).Direction;
+var c = require(path.join(path.dirname(require.main.filename), "creature", "Creature"));
+var Direction = require(path.join(path.dirname(require.main.filename), "utils", "simulation-utils")).Direction;
 var Creature = c.Creature;
 
 exports.use_comm = function(c) {
@@ -42,7 +42,7 @@ exports.startSim = function(creature_file, creature_count) {
 	if(creature_file){
 		console.log(creature_file);
 		console.log("BITCHES: " + require(creature_file));
-		var creature_class_instance = new Creature("my_name", 1, world, 100, 100, 100);
+		var creature_class_instance = new Creature(world);
 		var creature = require(creature_file).monster(creature_class_instance , Direction);
     	console.log( creature );
     	for(var i = 0; i < creature_count; i++){
