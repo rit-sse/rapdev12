@@ -78,7 +78,6 @@ MapCreatures.prototype.addCreatureClassToSidebar = function(creatureClass){
       '</dl>' +
     '</article>');
 
-  console.log(content);
 	$("#creature-classes").append(content);
 
 }

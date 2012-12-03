@@ -116,6 +116,10 @@ window.onload = function() {
   });
 
 
+  $(".creature-class").live("dragstart", function(event){
+    event.originalEvent.dataTransfer.setData("text", $(this).data("classid"));
+  });
+
   /* Cancel dragOver event so we can drop onto the canvas
    */
   $("#biogame canvas")[0].addEventListener("dragover", function(event){
@@ -137,7 +141,7 @@ window.onload = function() {
     console.log("(" + x + ", " + y + ")");
 
     socket.emit("add_creature", {
-      classId: 1,//event.dataTransfer.getData("text"),
+      classId: event.dataTransfer.getData("text"),
       x: x,
       y: y
     });
