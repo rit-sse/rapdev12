@@ -3,27 +3,52 @@ var world_lib = require('../world/world')
   , comm
   , running = true;
 var Delta = require('../sim/Delta').Delta;
+var c = require(require('path').join(require('path').dirname(require.main.filename), "creature", "creature"));
+var Direction = require(require('path').join(require('path').dirname(require.main.filename), "utils", "simulation-utils")).Direction;
+var Creature = c.Creature;
 
 exports.use_comm = function(c) {
   comm = c;
 }
 
+var fs = require('fs');
+
+function writeCreatureJS(name,data) {
+    fs.writeFile("./uploads/"+name, data, function(err) {
+        if(err) {
+            console.log(err);
+        } else {
+            console.log(name+" was written to disc.");
+        }
+    }); 
+}
+
 exports.client_hooks = {
   'get_map':function(){
     return(world);
+  },
+  'file_upload':function(data){
+    writeCreatureJS(data.name,data.contents)
+    return "File write attempted";
   }
 }
 
 exports.updates = {};
 
 
-exports.startSim = function(creature_file) {
+exports.startSim = function(creature_file, creature_count) {
 	world = new world_lib.World(world_lib.worldjson);
 	exports.world = world;
 	if(creature_file){
-		var creature = require(creature_file);
-    console.log( creature );
-		world.addCreature(creature.monster);
+		console.log(creature_file);
+		console.log("BITCHES: " + require(creature_file));
+		var creature_class_instance = new Creature("my_name", 1, world, 100, 100, 100);
+		var creature = require(creature_file).monster(creature_class_instance , Direction);
+    	console.log( creature );
+    	for(var i = 0; i < creature_count; i++){
+			world.addCreature(new creature());
+		}
+
 	}
 
 	var turn = 0;

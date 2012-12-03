@@ -66,6 +66,8 @@ window.onload = function() {
      });
   });
 
+  biogame.socket = socket;
+  
   socket.on('connected', function(data) {
     
   });

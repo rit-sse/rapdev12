@@ -28,9 +28,6 @@ function World( jsonObject ) {
 	//list of terrain accessed via index
 	this.terrain = jsonObject.terrain;
 	
-	//list of tiles that are passable
-	this.passableTiles = [];
-	
 	this.map = [];
 	var currentRow; var currentCol;
 	for(var i=0; i<jsonObject.map.length; i++){
@@ -40,17 +37,21 @@ function World( jsonObject ) {
 			var currentCol = currentRow[j];
 			var currentTile = new Tile(null,(this.terrain[jsonObject.map[i][j]]),i,j);
 			this.map[i].push(  currentTile  );
-			if (currentTile.terrain.passable == true){
-				this.passableTiles.push( [i,j] );
-			};
 		};
 	};
 	
 	this.items = [];
 };
 
+/* addCreature - puts a creature on the board
+ * creature - creature instance that is being added
+ * tile - OPTIONAL parameter which places the creature on the board
+ * if tile is null, it places the creature into a random valid tile
+ *
+ * returns the tile the creature was added to
+ */
 World.prototype.addCreature = function( creature ) {
-	if ( this.creatureClasses.indexOf( creature.classId ) == -1 ) {
+	if ( ! this.creatureClassExists( creature.classId ) ) {
 		this.creatureClasses.push( {
 			"id": creature.classId,
 			"name": creature.name,
@@ -59,19 +60,88 @@ World.prototype.addCreature = function( creature ) {
 		} );
 	}
 	this.creatures.push( creature );
-	var randTile = this.getRandomValidTile();
 	creature.setId( this.creatures.length - 1 );
 	this.activeCreatures.push( creature );
-	randTile.occupant = creature.getId();
+	
+	var creTile;
+	if (arguments.length == 2 ){
+		creTile = tile;
+	}
+	else{
+		creTile = this.getRandomValidTile();
+	}
+	creTile.occupant = creature.getId();
+	return creTile;
 };
+
+World.prototype.creatureClassExists = function( classId ) {
+	var classFoundFlag = false;
+	for( var i = 0; i < this.creatureClasses.length && !classFoundFlag; i++ ) {
+		if ( this.creatureClasses[i].id == classId ) {
+			classFoundFlag = true;
+		}
+	}
+	return classFoundFlag;
+}
 
 World.prototype.populateWithItems = function() {
 	
 };
 
+/* getTile - returns a tile on the map
+ * if outside the bounds of the board; returns null
+ */
 World.prototype.getTile = function( row, col ) {
-	return this.map[row][col];
+	var resTile;
+	if ( row < 0 || col < 0 ||
+		row > this.map.length || col > this.map[0].length) {
+		resTile = null
+	}
+	else {
+		resTile = this.map[row][col]
+	}
+	return resTile;
 };
+
+/*
+ * getAdjacentTile - returns an adjacent tile based on a direction
+ *
+ * tile - the initial tile
+ * direction - which adjacent tile to look at [NORTH | SOUTH][EAST | WEST]
+ * returns the given tile
+ */
+World.prototype.getAdjacentTile = function(tile, direction) {
+	var tRow = tile.row;
+  var tCol = tile.col;
+  var modPos;
+
+	if (direction == Direction.NORTH){
+		modPos = [-1,0];
+	}else if (direction == Direction.SOUTH){
+		modPos = [1,0];
+	}else if (direction == Direction.EAST){
+		modPos = [0,1];
+	}else if (direction == Direction.WEST){
+		modPos = [0,-1];
+	}else if (direction == Direction.NORTHWEST){
+		modPos = [-1,-1];
+	}else if (direction == Direction.NORTHEAST){
+		modPos = [-1,1];
+	}else if (direction == Direction.SOUTHWEST){
+		modPos = [1,-1];
+	}else if (direction == Direction.SOUTHEAST){
+		modPos = [1,1];
+	}
+	nRow = tRow + modPos[0];
+	nCol = tCol + modPos[1];
+
+	return ( this.isOutOfBounds( [nRow,nCol] ) ) ? null : this.getTile(nRow, nCol);
+};
+
+World.prototype.isOutOfBounds = function( coords ) {
+	return ( nRow < 0 || nRow >= this.map.length ||
+					 nCol < 0 || nCol >= this.map[0].length );
+}
 
 World.prototype.getTerrainAtTile = function( row, col ) {
 	console.log( "(" + row + ", " + col + ")" );
@@ -113,42 +183,48 @@ World.prototype.findInTiles = function( condition ) {
 	return valid;
 }
 
+/*
+* Enables a creature to attack another location. If a creature is at a location, then attack the creature.
+* attackerId - The creature that is initiating the attack.
+* direction - The direction that the initiating creature is attacking in.
+*/
+World.prototype.attackCreature = function(attackerId, direction) {
+    var attackerPosition = this.getCreaturePosition(attackerId);
+    console.log("attacker position " + attackerPosition);
+    var locationToAttack = this.getAdjacentTile(attackerPosition, direction);
+	
+    //if this tile is valid, grab the occupant
+    if (locationToAttack){
+        var occupant = locationToAttack.occupant;
+        if (occupant){
+            occupant.onHit();
+            console.log("Creature is attacking to the " + direction + "!");
+        } else {
+            console.log("Creature tried to attack an empty location (location " + locationToAttack + ").");
+        }
+    }
+}
+
 
 World.prototype.moveCreature = function( id, direction ) {
-	var modPos;
-	if (direction == Direction.NORTH){
-		modPos = [0,-1];
-	}else if (direction == Direction.SOUTH){
-		modPos = [0,1];
-	}else if (direction == Direction.EAST){
-		modPos = [1,0];
-	}else if (direction == Direction.WEST){
-		modPos = [-1,0];
-	}else if (direction == Direction.NORTHWEST){
-		modPos = [-1,-1];
-	}else if (direction == Direction.NORTHEAST){
-		modPos = [1,-1];
-	}else if (direction == Direction.SOUTHWEST){
-		modPos = [-1,1];
-	}else if (direction == Direction.SOUTHEAST){
-		modPos = [1,1];
-	}
-	
 	var creaturePosition = this.getCreaturePosition(id);
-	var newPos = [creaturePosition.row + modPos[0], creaturePosition.col + modPos[1]];
-	if (newPos[0] < 0 || newPos[1] < 0 ||
-		newPos[0] >= this.map.length || newPos[1] >= this.map[0].length){
+	var nextTile = this.getAdjacentTile(creaturePosition, direction);
+
+	if ( nextTile == null ){
+		console.log( "Creature with id " + id + " tried to move out of bounds." );
 		this.creatures[id].onCollision();
 		return;
 	}
+
+	var newPos = [nextTile.row, nextTile.col]
+	
 	var desiredTile = this.getTile( newPos[0], newPos[1] );
 	var tileCheck = desiredTile.terrain.passable && desiredTile.occupant == null;
 	if ( tileCheck ) {
 		this.getTile(creaturePosition.row, creaturePosition.col).occupant = null;
-		this.passableTiles.push(creaturePosition);
 		this.getTile(newPos[0], newPos[1]).occupant = id;
 		console.log( "Creature has moved to: row " + newPos[0] + ", col " + newPos[1] );
-		delta = new Delta([{type:"creature", action: "move", data: {id: 0, x:newPos[0], y:newPos[1]}}]);
+		delta = new Delta([{type:"creature", action: "move", data: {id: id, x:newPos[0], y:newPos[1]}}]);
 		comm.push_diff(delta);
 	}
 	else {
