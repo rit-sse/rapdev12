@@ -1,5 +1,5 @@
 
-SCROLL_SPEED = 10;
+SCROLL_SPEED = 30;
 
 function BioGame(stage) {
 	this.viewport = new Kinetic.Layer();
@@ -17,24 +17,27 @@ function BioGame(stage) {
  */
 BioGame.prototype.initGame = function(data) {
     // Create a map with the provided tile data
-    this.map.loadTileData(data.map);
-    this.mapCreatures.loadCreatureClassData(data.creatureClasses);
-    this.mapCreatures.loadCreatureData(data.creatures);
+    if (!this.initialized) {
+        this.initialized=true;
+        this.map.loadTileData(data.map);
+        this.mapCreatures.loadCreatureClassData(data.creatureClasses);
+        this.mapCreatures.loadCreatureData(data.creatures);
+    }
 }
 
 /*
  * Applies game state changes from the server to the client
  */
 BioGame.prototype.applyDelta = function(delta) {
-	for (var i = 0; i < delta.operations.length; i++) {
-		var operation = delta.operations[i];
+    for (var i = 0; i < delta.operations.length; i++) {
+        var operation = delta.operations[i];
 
-		if (operation.type == "creature") {
-			this.mapCreatures.applyOperation(operation.action, operation.data);
-		} else if (operation.type == "creatureclass") {
-			//TODO
-		}
-	}
+        if (operation.type == "creature") {
+            this.mapCreatures.applyOperation(operation.action, operation.data);
+        } else if (operation.type == "creatureclass") {
+            //TODO
+        }
+    }
 }
 
 
@@ -50,41 +53,27 @@ window.onload = function() {
       width: wrapper.width(),
       height: wrapper.height()
   });
+  
+  var socket = io.connect('http://localhost:3000');
 
   biogame = new BioGame(stage);
   
   biogame.splash = new Splash(stage, function() {
     biogame.viewport.draw();
+    
+    socket.on('push_diff', function(data){
+      biogame.applyDelta(data);
+     });
   });
-
-  var socket = io.connect('http://localhost:3000');
 
   socket.on('connected', function(data) {
-    //biogame.splash.SetPercent(0.5);
-  });
-
-  // Test message
-  socket.on('echo', function(data) {
-    console.log(data);
-  });
-
-  socket.on('count', function(data) {
-    console.log(data);
-  });
-
-  socket.on('push_diff', function(data){
-    console.log(data);
-    biogame.applyDelta(data);
+    
   });
 
   socket.on('get_map', function(data){
     console.log(data);
     setTimeout(function() {biogame.initGame(data)},1000)
     biogame.splash.Disperse(1);
-  });
-
-  $('#sendRequest').click(function(){
-    socket.emit('get_map');
   });
 
   // Add keyboard input to the map
