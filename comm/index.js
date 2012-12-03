@@ -61,11 +61,12 @@ exports.start = function(io, simulation) {
 
     socket.on('request_animation', function(data){
       console.log("Sending "+data.fileName+" to client");
-      fs.readFile('./public/'+data.fileName, 'utf8', function(err, data){
+      fs.readFile('./public/'+data.fileName, 'utf8', function(err, buff){
         if(err){
           console.log(err);
         } else {
-          socket.emit('get_animation', {fileName:data.fileName, contents:data});
+          console.log('\n'+data.fileName+'\n'+buff+'\n\n');
+          socket.emit('get_animation', {fileName:data.fileName, contents:buff});
         }
       });
     });
