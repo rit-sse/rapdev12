@@ -52,7 +52,8 @@ window.onload = function() {
       height: wrapper.height()
   });
   
-  var socket = io.connect('http://localhost:3000');
+  var socket = io.connect('http://'+location.host);
+  console.log(location.host);
 
   biogame = new BioGame(stage);
   
@@ -60,6 +61,7 @@ window.onload = function() {
     biogame.viewport.draw();
     
     socket.on('push_diff', function(data){
+      console.log(data);
       biogame.applyDelta(data);
      });
   });
