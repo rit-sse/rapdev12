@@ -17,6 +17,10 @@ function Creature(world){
     this.timeLeftToSleep = 0;
 };
 
+ /**
+  * The server calls eventChooser which sees weather you are going to do the creature act or you will be sleeping. This
+  * is done so you will gain energy.
+  */
  Creature.prototype.eventChooser = function(){
      if(this.timeLeftToSleep > 0){
          this.onSleepTurn();
