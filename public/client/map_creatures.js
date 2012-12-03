@@ -173,10 +173,12 @@ MapCreatures.prototype.moveCreature = function(creatureId, x, y) {
         var lasty = sprite.getY()/TILE_SIZE;
         
         //Test effect
-        effect.Attack1(window.stage,0,0)
-        if (lasty>y) {
+        //effect.Death1(window.stage,x,y)
+        if (y>lasty) {
+            sprite.setAnimation('walk');
+        } else if (lasty>y) {
             sprite.setAnimation('back');
-        } else if (lastx>=x) {
+        } else if (lastx>x) {
             sprite.setAnimation('right');
         } else {
             sprite.setAnimation('walk');
@@ -197,11 +199,16 @@ MapCreatures.prototype.moveCreature = function(creatureId, x, y) {
 
 }
 
+MapCreatures.prototype.doAttackAnim = function(x,y) {
+    effect.Attack1(window.stage,x,y);
+}
+
 
 MapCreatures.prototype.applyOperation = function(action, data) {
 	if (action == "move") {
 		this.moveCreature(data.id, data.x, data.y);
-	
+  } else if(action == "attack"){
+        this.doAttackAnim(data.col,data.row);
   } else if(action == "new"){
     this.loadCreatureData([{
       class: data.classId,

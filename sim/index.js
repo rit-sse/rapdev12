@@ -55,7 +55,7 @@ exports.addCreatureClass = function(creatureClass) {
 }
 
 exports.startSim = function(creature_file, creature_count) {
-	world = new world_lib.World(world_lib.worldjson);
+	world = new world_lib.World(world_lib.worldFromJSON);
 	exports.world = world;
 	if(creature_file){
 		var creature_class_instance = new Creature(world);

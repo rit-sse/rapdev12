@@ -59,15 +59,14 @@ var zzz_anim        = effect.getAnimations("misc_animations/zzz");
 
 effect.Attack1 = function(stage,x,y) {
     var efct = new Kinetic.Sprite({
-        x: (x*TILE_SIZE),
-        y: (y*TILE_SIZE),
+        x: (x*TILE_SIZE)-(TILE_SIZE/2),
+        y: (y*TILE_SIZE)-(TILE_SIZE/2),
         width: TILE_SIZE,
         height: TILE_SIZE,
         image: preloadImage("/assets/images/misc_animations/attack1.png"),
         animations: attack1_anim,
         animation: 'all'
     });
-    console.log(attack1_anim);
     var spriteLayer = new Kinetic.Layer()
     spriteLayer.add(efct);
     efct.start();
@@ -83,7 +82,7 @@ effect.Death1 = function(stage,x,y) {
         width: TILE_SIZE,
         height: TILE_SIZE,
         image: preloadImage("/assets/images/misc_animations/death1.png"),
-        animations: adeath1_anim,
+        animations: death1_anim,
         animation: 'all'
     });
     var spriteLayer = new Kinetic.Layer()

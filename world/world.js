@@ -6,8 +6,6 @@ var Tile = require('../world/Tile.js').Tile;
 var Direction = require('../utils/simulation-utils').Direction;
 var fs = require('fs');
 
-exports.World = World;
-
 var comm;
 exports.use_comm = function(c) {
   comm = c;
@@ -194,6 +192,15 @@ World.prototype.attackCreature = function(attackerId, direction) {
     if (locationToAttack){
         var occupant = locationToAttack.occupant;
         console.log(this.creatures[attackerId].name+" is attacking to the " + direction + "!");
+        var attackDelta = {
+        	type: "creature",
+        	action: "attack",
+        	data: {
+        		row: locationToAttack.row,
+        		col: locationToAttack.col
+        	}
+        };
+        comm.push_diff( attackDelta );
 		if (occupant){
             console.log(occupant + " was hit!");
 			this.creatures[occupant].onHit();
@@ -222,7 +229,15 @@ World.prototype.moveCreature = function( id, direction ) {
 		this.getTile(creaturePosition.row, creaturePosition.col).occupant = null;
 		this.getTile(newPos[0], newPos[1]).occupant = id;
 		console.log( "Creature has moved to: row " + newPos[0] + ", col " + newPos[1] );
-		var delta = {type: "creature", action: "move", data: {id: id, x:newPos[0], y:newPos[1]}};
+		delta = {
+			type: "creature",
+			action: "move",
+			data: {
+				id: id,
+				x: newPos[0],
+				y: newPos[1]
+			}
+		};
 		comm.push_diff(delta);
 	}
 	else {
@@ -302,41 +317,16 @@ World.prototype.getCreaturesForClient = function() {
 }
 
 // TODO: Make this read from world.json instead of hardcoding it
-var worldjson = {
-  "terrain": [
-    {
-      "name": Terrain.GRASS,
-      "passable": true
-    },
-    {
-      "name": Terrain.WATER,
-      "passable": false
-    },
-    {
-      "name": Terrain.ROCK,
-      "passable": false
-    }
-  ],
-  "map": [
-    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-    [ 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0 ],
-    [ 0, 0, 0, 0, 0, 2, 1, 1, 1, 1, 2, 0, 0, 0, 0, 0 ],
-    [ 0, 0, 0, 0, 0, 2, 1, 1, 1, 1, 2, 0, 0, 0, 0, 0 ],
-    [ 0, 0, 0, 0, 0, 2, 1, 1, 1, 1, 2, 0, 0, 0, 0, 0 ],
-    [ 0, 0, 0, 0, 0, 2, 1, 1, 1, 1, 2, 0, 0, 0, 0, 0 ],
-    [ 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0 ],
-    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
-  ]
-}
+var worldFromJSON = JSON.parse( fs.readFileSync( 'world/world.json' ) );
+// fs.readFileSync( 'world/world.json', function( err, data ) {
+// 	if (err) {
+// 		console.log( "ERROR READING world.json" );
+// 	} else {
+// 		console.log( data );
+// 		worldFromJSON = JSON.parse( data );
+// 	}
+// });
 
-var world = new World( worldjson );
-exports.worldjson = worldjson;
+exports.worldFromJSON = worldFromJSON;
+exports.World = World;
 
