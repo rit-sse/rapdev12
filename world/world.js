@@ -4,6 +4,7 @@
 var Terrain = require('../utils/world-utils').Terrain;
 var Tile = require('../world/Tile.js').Tile;
 var Direction = require('../utils/simulation-utils').Direction;
+var fs = require('fs');
 
 exports.World = World;
 
@@ -49,13 +50,13 @@ function World( jsonObject ) {
  *
  * returns the tile the creature was added to
  */
-World.prototype.addCreature = function( creature ) {
+World.prototype.addCreature = function( creature, tile ) {
 	if ( ! this.creatureClassExists( creature.classId ) ) {
 		this.creatureClasses.push( {
 			"id": creature.classId,
 			"name": creature.name,
 			"speed": creature.speed,
-			"attack": creature.attack
+			"offense": creature.offense
 		} );
 	}
 	this.creatures.push( creature );
@@ -143,7 +144,6 @@ World.prototype.isOutOfBounds = function( coords ) {
 }
 
 World.prototype.getTerrainAtTile = function( row, col ) {
-	console.log( "(" + row + ", " + col + ")" );
 	return this.getTile(row, col).terrain;
 };
 

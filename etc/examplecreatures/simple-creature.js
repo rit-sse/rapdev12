@@ -3,17 +3,14 @@ exports.monster = function(creature, Direction){ // TEMPLATE
     /* Set up your very own simple creature! */
     var SimpleCreature = function SimpleCreature(){
         this.direction = 0;
+        this.name = "My Awesome Name";
+        this.offense = 100;
+        this.defence = 100;
+        this.speed = 452;
     };
-
-
 
     /* Simple Creature needs to inherit from the creature class */
     SimpleCreature.prototype = creature;
-
-    this.name = "My Awesome Name";
-    this.offense = 100;
-    this.defence = 100;
-    this.speed = 452;
 
     /* Very own creature logic! */
     var next_dir = [
