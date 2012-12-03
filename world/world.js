@@ -4,7 +4,7 @@
 var Terrain = require('../utils/world-utils').Terrain;
 var Tile = require('../world/Tile.js').Tile;
 var Direction = require('../utils/simulation-utils').Direction;
-var Operation = require('../sim/Operation').Operation;
+var fs = require('fs');
 
 exports.World = World;
 
@@ -50,7 +50,7 @@ function World( jsonObject ) {
  *
  * returns the tile the creature was added to
  */
-World.prototype.addCreature = function( creature ) {
+World.prototype.addCreature = function( creature, tile ) {
 	this.creatures.push( creature );
 	creature.setId( this.creatures.length - 1 );
 	this.activeCreatures.push( creature );
@@ -64,15 +64,19 @@ World.prototype.addCreature = function( creature ) {
 	}
 	creTile.occupant = creature.getId();
 
-  console.log(JSON.stringify(creature));
-  console.log("MAKING A NEW CREATURE " + creature.classId);
-  delta = new Operation("creature", "new", {
-    id: creature.id,
-    x: creTile.col, 
-    y: creTile.row,
-    classId: creature.classId
-  });
+  var delta = {
+    type: "creature", 
+    action: "new", 
+    data: {
+      id: creature.id,
+      x: creTile.col, 
+      y: creTile.row,
+      classId: creature.classId,
+      name: creature.name,
+    }
+  };
   comm.push_diff(delta);
+
 
 	return creTile;
 };
@@ -138,7 +142,6 @@ World.prototype.isOutOfBounds = function( coords ) {
 }
 
 World.prototype.getTerrainAtTile = function( row, col ) {
-	console.log( "(" + row + ", " + col + ")" );
 	return this.getTile(row, col).terrain;
 };
 
@@ -190,9 +193,10 @@ World.prototype.attackCreature = function(attackerId, direction) {
     //if this tile is valid, grab the occupant
     if (locationToAttack){
         var occupant = locationToAttack.occupant;
-        if (occupant){
-            occupant.onHit();
-            console.log("Creature is attacking to the " + direction + "!");
+        console.log(this.creatures[attackerId].name+" is attacking to the " + direction + "!");
+		if (occupant){
+            console.log(occupant + " was hit!");
+			this.creatures[occupant].onHit();
         } else {
             console.log("Creature tried to attack an empty location (location " + locationToAttack + ").");
         }
@@ -218,7 +222,7 @@ World.prototype.moveCreature = function( id, direction ) {
 		this.getTile(creaturePosition.row, creaturePosition.col).occupant = null;
 		this.getTile(newPos[0], newPos[1]).occupant = id;
 		console.log( "Creature has moved to: row " + newPos[0] + ", col " + newPos[1] );
-		delta = new Operation("creature", "move", {id: id, x:newPos[0], y:newPos[1]});
+		var delta = {type: "creature", action: "move", data: {id: id, x:newPos[0], y:newPos[1]}};
 		comm.push_diff(delta);
 	}
 	else {

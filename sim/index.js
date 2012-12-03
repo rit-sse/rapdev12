@@ -1,10 +1,10 @@
+var path = require('path')
 var world_lib = require('../world/world')
   , world
   , comm
   , running = true;
-var Operation = require(require('path').join(require('path').dirname(require.main.filename), 'sim', 'Operation')).Operation;
-var c = require(require('path').join(require('path').dirname(require.main.filename), "creature", "Creature"));
-var Direction = require(require('path').join(require('path').dirname(require.main.filename), "utils", "simulation-utils")).Direction;
+var c = require(path.join(path.dirname(require.main.filename), "creature", "Creature"));
+var Direction = require(path.join(path.dirname(require.main.filename), "utils", "simulation-utils")).Direction;
 var Creature = c.Creature;
 
 exports.use_comm = function(c) {
@@ -34,7 +34,8 @@ exports.client_hooks = {
   'add_creature':function(data){
     var creature = new exports.world.creatureClasses[data.classId].constructor;
     creature.classId = data.classId;
-    exports.world.addCreature(creature, data.y, data.x);
+    var tile = exports.world.getTile(data.y, data.x);
+    exports.world.addCreature(creature, tile);
   }
 }
 

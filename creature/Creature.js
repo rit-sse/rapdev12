@@ -7,8 +7,8 @@ function Creature(world){
 	this.world = world;
 	this.health = 100;
 	this.energy = 100;
-	this.offence = 10;
-	this.defence = 10;
+	this.offense = 10;
+	this.defense = 10;
 	this.speed = 10;
   this.classId = 1;
   this.name = "Creature";
