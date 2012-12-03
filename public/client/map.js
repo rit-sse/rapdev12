@@ -11,6 +11,17 @@ function Map(viewport) {
 	this.tiles = [];
 };
 
+var terrainTex = ['grass','dirt','rock','water'];
+var texObjs = {};
+for (var i=0;i<terrainTex.length;i++) {
+    texObjs[terrainTex[i]] = new Image();
+    texObjs[terrainTex[i]].src = "assets/images/tiles/" + terrainTex[i] + ".png";
+    texObjs[terrainTex[i]].onload = function () {
+        this.initialized = true;
+    }
+}
+
+
 /**
  * Populates the tiles array with Objects containing Kinetic Images, the node
  * IDs, and the tile types, adds the Images to the viewport, and tells the
@@ -26,11 +37,7 @@ Map.prototype.loadTileData = function(tileData) {
 
 		for (var col in tileData[row]) {
 			// Create a rectangle to represent the tile
-			var imgObj = new Image();
-			imgObj.src = "assets/images/tiles/" + tileData[row][col] + ".png";
-			imgObj.onload = function () {
-				biogame.viewport.draw();
-			}
+			var imgObj = texObjs[tileData[row][col]];
 
 			var image = new Kinetic.Image({
 				x: col * TILE_SIZE,
