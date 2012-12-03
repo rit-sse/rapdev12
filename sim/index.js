@@ -30,24 +30,41 @@ exports.client_hooks = {
   'file_upload':function(data){
     writeCreatureJS(data.name,data.contents)
     return "File write attempted";
+  },
+  'add_creature':function(data){
+    var creature = new exports.world.creatureClasses[data.classId].constructor;
+    creature.classId = data.classId;
+    exports.world.addCreature(creature, data.y, data.x);
   }
 }
 
 exports.updates = {};
 
+var nextClassId = 1;
+
+exports.addCreatureClass = function(creatureClass) {
+  exports.world.creatureClasses[nextClassId] = {
+    "id": nextClassId,
+    "name": creatureClass.name,
+    "speed": creatureClass.speed,
+    "attack": creatureClass.attack,
+    "constructor": creatureClass,
+  };
+  nextClassId++;
+}
 
 exports.startSim = function(creature_file, creature_count) {
 	world = new world_lib.World(world_lib.worldjson);
 	exports.world = world;
 	if(creature_file){
-		console.log(creature_file);
-		console.log("BITCHES: " + require(creature_file));
 		var creature_class_instance = new Creature(world);
 		var creature = require(creature_file).monster(creature_class_instance , Direction);
-    	console.log( creature );
-    	for(var i = 0; i < creature_count; i++){
-			world.addCreature(new creature());
-		}
+
+    exports.addCreatureClass(creature);
+
+    for(var i = 0; i < creature_count; i++){
+      world.addCreature(new creature());
+    }
 
 	}
 

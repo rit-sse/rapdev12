@@ -65,8 +65,9 @@ MapCreatures.prototype.addCreatureClass = function(creatureClass) {
 /* Adds the creature class to the displayed list
  */
 MapCreatures.prototype.addCreatureClassToSidebar = function(creatureClass){
-  var content = 
-    '<article class="creature-class clearfix" id="creature-class-' + creatureClass.id + '" draggable="true">' +
+  var content =
+    $('<article class="creature-class clearfix" id="creature-class-'
+        + creatureClass.id + '" data-classId="' + creatureClass.id + '" draggable="true">' +
       '<img src="' + creatureClass.image.src +
         '" alt="' + creatureClass.name + 
         '" class="creature-preview" draggable="false" />' +
@@ -75,16 +76,18 @@ MapCreatures.prototype.addCreatureClassToSidebar = function(creatureClass){
         '<dt>Attack</dt><dd>' + creatureClass.attack + '</dd>' + 
         '<dt>Speed</dt><dd>' + creatureClass.speed + '</dd>' + 
       '</dl>' +
-    '</article>';
+    '</article>');
 
+  console.log(content);
 	$("#creature-classes").append(content);
+
 }
 
 
 /* Loads all creature classes into the client
  */
 MapCreatures.prototype.loadCreatureClassData = function(data) {
-	for(var i = 0, len = data.length; i < len; i++ ){
+	for(var i in data){
     	this.addCreatureClass(data[i]);
 	}
 };
@@ -119,6 +122,31 @@ MapCreatures.prototype.loadCreatureData = function(data) {
 }
 
 
+MapCreatures.prototype.addCreature = function(creatureId, xTile, yTile, classId){
+
+    var creature = {}
+
+		// Create the sprite and add it to the viewport
+		var sprite = new Kinetic.Sprite({
+			x: xTile * TILE_SIZE,
+			y: yTile * TILE_SIZE,
+			height: TILE_SIZE,
+			width: TILE_SIZE,
+			image: this.creatureClasses[classId].image,
+			animations: this.creatureClasses[classId].animations,
+			animation: 'idle'
+		});
+		this.viewport.add(sprite);
+		sprite.start();
+
+		// Save the creature for later reference
+		creature.sprite = sprite;
+    creature.x = xTile;
+    creature.y = yTile;
+		this.creatures[creatureId] = creature;
+}
+
+
 MapCreatures.prototype.moveCreature = function(creatureId, x, y) {
     if (this.loaded) {
         var sprite = this.creatures[creatureId].sprite;
@@ -133,5 +161,8 @@ MapCreatures.prototype.moveCreature = function(creatureId, x, y) {
 MapCreatures.prototype.applyOperation = function(action, data) {
 	if (action == "move") {
 		this.moveCreature(data.id, data.x, data.y);
-	}
+	
+  } else if(action == "new"){
+    this.addCreature(data.id, data.x, data.y, data.classId);
+  }
 }

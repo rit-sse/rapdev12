@@ -17,7 +17,7 @@ exports.client_hooks = {};
 exports.updates = {};
 
 function World( jsonObject ) {
-	this.creatureClasses = [];
+	this.creatureClasses = {}
 
 	//list of creatures
 	this.creatures = [];
@@ -51,14 +51,6 @@ function World( jsonObject ) {
  * returns the tile the creature was added to
  */
 World.prototype.addCreature = function( creature ) {
-	if ( ! this.creatureClassExists( creature.classId ) ) {
-		this.creatureClasses.push( {
-			"id": creature.classId,
-			"name": creature.name,
-			"speed": creature.speed,
-			"attack": creature.attack
-		} );
-	}
 	this.creatures.push( creature );
 	creature.setId( this.creatures.length - 1 );
 	this.activeCreatures.push( creature );
@@ -71,18 +63,20 @@ World.prototype.addCreature = function( creature ) {
 		creTile = this.getRandomValidTile();
 	}
 	creTile.occupant = creature.getId();
+
+  console.log(JSON.stringify(creature));
+  console.log("MAKING A NEW CREATURE " + creature.classId);
+  delta = new Operation("creature", "new", {
+    id: creature.id,
+    x: creTile.col, 
+    y: creTile.row,
+    classId: creature.classId
+  });
+  comm.push_diff(delta);
+
 	return creTile;
 };
 
-World.prototype.creatureClassExists = function( classId ) {
-	var classFoundFlag = false;
-	for( var i = 0; i < this.creatureClasses.length && !classFoundFlag; i++ ) {
-		if ( this.creatureClasses[i].id == classId ) {
-			classFoundFlag = true;
-		}
-	}
-	return classFoundFlag;
-}
 
 World.prototype.populateWithItems = function() {
 	

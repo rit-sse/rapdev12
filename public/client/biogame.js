@@ -71,6 +71,7 @@ window.onload = function() {
   });
 
   socket.on('push_diff', function(data){
+    console.log("push_diff");
     console.log(data);
     biogame.applyDelta(data);
   });
@@ -116,6 +117,36 @@ window.onload = function() {
     e.preventDefault();
 
   });
+
+
+  /* Cancel dragOver event so we can drop onto the canvas
+   */
+  $("#biogame canvas")[0].addEventListener("dragover", function(event){
+    event.preventDefault();
+  }, false);
+
+
+  /* Drop a creature onto the canvas
+   */
+  $("#biogame canvas")[0].addEventListener("drop", function(event){
+    event.preventDefault();
+
+    var xcoord = event.clientX - biogame.viewport.getX();
+    var x = Math.floor(xcoord/TILE_SIZE);
+
+    var ycoord = event.clientY - biogame.viewport.getY();
+    var y = Math.floor(ycoord/TILE_SIZE);
+
+    console.log("(" + x + ", " + y + ")");
+
+    socket.emit("add_creature", {
+      classId: 1,//event.dataTransfer.getData("text"),
+      x: x,
+      y: y
+    });
+
+  }, false);
+
 }
     
 
