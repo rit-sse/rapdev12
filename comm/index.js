@@ -1,3 +1,5 @@
+var fs = require('fs');
+
 var _unused = function(data) {
   return(data);
 }
@@ -48,6 +50,25 @@ exports.start = function(io, simulation) {
         socket.emit(name, result);
       });
     }
+
+    // Get assets through web sockets
+    /*
+        socket.emit('request_animation', {fileName:'assets/images/creatures/walk-1.txt'});
+        socket.on('get_animation', function(data){
+          var animation = data.contents;
+        });
+    */
+
+    socket.on('request_animation', function(data){
+      console.log("Sending "+data.fileName+" to client");
+      fs.readFile('./public/'+data.fileName, 'utf8', function(err, data){
+        if(err){
+          console.log(err);
+        } else {
+          socket.emit('get_animation', {fileName:data.fileName, contents:data});
+        }
+      });
+    });
 
     // Register update hooks
     simulation.updates.push_diff = function(){ return; }
