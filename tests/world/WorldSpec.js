@@ -1,5 +1,6 @@
 var World = require('../../world/world.js').World;
 var Creature = require('../../creature/Creature.js').Creature;
+var Tile = require('../../world/Tile.js').Tile;
 
 describe( "world.js suite", function() {
 
@@ -45,11 +46,23 @@ describe( "world.js suite", function() {
   var world;
   var smallWorld;
   var aCreature;
+  var aDifferentCreature;
 
   beforeEach( function() {
     world = new World( testWorld );
     smallWorld = new World( smallTestWorld );
-    aCreature = new Creature( "Frankenyacht", "yacht", smallWorld, 10, 10, 10 );
+    aCreature = new Creature( smallWorld );
+    aCreature.name = "Frankenyacht";
+    aCreature.classId = "yacht";
+    aCreature.offense = 10;
+    aCreature.defense = 10;
+    aCreature.speed = 10;
+    aDifferentCreature = new Creature( smallWorld );
+    aDifferentCreature.name = "Dorrene";
+    aDifferentCreature.classId = "queen";
+    aDifferentCreature.offense = 99;
+    aDifferentCreature.defense = 99;
+    aDifferentCreature.speed = 99;
   });
 
   // ----------------------------------------------------------------------
@@ -70,17 +83,6 @@ describe( "world.js suite", function() {
     expect( tile.terrain.passable ).toBe( false );
     expect( tile.terrain.name ).toEqual( "rock" );
     expect( tile.item ).toEqual( null );
-  });
-  
-  it( "returns the correct passable tiles", function() {
-    
-    expect( world.getTerrainAtTile( 0, 3).passable ).toEqual( false )
-    
-    expect( world.passableTiles ).toEqual([
-      [0,0],[0,1],[0,2],[0,4],[0,5],[1,0],[1,3],[1,5],
-      [2,3],[2,4],[3,0],[3,3],[3,5],[4,2],[4,4],
-      [4,5],[5,0],[5,2],[5,3],[5,4]
-    ]);
   });
   
   it( "returns the correct terrain at a tile", function() {
@@ -150,20 +152,18 @@ describe( "world.js suite", function() {
       "id": aCreature.classId,
       "name": aCreature.name,
       "speed": aCreature.speed,
-      "attack": aCreature.attack
+      "offense": aCreature.offense
     },
     {
       "id": aDifferentCreature.classId,
       "name": aDifferentCreature.name,
       "speed": aDifferentCreature.speed,
-      "attack": aDifferentCreature.attack
+      "offense": aDifferentCreature.offense
     }
     ]);
   });
 
   it( "correctly represents the creatures for client", function() {
-    var aDifferentCreature =
-      new Creature( "Dorrene", "queen", smallWorld, 99, 99, 99 );
     smallWorld.addCreature( aCreature );
     smallWorld.addCreature( aDifferentCreature );
     var smallWorldCreatures = smallWorld.getCreaturesForClient();
@@ -199,8 +199,8 @@ describe( "world.js suite", function() {
       "creatureClasses": [ {
         "id": aCreature.classId,
         "name": aCreature.name,
-        "speed": 10,
-        "attack": 10
+        "speed": aCreature.speed,
+        "offense": aCreature.offense
       }],
       "creatures": [ {
         "id": aCreature.getId(),
@@ -210,6 +210,44 @@ describe( "world.js suite", function() {
         "col": creatureTile.col
       }]
     });
+  });
+  
+  it( "correctly places a creature in a given tile, Part1", function() {
+    var tile = new Tile(null, world.terrain[0], 0, 0);
+    var creTile = world.addCreature( aCreature, tile );
+    wTile = world.getTile(tile.row, tile.col);
+    expect(wTile).toEqual(creTile);
+  });
+  
+  it( "correctly places a creature in a given tile, Part2", function() {
+    var tile = new Tile(null, world.terrain[0], 0, 0);
+    /* var creTile = */ world.addCreature( aCreature, tile );
+    var comTile = world.getCreaturePosition( aCreature.id );
+    var wTile = world.getTile(tile.row, tile.col);
+
+    expect(wTile).toEqual(comTile);
+  });
+  
+  it( "correctly places a creature in a random tile", function() {
+    var creTile = world.addCreature( aCreature );
+    var comTile = world.getCreaturePosition( aCreature.id );
+    expect(creTile).toEqual(comTile);
+    
+  });
+
+  it( "adds one creature class on duplicate creatures added", function() {
+    world.addCreature( aCreature );
+    world.addCreature( aCreature );
+    var creatureClasses = world.getCreatureClassesForClient();
+
+    expect( creatureClasses ).toEqual( [
+      {
+        "id": aCreature.classId,
+        "name": aCreature.name,
+        "speed": aCreature.speed,
+        "offense": aCreature.offense
+      }
+    ]);
   });
 
 } );

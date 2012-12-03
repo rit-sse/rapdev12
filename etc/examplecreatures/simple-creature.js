@@ -1,33 +1,38 @@
-var c = require(require('path').join(require('path').dirname(require.main.filename), "creature", "creature"));
-var Direction = require(require('path').join(require('path').dirname(require.main.filename), "utils", "simulation-utils")).Direction;
-var Creature = c.Creature;
-var world = require(require('path').join(require('path').dirname(require.main.filename), "sim")).world;
+exports.monster = function(creature, Direction){ // TEMPLATE
 
+    /* Set up your very own simple creature! */
+    var SimpleCreature = function SimpleCreature(){
+        this.direction = 0;
+        this.name = "My Awesome Name";
+        this.offense = 100;
+        this.defence = 100;
+        this.speed = 452;
+    };
 
-var monster = new Creature("my_name", 1, world, 100, 100, 100);
-var next_dir = [
-    Direction.SOUTH,
-    Direction.EAST,
-    Direction.NORTH,
-    Direction.WEST,
-    Direction.NORTHEAST,
-    Direction.SOUTHWEST,
-    Direction.SOUTHEAST,
-    Direction.NORTHWEST
-];
-var direction = 0;
+    /* Simple Creature needs to inherit from the creature class */
+    SimpleCreature.prototype = creature;
 
+    /* Very own creature logic! */
+    var next_dir = [
+        Direction.SOUTH,
+        Direction.EAST,
+        Direction.NORTH,
+        Direction.WEST,
 
-/*
-This creature moves in each of the eight cardinal directions and nothing else.
- */
-monster.act = function() {
-	console.log("Now moving \"" + monster.getName() + "\"");
+    ];
 
-    this.move(next_dir[direction]);
-    direction = ( direction + 1 ) % next_dir.length;
-};
+    /*
+    This creature moves in each of the eight cardinal directions.
+     */
+    SimpleCreature.prototype.act = function()
+    {
+        console.log("Now moving \"" + this.getName() + "\"");
 
+        this.move(next_dir[this.direction]);
+        this.direction = ( this.direction + 1 ) % next_dir.length;
+        this.attack(Direction.NORTH);
+    };
 
-console.log( "Monster: " + monster );
-exports.monster = monster;
+    /* We need to return the creature we created so that we can have our own instances */
+    return SimpleCreature;
+} // TEMPLATE

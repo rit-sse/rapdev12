@@ -86,6 +86,7 @@ effect.Death1 = function(stage,x,y) {
     });
     var spriteLayer = new Kinetic.Layer()
     spriteLayer.add(efct);
+    efct.start();
     
     stage.add(spriteLayer);
     setTimeout(function() {spriteLayer.remove()},1000);
@@ -103,6 +104,7 @@ effect.Effect01 = function(stage,x,y) {
     });
     var spriteLayer = new Kinetic.Layer()
     spriteLayer.add(efct);
+    efct.start();
     
     stage.add(spriteLayer);
     setTimeout(function() {spriteLayer.remove()},1000);
@@ -120,6 +122,7 @@ effect.Effect2 = function(stage,x,y) {
     });
     var spriteLayer = new Kinetic.Layer()
     spriteLayer.add(efct);
+    efct.start();
     
     stage.add(spriteLayer);
     setTimeout(function() {spriteLayer.remove()},1000);
@@ -137,6 +140,7 @@ effect.Sleep = function(stage,x,y) {
     });
     var spriteLayer = new Kinetic.Layer()
     spriteLayer.add(efct);
+    efct.start();
     
     stage.add(spriteLayer);
     setTimeout(function() {spriteLayer.remove()},1000);

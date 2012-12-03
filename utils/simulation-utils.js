@@ -3,12 +3,12 @@
  * North is up on the screen, east is right.
  */
 exports.Direction = {
-    NORTH: 0,
-    NORTHEAST: 1,
-    EAST: 2,
-    SOUTHEAST: 3,
-    SOUTH: 4,
-    SOUTHWEST: 5,
-    WEST: 6,
-    NORTHWEST: 7
+    NORTH: "NORTH",
+    NORTHEAST: "NORTHEAST",
+    EAST: "EAST",
+    SOUTHEAST: "SOUTHEAST",
+    SOUTH: "SOUTH",
+    SOUTHWEST: "SOUTHWEST",
+    WEST: "WEST",
+    NORTHWEST: "NORTHWEST"
 };
