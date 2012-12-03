@@ -59,8 +59,8 @@ var zzz_anim        = effect.getAnimations("misc_animations/zzz");
 
 effect.Attack1 = function(stage,x,y) {
     var efct = new Kinetic.Sprite({
-        x: x*TILE_SIZE,
-        y: y*TILE_SIZE,
+        x: (x*TILE_SIZE),
+        y: (y*TILE_SIZE),
         width: TILE_SIZE,
         height: TILE_SIZE,
         image: preloadImage("/assets/images/misc_animations/attack1.png"),
