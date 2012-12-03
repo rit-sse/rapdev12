@@ -67,8 +67,10 @@ effect.Attack1 = function(stage,x,y) {
         animations: attack1_anim,
         animation: 'all'
     });
+    console.log(attack1_anim);
     var spriteLayer = new Kinetic.Layer()
     spriteLayer.add(efct);
+    efct.start();
     
     stage.add(spriteLayer);
     setTimeout(function() {spriteLayer.remove()},1000);

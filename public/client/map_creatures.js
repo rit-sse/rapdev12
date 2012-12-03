@@ -143,7 +143,7 @@ MapCreatures.prototype.moveCreature = function(creatureId, x, y) {
         var lasty = sprite.getY()/TILE_SIZE;
         
         //Test effect
-        //effect.Attack1(window.stage,lastx,lasty)
+        effect.Attack1(window.stage,0,0)
         if (lasty>y) {
             sprite.setAnimation('back');
         } else if (lastx>=x) {

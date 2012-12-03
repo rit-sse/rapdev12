@@ -19,6 +19,7 @@ BioGame.prototype.initGame = function(data) {
     // Create a map with the provided tile data
     if (!this.initialized) {
         this.initialized=true;
+        effect(this.socket);
         this.map.loadTileData(data.map);
         this.mapCreatures.loadCreatureClassData(data.creatureClasses);
         this.mapCreatures.loadCreatureData(data.creatures);
