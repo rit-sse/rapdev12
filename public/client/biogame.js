@@ -61,7 +61,6 @@ window.onload = function() {
     biogame.viewport.draw();
     
     socket.on('push_diff', function(data){
-      console.log(data);
       biogame.applyDelta(data);
      });
   });

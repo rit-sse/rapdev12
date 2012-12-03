@@ -208,7 +208,7 @@ MapCreatures.prototype.applyOperation = function(action, data) {
 	if (action == "move") {
 		this.moveCreature(data.id, data.x, data.y);
   } else if(action == "attack"){
-        this.doAttackAnim(data.col,data.row);
+        this.doAttackAnim(data.row,data.col);
   } else if(action == "new"){
     this.loadCreatureData([{
       class: data.classId,
