@@ -162,8 +162,7 @@ MapCreatures.prototype.moveCreature = function(creatureId, x, y) {
         }
     });
 
-        this.viewport.draw();
-    }
+    this.viewport.draw();
 }
 
 
