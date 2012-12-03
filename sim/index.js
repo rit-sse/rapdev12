@@ -58,7 +58,7 @@ exports.startSim = function(creature_file, creature_count) {
 
 		var creatures = world.getActiveCreatures();
 		for(var i = 0; i < creatures.length; i++){
-			creatures[i].act();
+			creatures[i].eventChooser();
 		}
 		if(running){
 			setTimeout(a_turn, 2000);

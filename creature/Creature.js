@@ -18,7 +18,7 @@ function Creature(world){
 };
 
  Creature.prototype.eventChooser = function(){
-     if(timeLeftToSleep > 0){
+     if(this.timeLeftToSleep > 0){
          this.onSleepTurn();
      }else{
          this.act();
