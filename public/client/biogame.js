@@ -71,13 +71,10 @@ window.onload = function() {
   });
 
   socket.on('push_diff', function(data){
-    console.log("push_diff");
-    console.log(data);
     biogame.applyDelta(data);
   });
 
   socket.on('get_map', function(data){
-    console.log(data);
     setTimeout(function() {biogame.initGame(data)},1000)
     biogame.splash.Disperse(1);
   });

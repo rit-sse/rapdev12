@@ -56,8 +56,8 @@ World.prototype.addCreature = function( creature ) {
 	this.activeCreatures.push( creature );
 	
 	var creTile;
-	if (arguments.length == 2 ){
-		creTile = this.getTile(tile.row, tile.col);
+	if (arguments.length == 3 ){
+		creTile = this.getTile(arguments[1], arguments[2]);
 	}
 	else{
 		creTile = this.getRandomValidTile();
