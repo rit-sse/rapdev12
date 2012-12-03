@@ -54,7 +54,8 @@ window.onload = function() {
       height: wrapper.height()
   });
   
-  var socket = io.connect('http://localhost:3000');
+  var socket = io.connect('http://'+location.host);
+  console.log(location.host);
 
   biogame = new BioGame(stage);
   
