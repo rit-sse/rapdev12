@@ -16,6 +16,14 @@ function Creature(world){
     this.minHitDamage = 1;
     this.timeLeftToSleep = 0;
 };
+
+ Creature.prototype.eventChooser = function(){
+     if(timeLeftToSleep > 0){
+         this.onSleepTurn();
+     }else{
+         this.act();
+     }
+ }
  /*
   Moves the creature in the given direction, calls onCollision it hits collision. Will not move if you are asleep or have
   no energy.
