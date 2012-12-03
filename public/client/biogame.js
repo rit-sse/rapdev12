@@ -27,17 +27,14 @@ BioGame.prototype.initGame = function(data) {
 
 /*
  * Applies game state changes from the server to the client
+ * @param {Object} operation - The operation received from the server
  */
-BioGame.prototype.applyDelta = function(delta) {
-    for (var i = 0; i < delta.operations.length; i++) {
-        var operation = delta.operations[i];
-
-        if (operation.type == "creature") {
-            this.mapCreatures.applyOperation(operation.action, operation.data);
-        } else if (operation.type == "creatureclass") {
-            //TODO
-        }
-    }
+BioGame.prototype.applyDelta = function(operation) {
+	if (operation.type == "creature") {
+		this.mapCreatures.applyOperation(operation.action, operation.data);
+	} else if (operation.type == "creatureclass") {
+		//TODO
+	}
 }
 
 
