@@ -46,11 +46,23 @@ describe( "world.js suite", function() {
   var world;
   var smallWorld;
   var aCreature;
+  var aDifferentCreature;
 
   beforeEach( function() {
     world = new World( testWorld );
     smallWorld = new World( smallTestWorld );
-    aCreature = new Creature( "Frankenyacht", "yacht", smallWorld, 10, 10, 10 );
+    aCreature = new Creature( smallWorld );
+    aCreature.name = "Frankenyacht";
+    aCreature.classId = "yacht";
+    aCreature.offense = 10;
+    aCreature.defense = 10;
+    aCreature.speed = 10;
+    aDifferentCreature = new Creature( smallWorld );
+    aDifferentCreature.name = "Dorrene";
+    aDifferentCreature.classId = "queen";
+    aDifferentCreature.offense = 99;
+    aDifferentCreature.defense = 99;
+    aDifferentCreature.speed = 99;
   });
 
   // ----------------------------------------------------------------------
@@ -140,20 +152,18 @@ describe( "world.js suite", function() {
       "id": aCreature.classId,
       "name": aCreature.name,
       "speed": aCreature.speed,
-      "attack": aCreature.attack
+      "offense": aCreature.offense
     },
     {
       "id": aDifferentCreature.classId,
       "name": aDifferentCreature.name,
       "speed": aDifferentCreature.speed,
-      "attack": aDifferentCreature.attack
+      "offense": aDifferentCreature.offense
     }
     ]);
   });
 
   it( "correctly represents the creatures for client", function() {
-    var aDifferentCreature =
-      new Creature( "Dorrene", "queen", smallWorld, 99, 99, 99 );
     smallWorld.addCreature( aCreature );
     smallWorld.addCreature( aDifferentCreature );
     var smallWorldCreatures = smallWorld.getCreaturesForClient();
@@ -190,7 +200,7 @@ describe( "world.js suite", function() {
         "id": aCreature.classId,
         "name": aCreature.name,
         "speed": aCreature.speed,
-        "attack": aCreature.attack
+        "offense": aCreature.offense
       }],
       "creatures": [ {
         "id": aCreature.getId(),
@@ -235,7 +245,7 @@ describe( "world.js suite", function() {
         "id": aCreature.classId,
         "name": aCreature.name,
         "speed": aCreature.speed,
-        "attack": aCreature.attack
+        "offense": aCreature.offense
       }
     ]);
   });

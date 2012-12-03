@@ -78,25 +78,28 @@ MapCreatures.prototype.addCreatureClass = function(creatureClass) {
 /* Adds the creature class to the displayed list
  */
 MapCreatures.prototype.addCreatureClassToSidebar = function(creatureClass){
-  var content = 
-    '<article class="creature-class" id="creature-class-' + creatureClass.id + '">' +
+  var content =
+    $('<article class="creature-class clearfix" id="creature-class-'
+        + creatureClass.id + '" data-classId="' + creatureClass.id + '" draggable="true">' +
       '<img src="' + creatureClass.image.src +
-        '" alt="' + creatureClass.name + '" class="creature-preview" />' +
+        '" alt="' + creatureClass.name + 
+        '" class="creature-preview" draggable="false" />' +
       '<h1>' + creatureClass.name + '</h1>' +
       '<dl>' + 
         '<dt>Attack</dt><dd>' + creatureClass.attack + '</dd>' + 
         '<dt>Speed</dt><dd>' + creatureClass.speed + '</dd>' + 
       '</dl>' +
-    '</article>';
+    '</article>');
 
 	$("#creature-classes").append(content);
+
 }
 
 
 /* Loads all creature classes into the client
  */
 MapCreatures.prototype.loadCreatureClassData = function(data) {
-	for(var i = 0, len = data.length; i < len; i++ ){
+	for(var i in data){
     	this.addCreatureClass(data[i]);
 	}
 };
@@ -134,11 +137,38 @@ MapCreatures.prototype.loadCreatureData = function(data) {
 }
 
 
+//MapCreatures.prototype.addCreature = function(creatureId, xTile, yTile, classId){
+//
+//    var creature = {}
+//
+//		// Create the sprite and add it to the viewport
+//		var sprite = new Kinetic.Sprite({
+//			x: xTile * TILE_SIZE,
+//			y: yTile * TILE_SIZE,
+//			height: TILE_SIZE,
+//			width: TILE_SIZE,
+//			image: this.creatureClasses[classId].image,
+//			animations: this.creatureClasses[classId].animations,
+//			animation: 'idle'
+//		});
+//		this.viewport.add(sprite);
+//		sprite.start();
+//
+//		// Save the creature for later reference
+//		creature.sprite = sprite;
+//    creature.x = xTile;
+//    creature.y = yTile;
+//    creature.loaded = false;
+//		this.creatures[creatureId] = creature;
+//}
+
+
 MapCreatures.prototype.moveCreature = function(creatureId, x, y) {
 
-	var sprite = this.creatures[creatureId].sprite;
-    
+  if(this.creatures[creatureId]){
     if (this.creatureClasses[(this.creatures[creatureId].class)].loaded) {
+
+        var sprite = this.creatures[creatureId].sprite;
         var lastx = sprite.getX()/TILE_SIZE;
         var lasty = sprite.getY()/TILE_SIZE;
         
@@ -151,23 +181,34 @@ MapCreatures.prototype.moveCreature = function(creatureId, x, y) {
         } else {
             sprite.setAnimation('walk');
         }
-    }
-    sprite.transitionTo({
-        x: (x * TILE_SIZE),
-        y: (y * TILE_SIZE),
-        duration: 0.75,
-        callback: function() {
-            sprite.setIndex(0);
-            sprite.setAnimation('idle');
-        }
-    });
 
-    this.viewport.draw();
+      sprite.transitionTo({
+          x: (x * TILE_SIZE),
+          y: (y * TILE_SIZE),
+          duration: 0.75,
+          callback: function() {
+              sprite.setIndex(0);
+              sprite.setAnimation('idle');
+          }
+      });
+      this.viewport.draw();
+    }
+  }
+
 }
 
 
 MapCreatures.prototype.applyOperation = function(action, data) {
 	if (action == "move") {
 		this.moveCreature(data.id, data.x, data.y);
-	}
+	
+  } else if(action == "new"){
+    this.loadCreatureData([{
+      class: data.classId,
+      id: data.id,
+      col: data.x,
+      row: data.y,
+      name: data.name,
+    }]);
+  }
 }

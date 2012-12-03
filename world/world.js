@@ -4,6 +4,7 @@
 var Terrain = require('../utils/world-utils').Terrain;
 var Tile = require('../world/Tile.js').Tile;
 var Direction = require('../utils/simulation-utils').Direction;
+var fs = require('fs');
 
 exports.World = World;
 
@@ -16,7 +17,7 @@ exports.client_hooks = {};
 exports.updates = {};
 
 function World( jsonObject ) {
-	this.creatureClasses = [];
+	this.creatureClasses = {}
 
 	//list of creatures
 	this.creatures = [];
@@ -49,39 +50,37 @@ function World( jsonObject ) {
  *
  * returns the tile the creature was added to
  */
-World.prototype.addCreature = function( creature ) {
-	if ( ! this.creatureClassExists( creature.classId ) ) {
-		this.creatureClasses.push( {
-			"id": creature.classId,
-			"name": creature.name,
-			"speed": creature.speed,
-			"attack": creature.attack
-		} );
-	}
+World.prototype.addCreature = function( creature, tile ) {
 	this.creatures.push( creature );
 	creature.setId( this.creatures.length - 1 );
 	this.activeCreatures.push( creature );
 	
 	var creTile;
-	if (arguments.length == 2 ){
-		creTile = this.getTile(tile.row, tile.col);
+	if (arguments.length == 3 ){
+		creTile = this.getTile(arguments[1], arguments[2]);
 	}
 	else{
 		creTile = this.getRandomValidTile();
 	}
 	creTile.occupant = creature.getId();
+
+  var delta = {
+    type: "creature", 
+    action: "new", 
+    data: {
+      id: creature.id,
+      x: creTile.col, 
+      y: creTile.row,
+      classId: creature.classId,
+      name: creature.name,
+    }
+  };
+  comm.push_diff(delta);
+
+
 	return creTile;
 };
 
-World.prototype.creatureClassExists = function( classId ) {
-	var classFoundFlag = false;
-	for( var i = 0; i < this.creatureClasses.length && !classFoundFlag; i++ ) {
-		if ( this.creatureClasses[i].id == classId ) {
-			classFoundFlag = true;
-		}
-	}
-	return classFoundFlag;
-}
 
 World.prototype.populateWithItems = function() {
 	
@@ -143,7 +142,6 @@ World.prototype.isOutOfBounds = function( coords ) {
 }
 
 World.prototype.getTerrainAtTile = function( row, col ) {
-	console.log( "(" + row + ", " + col + ")" );
 	return this.getTile(row, col).terrain;
 };
 
@@ -224,7 +222,7 @@ World.prototype.moveCreature = function( id, direction ) {
 		this.getTile(creaturePosition.row, creaturePosition.col).occupant = null;
 		this.getTile(newPos[0], newPos[1]).occupant = id;
 		console.log( "Creature has moved to: row " + newPos[0] + ", col " + newPos[1] );
-		delta = {type: "creature", action: "move", data: {id: id, x:newPos[0], y:newPos[1]}};
+		var delta = {type: "creature", action: "move", data: {id: id, x:newPos[0], y:newPos[1]}};
 		comm.push_diff(delta);
 	}
 	else {
