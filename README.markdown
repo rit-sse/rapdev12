@@ -16,14 +16,14 @@ can build the native extensions for some Node.js modules.
 3. Move to the repository directory and run `npm install` in your favorite
    shell. This will install any dependencies to the project folder.
 
-
-
 ##Running the Program
-From the command line, run:
+From the command line, run the following to start the server:
 
     node app -c <number of creatures> <relative path to creature file>
 
 As of this writing, there can only be one type of creature run on the server at a time. 
+
+Go to localhost:3000 in your browser to run the client.
 
 ## Contributing ##
 Be sure to read our documentation on the [project conventions][2] before
