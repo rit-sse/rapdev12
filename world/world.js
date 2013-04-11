@@ -51,7 +51,7 @@ function World( jsonObject ) {
  *
  * returns the tile the creature was added to
  */
-World.prototype.addCreature = function( creature, tile ) {
+World.prototype.addCreature = function( creature ) {
 	if ( ! this.creatureClassExists( creature.classId ) ) {
 		this.creatureClasses.push( {
 			"id": creature.classId,
@@ -198,10 +198,6 @@ World.prototype.attackCreature = function(attackerId, direction) {
     //if this tile is valid, grab the occupant
     if (locationToAttack){
         var occupant = locationToAttack.occupant;
-        delta = new Delta({type:"creature", action: "attack",
-            data: {attackerX: attackerPosition.col, attackerY: attackerPosition.row,
-                   targetX: locationToAttack.col, targetY: attackerPosition.row}});
-        comm.push_diff(delta);
         if (occupant){
             occupant.onHit();
             console.log("Creature is attacking to the " + direction + "!");
@@ -216,10 +212,8 @@ World.prototype.moveCreature = function( id, direction ) {
     console.log("moving Creature")
 	var creaturePosition = this.getCreaturePosition(id);
 	var nextTile = this.getAdjacentTile(creaturePosition, direction);
-	
-	var newPos = [nextTile.col, nextTile.row]
-	if (newPos[0] < 0 || newPos[1] < 0 ||
-		newPos[0] >= this.map.length || newPos[1] >= this.map[0].length){
+
+	if ( nextTile == null ){
 		console.log( "Creature with id " + id + " tried to move out of bounds." );
 		this.creatures[id].onCollision();
 		return;
@@ -294,7 +288,6 @@ World.prototype.getMapForClient = function() {
 }
 
 World.prototype.getCreatureClassesForClient = function() {
-    console.log("creatureClasses")
 	return this.creatureClasses;
 }
 
@@ -319,6 +312,7 @@ World.prototype.getCreaturesForClient = function() {
 	for ( var i = 0; i < this.activeCreatures.length; i++ ) {
 		var c = this.activeCreatures[i];
 		var creatureTile = this.getCreaturePosition( c.getId() );
+        console.log("8=====}")
 		clientCreatures.push( {
 			"id": c.getId(),
 			"class": c.classId,

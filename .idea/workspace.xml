@@ -3,9 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="786bc3a6-ed44-44b9-8041-dce3d9aeb431" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/comm/index.js" afterPath="$PROJECT_DIR$/comm/index.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/creature/Creature.js" afterPath="$PROJECT_DIR$/creature/Creature.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/socket.io/lib/parser.js" afterPath="$PROJECT_DIR$/node_modules/socket.io/lib/parser.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/etc/examplecreatures/simple-creature.js" afterPath="$PROJECT_DIR$/etc/examplecreatures/simple-creature.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/world/world.js" afterPath="$PROJECT_DIR$/world/world.js" />
     </list>
     <list id="73ad94d8-b7b1-45e1-8094-84cf637bc637" name="Failed commit: Default" comment="Merge branch 'simulation' of https://github.com/rit-sse/rapdev12 into simulation&#10;&#10;Conflicts:&#10;&#9;world/world.js&#10;" />
@@ -30,16 +29,7 @@
       <file leaf-file-name="Creature.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/creature/Creature.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="21" selection-start="249" selection-end="249" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Delta.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sim/Delta.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="4" selection-start="184" selection-end="184" vertical-scroll-proportion="0.0">
+            <state line="15" column="4" selection-start="373" selection-end="425" vertical-scroll-proportion="-10.2">
               <folding />
             </state>
           </provider>
@@ -54,10 +44,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="world.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="world.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/world/world.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="329" column="23" selection-start="9500" selection-end="9500" vertical-scroll-proportion="-17.72">
+            <state line="293" column="0" selection-start="8131" selection-end="8661" vertical-scroll-proportion="0.110210694">
               <folding />
             </state>
           </provider>
@@ -66,7 +56,7 @@
       <file leaf-file-name="simple-creature.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/etc/examplecreatures/simple-creature.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="9" selection-start="69" selection-end="71" vertical-scroll-proportion="-0.68">
+            <state line="6" column="17" selection-start="246" selection-end="246" vertical-scroll-proportion="-4.08">
               <folding />
             </state>
           </provider>
@@ -75,7 +65,16 @@
       <file leaf-file-name="MiniGrid.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/world/MiniGrid.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="46" selection-start="317" selection-end="317" vertical-scroll-proportion="0.0">
+            <state line="0" column="0" selection-start="0" selection-end="1109" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Tile.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/world/Tile.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="332" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -90,10 +89,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="parser.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="parser.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/node_modules/socket.io/lib/parser.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="73" column="21" selection-start="1235" selection-end="1235" vertical-scroll-proportion="0.8277858">
+            <state line="73" column="21" selection-start="1235" selection-end="1235" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -117,18 +116,18 @@
         <option value="$PROJECT_DIR$/world/Tile.js" />
         <option value="$PROJECT_DIR$/world/MiniGrid.js" />
         <option value="$PROJECT_DIR$/tests/world/WorldSpec.js" />
-        <option value="$PROJECT_DIR$/creature/Creature.js" />
-        <option value="$PROJECT_DIR$/world/world.js" />
         <option value="$PROJECT_DIR$/comm/index.js" />
         <option value="$PROJECT_DIR$/node_modules/socket.io/lib/parser.js" />
+        <option value="$PROJECT_DIR$/world/world.js" />
+        <option value="$PROJECT_DIR$/creature/Creature.js" />
+        <option value="$PROJECT_DIR$/etc/examplecreatures/simple-creature.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1616" />
-    <option name="height" value="876" />
+    <option name="x" value="800" />
+    <option name="width" value="800" />
+    <option name="height" value="860" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -171,7 +170,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/rapdev/rapdev12" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="JSTestDriver:ConfigurationType" factoryName="JsTestDriver">
@@ -244,14 +243,14 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1616" height="876" extended-state="0" />
-    <editor active="true" />
+    <frame x="800" y="0" width="800" height="860" extended-state="0" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32960895" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32960895" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32960895" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22447686" sideWeight="0.32681563" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22779922" sideWeight="0.6703911" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4796748" sideWeight="0.6703911" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24967825" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
@@ -328,13 +327,6 @@
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/world/Tile.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="10" selection-start="198" selection-end="198" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavascriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/ECMAScript.js2">
       <provider selected="true" editor-type-id="text-editor">
         <state line="27" column="0" selection-start="1203" selection-end="1203" vertical-scroll-proportion="0.6642547">
@@ -379,44 +371,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/world/MiniGrid.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="46" selection-start="317" selection-end="317" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sim/Delta.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="4" selection-start="184" selection-end="184" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sim/Operation.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="13" column="0" selection-start="306" selection-end="306" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/creature/Creature.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="21" selection-start="249" selection-end="249" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/etc/examplecreatures/simple-creature.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="9" selection-start="69" selection-end="71" vertical-scroll-proportion="-0.68">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/world/world.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="329" column="23" selection-start="9500" selection-end="9500" vertical-scroll-proportion="-17.72">
           <folding />
         </state>
       </provider>
@@ -430,7 +387,42 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/socket.io/lib/parser.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="73" column="21" selection-start="1235" selection-end="1235" vertical-scroll-proportion="0.8277858">
+        <state line="73" column="21" selection-start="1235" selection-end="1235" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/etc/examplecreatures/simple-creature.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="17" selection-start="246" selection-end="246" vertical-scroll-proportion="-4.08">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/creature/Creature.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="4" selection-start="373" selection-end="425" vertical-scroll-proportion="-10.2">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/world/MiniGrid.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="1109" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/world/Tile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="332" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/world/world.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="293" column="0" selection-start="8131" selection-end="8661" vertical-scroll-proportion="0.110210694">
           <folding />
         </state>
       </provider>
