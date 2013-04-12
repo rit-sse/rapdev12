@@ -16,7 +16,9 @@ exports.use_comm = function(c) {
 exports.client_hooks = {};
 exports.updates = {};
 
-function World( jsonObject ) {
+function World( worldfile ) {
+    var dir = worldfile;
+    var jsonObject = require(dir);
 	this.creatureClasses = [];
 
 	//list of creatures
@@ -30,6 +32,7 @@ function World( jsonObject ) {
 	
 	this.map = [];
 	var currentRow; var currentCol;
+
 	for(var i=0; i<jsonObject.map.length; i++){
 		currentRow = jsonObject.map[i];
 		this.map.push([]);
@@ -157,6 +160,7 @@ World.prototype.getItemAtTile = function( row, col ) {
 
 World.prototype.getRandomValidTile = function() {
 	var validTiles = this.findInTiles( function( tile ) {
+        console.log(tile)
 		return tile.terrain.passable && tile.occupant === null;
 	});
 	return this.randomElement( validTiles );
@@ -302,43 +306,4 @@ World.prototype.getCreaturesForClient = function() {
 	}
 	return clientCreatures;
 }
-
-// TODO: Make this read from world.json instead of hardcoding it
-var worldjson = {
-  "terrain": [
-    {
-      "name": Terrain.GRASS,
-      "passable": true
-    },
-    {
-      "name": Terrain.WATER,
-      "passable": false
-    },
-    {
-      "name": Terrain.ROCK,
-      "passable": false
-    }
-  ],
-  "map": [
-    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-    [ 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0 ],
-    [ 0, 0, 0, 0, 0, 2, 1, 1, 1, 1, 2, 0, 0, 0, 0, 0 ],
-    [ 0, 0, 0, 0, 0, 2, 1, 1, 1, 1, 2, 0, 0, 0, 0, 0 ],
-    [ 0, 0, 0, 0, 0, 2, 1, 1, 1, 1, 2, 0, 0, 0, 0, 0 ],
-    [ 0, 0, 0, 0, 0, 2, 1, 1, 1, 1, 2, 0, 0, 0, 0, 0 ],
-    [ 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0 ],
-    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
-  ]
-}
-
-var world = new World( worldjson );
-exports.worldjson = worldjson;
 

@@ -73,6 +73,17 @@ if(argv._.length != 0){
   }
 }
 
+var world_file = null
+if(argv._.length != 0){
+    world_file = path.join(__dirname, argv._[1]);
+    if(!fs.existsSync(world_file)){
+        throw {
+            name : "File Error",
+            message : "World File provided does not exist"
+        }
+    }
+}
+
 var creature_count = 1;
 creature_count = argv.c ? argv.c : creature_count;
 creature_count = argv.count ? argv.count : creature_count;
@@ -86,5 +97,5 @@ sim = require('./sim')
 var io = require('socket.io').listen(server);
 sim.use_comm(comm);
 world.use_comm(comm);
-sim.startSim(creature_file, creature_count);
+sim.startSim(creature_file, creature_count,world_file);
 comm.start(io, sim);

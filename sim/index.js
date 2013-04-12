@@ -36,8 +36,8 @@ exports.client_hooks = {
 exports.updates = {};
 
 
-exports.startSim = function(creature_file, creature_count) {
-	world = new world_lib.World(world_lib.worldjson);
+exports.startSim = function(creature_file, creature_count, world_file) {
+	world = new world_lib.World(world_file);
 	exports.world = world;
 	if(creature_file){
 		console.log(creature_file);

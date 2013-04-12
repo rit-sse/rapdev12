@@ -1,0 +1,12 @@
+{
+    "terrain":[
+        {
+	    "name": "grass",
+	    "passable" : true
+	}
+    ],
+    "map": [
+         [ 0, 0 ],
+	 [ 0, 0 ]
+    ]
+}
