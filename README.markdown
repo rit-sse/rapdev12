@@ -22,10 +22,10 @@ From the command line, run the following to start the server:
 
     node app -c
 
-To change how the program runs you can go to setup.json.
-The first field is the number of each creature to be made
-The second is a list of all of the creatures locations
-The third field is the world location
+To change how the program runs you can go to setup.json.  
+The first field is the number of each creature to be made  
+The second is a list of all of the creatures locations  
+The third field is the world location  
 
 Go to localhost:3000 in your browser to run the client.
 
