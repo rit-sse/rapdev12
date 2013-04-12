@@ -13,19 +13,19 @@ can build the native extensions for some Node.js modules.
 
 1.  Install [Node.js][1] (Available for Windows, Mac OS X, and Linux)
 2.  Clone this repository
-3a. For OS X and Linux users, move to the repository directory and run `npm install` in your favorite
+    1. For OS X and Linux users, move to the repository directory and run `npm install` in your favorite
     shell. This will install any dependencies to the project folder.
-3b. For Windows users, reboot your system, open the command prompt, and follow the rest of 3a.
+    2. For Windows users, reboot your system, open the command prompt, and follow the same as OS X and Linux.
 
 ## Running the Program ##
 From the command line, run the following to start the server:
 
     node app -c
 
-To change how the program runs you can go to setup.json.  
-The first field is the number of each creature to be made  
-The second is a list of all of the creatures locations  
-The third field is the world location  
+To change how the program runs you can go to setup.json. The fields are as follows: 
+1.  Number of each creature to be made  
+2.  List of all of the creatures locations  
+3.  World location  
 
 Go to localhost:3000 in your browser to run the client.
 
