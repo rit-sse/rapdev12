@@ -10,7 +10,7 @@ var express = require('express')
   , path = require('path');
 
 var app = express();
-
+app.set('title','BioGrid');
 app.configure(function(){
   app.set('port', process.env.PORT || 1234);
   app.set('views', __dirname + '/views');

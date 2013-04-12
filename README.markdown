@@ -22,8 +22,7 @@ From the command line, run the following to start the server:
 
     node app -c
 
-To change how the program runs you can go to setup.json. The fields are as follows:
-
+To change how the program runs you can go to setup.json. The fields are as follows:  
 1.  Number of each creature to be made  
 2.  List of all of the creatures locations  
 3.  World location  
