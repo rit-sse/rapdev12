@@ -20,9 +20,12 @@ can build the native extensions for some Node.js modules.
 ## Running the Program ##
 From the command line, run the following to start the server:
 
-    node app -c <number of creatures> <relative path to creature file>
+    node app -c
 
-As of this writing, there can only be one type of creature run on the server at a time. 
+To change how the program runs you can go to setup.json.
+The first field is the number of each creature to be made
+The second is a list of all of the creatures locations
+The third field is the world location
 
 Go to localhost:3000 in your browser to run the client.
 

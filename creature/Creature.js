@@ -11,8 +11,8 @@ function Creature(world){
 	this.offense = 10;
 	this.defense = 10;
 	this.speed = 10;
-  this.classId = 1;
-  this.name = "Creature";
+    this.classId = 1;
+    this.name = "Creature";
     this.minHitDamage = 1;
     this.timeLeftToSleep = 0;
 };
