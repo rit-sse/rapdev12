@@ -15,6 +15,7 @@ var express = require('express')
   , argv = require('optimist').argv
   , optimist = require('optimist');
 
+var setupFile = require('./setup.json');
 
 var app = express();
 
@@ -62,31 +63,17 @@ if(argv.h || argv.help){
 }
 
 
-var creature_file = null
-if(argv._.length != 0){
-  creature_file = path.join(__dirname, argv._[0]);
-  if(!fs.existsSync(creature_file)){
-    throw {
-      name : "File Error",
-      message : "File provided does not exist"
-    }
-  }
-}
 
-var world_file = null
-if(argv._.length != 0){
-    world_file = path.join(__dirname, argv._[1]);
-    if(!fs.existsSync(world_file)){
-        throw {
-            name : "File Error",
-            message : "World File provided does not exist"
-        }
-    }
-}
+console.log();
+console.log(setupFile.world);
+console.log(setupFile.creatures);
 
-var creature_count = 1;
-creature_count = argv.c ? argv.c : creature_count;
-creature_count = argv.count ? argv.count : creature_count;
+
+
+var creature_file = setupFile.creatures;
+
+var world_file = setupFile.world;
+var creature_count = setupFile.numOfCreatures;
 
 server.listen(app.get('port'), function() {
   console.log("Express server listening on port " + app.get('port'));

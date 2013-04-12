@@ -39,18 +39,22 @@ exports.updates = {};
 exports.startSim = function(creature_file, creature_count, world_file) {
 	world = new world_lib.World(world_file);
 	exports.world = world;
-	if(creature_file){
-		console.log(creature_file);
-		console.log("BITCHES: " + require(creature_file));
+
+    var creature = creature_file[0];
+    var index = 0;
+    while(creature){
+	    console.log("??? " + creature);
+		console.log("BITCHES: " + require(creature));
 		var creature_class_instance = new Creature(world);
-		var creature = require(creature_file).monster(creature_class_instance , Direction);
+        console.log("lo "+creature)
+		var creature = require(creature).monster(creature_class_instance , Direction);
     	console.log( creature );
     	for(var i = 0; i < creature_count; i++){
-			world.addCreature(new creature());
+		    world.addCreature(new creature());
 		}
-
-	}
-
+        index += 1;
+        creature = creature_file[index];
+    }
 	var turn = 0;
 	var a_turn = function(){	
 		turn++;

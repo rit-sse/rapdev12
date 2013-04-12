@@ -17,8 +17,10 @@ exports.client_hooks = {};
 exports.updates = {};
 
 function World( worldfile ) {
-    var dir = worldfile;
+    var dir = "../world/world.json"
+    console.log("lol "+dir)
     var jsonObject = require(dir);
+
 	this.creatureClasses = [];
 
 	//list of creatures
