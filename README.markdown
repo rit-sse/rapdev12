@@ -6,10 +6,17 @@
 BioGrid is a fishtank-style game where creatures strive to live in a hostile world. Write JavaScript to
 build your very own creature -- the success of your creature depends on the quality of your code.
 
+## Want to Help? ##
+
+We are looking for some help to get many of the features that did not get done over the original Rapid 
+Development Weekend. If you want to help contact mrm9084@rit.edu and we will help get you started with 
+what is currently going on.
+
 ## Getting Started ##
 
-If you're using Windows, you **should** install Visual Studio so you
-can build the native extensions for some Node.js modules.
+If you what to get started here is how you get the program downloaded and start runningIf you're using
+Windows, you **should** install Visual Studio so you can build the native extensions for some Node.js 
+modules.
 
 1.  Install [Node.js][1] (Available for Windows, Mac OS X, and Linux)
 2.  Clone this repository
