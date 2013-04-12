@@ -5,6 +5,7 @@ var Terrain = require('../utils/world-utils').Terrain;
 var Tile = require('../world/Tile.js').Tile;
 var Direction = require('../utils/simulation-utils').Direction;
 var fs = require('fs');
+var MiniGrid = require('../world/MiniGrid.js').MiniGrid;
 
 exports.World = World;
 
@@ -237,6 +238,25 @@ World.prototype.moveCreature = function( id, direction ) {
 		this.creatures[id].onCollision();
 	}
 	return tileCheck;
+}
+
+World.prototype.createMiniGrid = function(creatureId){
+    var miniGrid = new MiniGrid();
+    var creatureLocation = this.getCreaturePosition(creatureId);
+    for(var i = -2; i <= 2; i++){
+        for(var j = -2; j <= 2; j++){
+            if(creatureLocation != null){
+                var tile = this.getTile(creatureLocation.row + i, creatureLocation.col + j);
+                if(tile == null){
+                    tile = new Tile(null,null,creatureLocation.row + i, creatureLocation.col + j);
+                }
+
+                miniGrid.addTile(tile);
+            }
+        }
+    }
+    console.log("looked around")
+    return miniGrid;
 }
 
 World.prototype.randomElement = function( someArray ) {
