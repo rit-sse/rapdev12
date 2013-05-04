@@ -36,10 +36,30 @@ exports.client_hooks = {
   'file_upload':function(data){
     writeCreatureJS(data.name,data.contents)
     return "File write attempted";
+  },
+  'add_creature':function(data){
+    var creature = new exports.world.creatureClasses[data.classId].constructor;
+    creature.classId = data.classId;
+    var tile = exports.world.getTile(data.y, data.x);
+    exports.world.addCreature(creature, tile);
   }
 }
 
 exports.updates = {};
+
+var nextClassId = 1;
+
+exports.addCreatureClass = function(creatureClass) {
+  exports.world.creatureClasses[nextClassId] = {
+    "id": nextClassId,
+    "name": creatureClass.name,
+    "speed": creatureClass.speed,
+    "attack": creatureClass.attack,
+    "constructor": creatureClass
+  };
+  nextClassId++;
+}
+
 
 /**
  * Starts the program by creating all of the creatures
@@ -66,6 +86,7 @@ exports.startSim = function(creature_file, creature_count, world_file) {
         index += 1;
         creature = creature_file[index];
     }
+
 	var turn = 0;
 	var a_turn = function(){	
 		turn++;
@@ -81,5 +102,6 @@ exports.startSim = function(creature_file, creature_count, world_file) {
 	}
 
 	setTimeout(0,a_turn());
+
 
 }
