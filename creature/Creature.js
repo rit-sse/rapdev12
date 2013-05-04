@@ -13,7 +13,7 @@ function Creature(world){
 	this.speed = 10;
     this.classId = 1;
     this.name = "Creature";
-    this.minHitDamage = 1;
+    this.minHitDamage = 25;
     this.timeLeftToSleep = 0;
 };
 
@@ -61,6 +61,7 @@ function Creature(world){
  Creature.prototype.attack = function(direction){
      if(this.energy >= 5 && this.health > 0  && this.timeLeftToSleep == 0){
          this.energy-=5;
+         console.log("Made It Here????????????????????????")
          this.world.attackCreature(this.id, direction);
      }
      this.energyRemaining();
@@ -182,6 +183,7 @@ function Creature(world){
   */
  Creature.prototype.hit = function(damage,direction){
      var damageTaken = damage - this.defense;
+     console.log("I have taken " + damageTaken + "damage");
      if(damage>0){
          this.health -= damage;
      }else{
@@ -214,8 +216,15 @@ function Creature(world){
      return this.name;
  }
 
+ /*
+ Returns the string "to String", this needs to be changed to an actual print out for the creature
+  */
  Creature.prototype.toString = function() {
      return "to String";
+ }
+
+ Creature.prototype.getHealth = function() {
+     return this.health
  }
 
  exports.Creature = Creature;

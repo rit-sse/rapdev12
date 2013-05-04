@@ -30,6 +30,7 @@ app.configure(function(){
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
   app.use(express.errorHandler());
+  app.use(express.favicon(__dirname + '/public/assets/images/biogrid.ico'));
   app.locals.pretty = true;
 });
 

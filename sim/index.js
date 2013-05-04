@@ -13,6 +13,12 @@ exports.use_comm = function(c) {
 
 var fs = require('fs');
 
+/**
+ * Writes the Creatures program to the uploads directory
+ *
+ * @param name
+ * @param data
+ */
 function writeCreatureJS(name,data) {
     fs.writeFile("./uploads/"+name, data, function(err) {
         if(err) {
@@ -35,7 +41,12 @@ exports.client_hooks = {
 
 exports.updates = {};
 
-
+/**
+ * Starts the program by creating all of the creatures
+ * @param creature_file
+ * @param creature_count
+ * @param world_file
+ */
 exports.startSim = function(creature_file, creature_count, world_file) {
 	world = new world_lib.World(world_file);
 	exports.world = world;

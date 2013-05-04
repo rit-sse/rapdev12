@@ -5,7 +5,11 @@ function MapCreatures(viewport) {
 	this.creatures = [];
 }
 
-
+/**
+ * Animation for the creatures moving around, is missing left
+ * @param classId
+ * @return {Object}
+ */
 MapCreatures.prototype.getAnimations = function(classId) {
 	
     var animations = {
@@ -22,7 +26,7 @@ MapCreatures.prototype.getAnimations = function(classId) {
 		walk: [],
         
         right: [],
-        
+
         back: []
 	}
     
@@ -45,6 +49,7 @@ MapCreatures.prototype.getAnimations = function(classId) {
 					width: values[4],
 					height: values[5]
 				});
+
                 animations.walk = animations.all.slice(0,32)
                 animations.right = animations.all.slice(33,64)
                 animations.back = animations.all.slice(65,96)
@@ -103,7 +108,6 @@ MapCreatures.prototype.loadCreatureClassData = function(data) {
 
 
 MapCreatures.prototype.loadCreatureData = function(data) {
-    
     if (!this.loaded) {
         this.loaded = true;
     }
@@ -137,26 +141,30 @@ MapCreatures.prototype.loadCreatureData = function(data) {
 MapCreatures.prototype.moveCreature = function(creatureId, x, y) {
 
 	var sprite = this.creatures[creatureId].sprite;
-    
+
+    //console.log("?????????????????????????????????????")
     if (this.creatureClasses[(this.creatures[creatureId].class)].loaded) {
         var lastx = sprite.getX()/TILE_SIZE;
         var lasty = sprite.getY()/TILE_SIZE;
-        
+
+        console.log(lastx + " : " + lasty + " :: " + x + " : " + y)
         //Test effect
         //effect.Attack1(window.stage,lastx,lasty)
         if (lasty>y) {
             sprite.setAnimation('back');
-        } else if (lastx>=x) {
+        } else if (lastx>x) {
             sprite.setAnimation('right');
         } else {
             sprite.setAnimation('walk');
         }
     }
     sprite.transitionTo({
+
         x: (x * TILE_SIZE),
         y: (y * TILE_SIZE),
         duration: 0.75,
         callback: function() {
+            //console.log("=======================================================");
             sprite.setIndex(0);
             sprite.setAnimation('idle');
         }

@@ -124,6 +124,7 @@ $(window).resize(function () {
 /* Adds delay to when the canvas is resized so that it doesn't constantly
  * redraw as the window changes
  */
+
 var waitForFinalEvent = (function () {
   var timers = {};
   return function (callback, ms, uniqueId) {

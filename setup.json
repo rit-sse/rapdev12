@@ -2,7 +2,7 @@
     "numOfCreatures": 1,
 
     "creatures" : [
-        "../etc/examplecreatures/simple-creature.js",
+        "../etc/examplecreatures/forward-creature.js",
         "../etc/examplecreatures/forward-creature.js"
     ],
 

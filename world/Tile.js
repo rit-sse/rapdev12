@@ -1,3 +1,12 @@
+/**
+ * Represents a tile in the world and miniGrid
+ *
+ * @param occupant
+ * @param terrain
+ * @param row
+ * @param column
+ * @constructor
+ */
 function Tile(occupant,terrain,row,column){
     this.occupant = occupant;
     this.terrain = terrain;
