@@ -8,7 +8,7 @@ var fs = require('fs');
 var MiniGrid = require('../world/MiniGrid.js').MiniGrid;
 
 exports.World = World;
-
+//Test
 var comm;
 exports.use_comm = function(c) {
   comm = c;
