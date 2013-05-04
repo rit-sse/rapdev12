@@ -70,9 +70,16 @@ var zzz_anim        = effect.getAnimations("misc_animations/zzz");
  * @constructor
  */
 effect.Attack1 = function(stage,x,y) {
+    var xsc = x*TILE_SIZE
+    var xcoord = xsc - biogame.viewport.getX();
+    
+    var ysc = y*TILE_SIZE
+    var ycoord = ysc - biogame.viewport.getY();
+
+
     var efct = new Kinetic.Sprite({
-        x: x*TILE_SIZE,
-        y: y*TILE_SIZE,
+        x: (xcoord),
+        y: (ycoord),
         width: TILE_SIZE,
         height: TILE_SIZE,
         image: preloadImage("/assets/images/misc_animations/attack1.png"),
@@ -81,6 +88,7 @@ effect.Attack1 = function(stage,x,y) {
     });
     var spriteLayer = new Kinetic.Layer()
     spriteLayer.add(efct);
+    efct.start();
     
     stage.add(spriteLayer);
     setTimeout(function() {spriteLayer.remove()},1000);
@@ -95,18 +103,27 @@ effect.Attack1 = function(stage,x,y) {
  * @constructor
  */
 effect.Death1 = function(stage,x,y) {
+    var xsc = x*TILE_SIZE
+    var xcoord = xsc - biogame.viewport.getX();
+    
+    var ysc = y*TILE_SIZE
+    var ycoord = ysc - biogame.viewport.getY();
+
+
     var efct = new Kinetic.Sprite({
-        x: x*TILE_SIZE,
-        y: y*TILE_SIZE,
+        x: xcoord,
+        y: ycoord,
         width: TILE_SIZE,
         height: TILE_SIZE,
         image: preloadImage("/assets/images/misc_animations/death1.png"),
-        animations: adeath1_anim,
+        animations: death1_anim,
         animation: 'all'
     });
     var spriteLayer = new Kinetic.Layer()
     spriteLayer.add(efct);
     efct.start();
+    
+    console.log("Effect Made")
     
     stage.add(spriteLayer);
     setTimeout(function() {spriteLayer.remove()},1000);
@@ -121,9 +138,15 @@ effect.Death1 = function(stage,x,y) {
  * @constructor
  */
 effect.Effect01 = function(stage,x,y) {
+    var xsc = x*TILE_SIZE
+    var xcoord = xsc - biogame.viewport.getX();
+    
+    var ysc = y*TILE_SIZE
+    var ycoord = ysc - biogame.viewport.getY();
+
     var efct = new Kinetic.Sprite({
-        x: x*TILE_SIZE,
-        y: y*TILE_SIZE,
+        x: xcoord,
+        y: ycoord,
         width: TILE_SIZE,
         height: TILE_SIZE,
         image: preloadImage("/assets/images/misc_animations/effect01.png"),
@@ -147,9 +170,15 @@ effect.Effect01 = function(stage,x,y) {
  * @constructor
  */
 effect.Effect2 = function(stage,x,y) {
+    var xsc = x*TILE_SIZE
+    var xcoord = xsc - biogame.viewport.getX();
+    
+    var ysc = y*TILE_SIZE
+    var ycoord = ysc - biogame.viewport.getY();
+
     var efct = new Kinetic.Sprite({
-        x: x*TILE_SIZE,
-        y: y*TILE_SIZE,
+        x: xcoord,
+        y: ycoord,
         width: TILE_SIZE,
         height: TILE_SIZE,
         image: preloadImage("/assets/images/misc_animations/effect2.png"),
@@ -172,9 +201,15 @@ effect.Effect2 = function(stage,x,y) {
  * @constructor
  */
 effect.Sleep = function(stage,x,y) {
+    var xsc = x*TILE_SIZE
+    var xcoord = xsc - biogame.viewport.getX();
+    
+    var ysc = y*TILE_SIZE
+    var ycoord = ysc - biogame.viewport.getY();
+
     var efct = new Kinetic.Sprite({
-        x: x*TILE_SIZE,
-        y: y*TILE_SIZE,
+        x: xcoord,
+        y: ycoord,
         width: TILE_SIZE,
         height: TILE_SIZE,
         image: preloadImage("/assets/images/misc_animations/zzz.png"),

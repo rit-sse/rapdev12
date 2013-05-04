@@ -7,8 +7,10 @@ var Direction = require('../utils/simulation-utils').Direction;
 var fs = require('fs');
 var MiniGrid = require('../world/MiniGrid.js').MiniGrid;
 
+
 exports.World = World;
 //Test
+
 var comm;
 exports.use_comm = function(c) {
   comm = c;
@@ -24,9 +26,11 @@ exports.updates = {};
  * @constructor
  */
 function World( worldfile ) {
+    console.log("Wordfile " + worldfile)
     var jsonObject = require(worldfile);
 
 	this.creatureClasses = [];
+
 
 	//list of creatures
 	this.creatures = [];
@@ -61,28 +65,44 @@ function World( worldfile ) {
  * returns the tile the creature was added to
  */
 World.prototype.addCreature = function( creature, tile ) {
-	if ( ! this.creatureClassExists( creature.classId ) ) {
-		this.creatureClasses.push( {
-			"id": creature.classId,
-			"name": creature.name,
-			"speed": creature.speed,
-			"offense": creature.offense
-		} );
-	}
-	this.creatures.push( creature );
+	if( ! this.creatureClassExists(creature.classId)){
+        this.creatureClasses.push({
+            "id":creature.classId,
+            "name":creature.name,
+            "speed":creature.speed,
+            "offense":creature.offense
+        })
+    }
+    this.creatures.push( creature );
 	creature.setId( this.creatures.length - 1 );
 	this.activeCreatures.push( creature );
 	
 	var creTile;
 	if (arguments.length == 2 ){
-		creTile = this.getTile(tile.row, tile.col);
+		creTile = this.getTile(tile.row, tile.column);
 	}
 	else{
 		creTile = this.getRandomValidTile();
 	}
 	creTile.occupant = creature.getId();
+
+  /*var delta = {
+    type: "creature", 
+    action: "new", 
+    data: {
+      id: creature.id,
+      x: creTile.col, 
+      y: creTile.row,
+      classId: creature.classId,
+      name: creature.name
+    }
+  };
+  comm.push_diff(delta);     */
+
+
 	return creTile;
 };
+
 
 /**
  * Looks to see if the creatures class is on the board
@@ -257,6 +277,15 @@ World.prototype.attackCreature = function(attackerId, direction) {
     if (locationToAttack){
         var occupant = locationToAttack.occupant;
         console.log(this.creatures[attackerId].name+" is attacking to the " + direction + "!");
+        var attackDelta = {
+        	type: "creature",
+        	action: "attack",
+        	data: {
+        		row: locationToAttack.row,
+        		col: locationToAttack.col
+        	}
+        };
+        comm.push_diff( attackDelta );
 		if (occupant){
             console.log(occupant + " was hit!");
             var attacker = this.getCreaturePosition(attackerId).occupant;
@@ -284,21 +313,30 @@ World.prototype.moveCreature = function( id, direction ) {
         return false;
     }
 
-    var newPos = [nextTile.row, nextTile.col]
 
-    var desiredTile = this.getTile( newPos[0], newPos[1] );
-    var tileCheck = desiredTile.terrain.passable && desiredTile.occupant == null;
-    if ( tileCheck ) {
-        this.getTile(creaturePosition.row, creaturePosition.col).occupant = null;
-        this.getTile(newPos[0], newPos[1]).occupant = id;
-        console.log( "Creature has moved to: row " + newPos[0] + ", col " + newPos[1] );
-        delta = {type: "creature", action: "move", data: {id: id, x:newPos[0], y:newPos[1]}};
-        comm.push_diff(delta);
-    }
-    else {
-        this.creatures[id].onCollision();
-    }
-    return tileCheck;
+	var newPos = [nextTile.row, nextTile.col]
+	
+	var desiredTile = this.getTile( newPos[0], newPos[1] );
+	var tileCheck = desiredTile.terrain.passable && desiredTile.occupant == null;
+	if ( tileCheck ) {
+		this.getTile(creaturePosition.row, creaturePosition.col).occupant = null;
+		this.getTile(newPos[0], newPos[1]).occupant = id;
+		console.log( "Creature has moved to: row " + newPos[0] + ", col " + newPos[1] );
+		delta = {
+			type: "creature",
+			action: "move",
+			data: {
+				id: id,
+				x: newPos[0],
+				y: newPos[1]
+			}
+		};
+		comm.push_diff(delta);
+	}
+	else {
+		this.creatures[id].onCollision();
+	}
+	return tileCheck;
 }
 
 World.prototype.createMiniGrid = function(creatureId){
@@ -316,8 +354,9 @@ World.prototype.createMiniGrid = function(creatureId){
             }
         }
     }
-    console.log("looked around")
+    console.log("looked around");
     return miniGrid;
+
 }
 
 World.prototype.randomElement = function( someArray ) {
@@ -389,4 +428,19 @@ World.prototype.getCreaturesForClient = function() {
 	}
 	return clientCreatures;
 }
+
+
+// TODO: Make this read from world.json instead of hardcoding it
+var worldFromJSON = JSON.parse( fs.readFileSync( 'world/world.json' ) );
+// fs.readFileSync( 'world/world.json', function( err, data ) {
+// 	if (err) {
+// 		console.log( "ERROR READING world.json" );
+// 	} else {
+// 		console.log( data );
+// 		worldFromJSON = JSON.parse( data );
+// 	}
+// });
+
+exports.worldFromJSON = worldFromJSON;
+exports.World = World;
 

@@ -44,6 +44,7 @@ function getRandomSubTitle() {
 * @see Splash.Kill,Splash.SetPercent,Splash.Disperse
 */
 var Splash = function Splash(stage,onkill) {
+    console.log("I can do this");
     this.stage = stage;
     this.onkill = onkill;
     

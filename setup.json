@@ -2,9 +2,8 @@
     "numOfCreatures": 1,
 
     "creatures" : [
-        "../etc/examplecreatures/forward-creature.js",
-        "../etc/examplecreatures/forward-creature.js"
+        "../etc/examplecreatures/simple-creature.js"
     ],
 
-    "world" : "../world/testworld.json"
+    "world" : "../world/world.json"
 }

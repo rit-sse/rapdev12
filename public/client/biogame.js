@@ -19,6 +19,7 @@ BioGame.prototype.initGame = function(data) {
     // Create a map with the provided tile data
     if (!this.initialized) {
         this.initialized=true;
+        effect(this.socket);
         this.map.loadTileData(data.map);
         this.mapCreatures.loadCreatureClassData(data.creatureClasses);
         this.mapCreatures.loadCreatureData(data.creatures);
@@ -43,15 +44,16 @@ BioGame.prototype.applyDelta = function(operation) {
  * the game state when loading the window.
  */
 window.onload = function() {
-  
+
   var wrapper = $("#biogame");
   window.stage = new Kinetic.Stage({
       container: 'biogame',
       width: wrapper.width(),
       height: wrapper.height()
   });
-  
-  var socket = io.connect('http://localhost:3000');
+
+  var socket = io.connect('http://'+location.host);
+  console.log(location.host);
 
   biogame = new BioGame(stage);
   
@@ -66,11 +68,23 @@ window.onload = function() {
   biogame.socket = socket;
   
   socket.on('connected', function(data) {
-    
+    //biogame.splash.SetPercent(0.5);
+  });
+
+  // Test message
+  socket.on('echo', function(data) {
+    console.log(data);
+  });
+
+  socket.on('count', function(data) {
+    console.log(data);
+  });
+
+  socket.on('push_diff', function(data){
+    biogame.applyDelta(data);
   });
 
   socket.on('get_map', function(data){
-    console.log(data);
     setTimeout(function() {biogame.initGame(data)},1000)
     biogame.splash.Disperse(1);
   });
@@ -106,6 +120,40 @@ window.onload = function() {
     e.preventDefault();
 
   });
+
+
+  $(".creature-class").live("dragstart", function(event){
+    event.originalEvent.dataTransfer.setData("text", $(this).data("classid"));
+  });
+
+  /* Cancel dragOver event so we can drop onto the canvas
+   */
+  $("#biogame canvas")[0].addEventListener("dragover", function(event){
+    event.preventDefault();
+  }, false);
+
+
+  /* Drop a creature onto the canvas
+   */
+  $("#biogame canvas")[0].addEventListener("drop", function(event){
+    event.preventDefault();
+
+    var xcoord = event.clientX - biogame.viewport.getX();
+    var x = Math.floor(xcoord/TILE_SIZE);
+
+    var ycoord = event.clientY - biogame.viewport.getY();
+    var y = Math.floor(ycoord/TILE_SIZE);
+
+    console.log("(" + x + ", " + y + ")");
+
+    socket.emit("add_creature", {
+      classId: event.dataTransfer.getData("text"),
+      x: x,
+      y: y
+    });
+
+  }, false);
+
 }
     
 
