@@ -5,6 +5,12 @@ function effect() {
 }
 TILE_SIZE = 64;
 
+/**
+ * Gets the different move animations for the creatures, is missing left
+ *
+ * @param image_loc
+ * @return {Object}
+ */
 effect.getAnimations = function(image_loc) {
 	
     var animations = {
@@ -56,7 +62,13 @@ var effect01_anim   = effect.getAnimations("misc_animations/effect01");
 var effect2_anim    = effect.getAnimations("misc_animations/effect2");
 var zzz_anim        = effect.getAnimations("misc_animations/zzz");
 
-
+/**
+ * Effect that shows one of the attack animations
+ * @param stage
+ * @param x
+ * @param y
+ * @constructor
+ */
 effect.Attack1 = function(stage,x,y) {
     var xsc = x*TILE_SIZE
     var xcoord = xsc - biogame.viewport.getX();
@@ -82,6 +94,14 @@ effect.Attack1 = function(stage,x,y) {
     setTimeout(function() {spriteLayer.remove()},1000);
 }
 
+/**
+ * Effect that shows one of the death animations
+ *
+ * @param stage
+ * @param x
+ * @param y
+ * @constructor
+ */
 effect.Death1 = function(stage,x,y) {
     var xsc = x*TILE_SIZE
     var xcoord = xsc - biogame.viewport.getX();
@@ -109,6 +129,14 @@ effect.Death1 = function(stage,x,y) {
     setTimeout(function() {spriteLayer.remove()},1000);
 }
 
+/**
+ * Effect animation unknown what it is meant to be
+ *
+ * @param stage
+ * @param x
+ * @param y
+ * @constructor
+ */
 effect.Effect01 = function(stage,x,y) {
     var xsc = x*TILE_SIZE
     var xcoord = xsc - biogame.viewport.getX();
@@ -133,6 +161,14 @@ effect.Effect01 = function(stage,x,y) {
     setTimeout(function() {spriteLayer.remove()},1000);
 }
 
+/**
+ * Effect animation, unknown what it is meant to be
+ *
+ * @param stage
+ * @param x
+ * @param y
+ * @constructor
+ */
 effect.Effect2 = function(stage,x,y) {
     var xsc = x*TILE_SIZE
     var xcoord = xsc - biogame.viewport.getX();
@@ -156,7 +192,14 @@ effect.Effect2 = function(stage,x,y) {
     stage.add(spriteLayer);
     setTimeout(function() {spriteLayer.remove()},1000);
 }
-
+/**
+ * Animation that puts ZZZ on top of the creature
+ *
+ * @param stage
+ * @param x
+ * @param y
+ * @constructor
+ */
 effect.Sleep = function(stage,x,y) {
     var xsc = x*TILE_SIZE
     var xcoord = xsc - biogame.viewport.getX();

@@ -30,7 +30,8 @@ exports.monster = function(creature, Direction){ // TEMPLATE
 
         this.move(next_dir[this.direction]);
         this.direction = ( this.direction + 1 ) % next_dir.length;
-        this.attack(Direction.NORTH);
+        //this.attack(Direction.NORTH);
+        this.lookAround();
     };
 
     /* We need to return the creature we created so that we can have our own instances */

@@ -10,9 +10,10 @@ exports.monster = function(creature, Direction){ // TEMPLATE
 
     creature.name = "Captain Forward";
     creature.offense = 100;
-    creature.defence = 100;
+    creature.defence = 50;
     creature.speed = 100;
-    
+    var attackDir = 0;
+
     var next_dir = [
         Direction.SOUTH,
         Direction.NORTH,
@@ -28,9 +29,13 @@ exports.monster = function(creature, Direction){ // TEMPLATE
      */
     SimpleCreature.prototype.act = function() {
         console.log("Now moving \"" + this.getName() + "\"");
-        
-        this.move(next_dir[this.cDir]);
-        this.attack(next_dir[this.cDir]);
+        if(attackDir < 2){
+            this.attack(next_dir[attackDir])
+        }else{
+            this.attack(dodge_dir[attackDir-2]);
+        }
+
+        attackDir = (attackDir + 1) % 4;
     };
     
     SimpleCreature.prototype.onCollision = function() {
@@ -38,9 +43,9 @@ exports.monster = function(creature, Direction){ // TEMPLATE
     };
     
     SimpleCreature.prototype.onHit = function() {
-        console.log("I've been hit!");
+        console.log("I've been hit! My hp is " + this.getHealth());
         //this.move([Direction.EAST, Direction.WEST][this.cDir]); //BAD IDEAS
-        this.move(dodge_dir[this.cDir]);
+        //this.move(dodge_dir[this.cDir]);
     }
     
 

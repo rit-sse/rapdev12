@@ -5,9 +5,13 @@ function MapCreatures(viewport) {
 	this.creatures = [];
 }
 
-
+/**
+ * Animation for the creatures moving around, is missing left
+ * @param classId
+ * @return {Object}
+ */
 MapCreatures.prototype.getAnimations = function(classId) {
-	
+
     var animations = {
 		// Default to an idle animation of the first frame
 		idle: [{
@@ -16,23 +20,23 @@ MapCreatures.prototype.getAnimations = function(classId) {
 			width: TILE_SIZE,
 			height: TILE_SIZE
 		}],
-        
+
         all: [],
 
 		walk: [],
-        
+
         right: [],
-        
+
         back: []
 	}
-    
+
     var yacht = this;
 
 	// Load the walk animation from the appropriate sprite sheet
 	$.ajax({ //You're aware we do this like 128 times, right?
 		url: "assets/images/creatures/walk-" + classId + ".txt",
 		dataType: "text",
-		async: true, 
+		async: true,
 		success: function (data) {
 			// Create animation frames from the file
 			var lines = data.split('\n');
@@ -45,6 +49,7 @@ MapCreatures.prototype.getAnimations = function(classId) {
 					width: values[4],
 					height: values[5]
 				});
+
                 animations.walk = animations.all.slice(0,32)
                 animations.right = animations.all.slice(33,64)
                 animations.back = animations.all.slice(65,96)
@@ -82,12 +87,12 @@ MapCreatures.prototype.addCreatureClassToSidebar = function(creatureClass){
     $('<article class="creature-class clearfix" id="creature-class-'
         + creatureClass.id + '" data-classId="' + creatureClass.id + '" draggable="true">' +
       '<img src="' + creatureClass.image.src +
-        '" alt="' + creatureClass.name + 
+        '" alt="' + creatureClass.name +
         '" class="creature-preview" draggable="false" />' +
       '<h1>' + creatureClass.name + '</h1>' +
-      '<dl>' + 
-        '<dt>Attack</dt><dd>' + creatureClass.attack + '</dd>' + 
-        '<dt>Speed</dt><dd>' + creatureClass.speed + '</dd>' + 
+      '<dl>' +
+        '<dt>Attack</dt><dd>' + creatureClass.attack + '</dd>' +
+        '<dt>Speed</dt><dd>' + creatureClass.speed + '</dd>' +
       '</dl>' +
     '</article>');
 
@@ -106,14 +111,13 @@ MapCreatures.prototype.loadCreatureClassData = function(data) {
 
 
 MapCreatures.prototype.loadCreatureData = function(data) {
-    
     if (!this.loaded) {
         this.loaded = true;
     }
 	for (var i=0;i<data.length;i++) {
 
 		var creature = data[i];
-        
+
 		// Create the sprite and add it to the viewport
 		var sprite = new Kinetic.Sprite({
 			x: creature.row * TILE_SIZE,
@@ -129,7 +133,7 @@ MapCreatures.prototype.loadCreatureData = function(data) {
 
 		// Save the creature for later reference
 		creature.sprite = sprite;
-        
+
         this.creatures[creature.id] = creature;
 	}
 
@@ -165,13 +169,14 @@ MapCreatures.prototype.loadCreatureData = function(data) {
 
 MapCreatures.prototype.moveCreature = function(creatureId, x, y) {
 
-  if(this.creatures[creatureId]){
+
     if (this.creatureClasses[(this.creatures[creatureId].class)].loaded) {
 
         var sprite = this.creatures[creatureId].sprite;
         var lastx = sprite.getX()/TILE_SIZE;
         var lasty = sprite.getY()/TILE_SIZE;
-        
+
+        console.log(lastx + " : " + lasty + " :: " + x + " : " + y)
         //Test effect
         //effect.Death1(window.stage,x,y)
         if (y>lasty) {
@@ -195,7 +200,19 @@ MapCreatures.prototype.moveCreature = function(creatureId, x, y) {
       });
       this.viewport.draw();
     }
-  }
+
+    sprite.transitionTo({
+
+        x: (x * TILE_SIZE),
+        y: (y * TILE_SIZE),
+        duration: 0.75,
+        callback: function() {
+            //console.log("=======================================================");
+            sprite.setIndex(0);
+            sprite.setAnimation('idle');
+        }
+    });
+
 
 }
 
@@ -215,7 +232,7 @@ MapCreatures.prototype.applyOperation = function(action, data) {
       id: data.id,
       col: data.x,
       row: data.y,
-      name: data.name,
+      name: data.name
     }]);
   }
 }

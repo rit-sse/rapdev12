@@ -1,0 +1,9 @@
+{
+    "numOfCreatures": 1,
+
+    "creatures" : [
+        "../etc/examplecreatures/simple-creature.js"
+    ],
+
+    "world" : "../world/world.json"
+}

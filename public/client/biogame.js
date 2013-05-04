@@ -44,14 +44,14 @@ BioGame.prototype.applyDelta = function(operation) {
  * the game state when loading the window.
  */
 window.onload = function() {
-  
+
   var wrapper = $("#biogame");
   window.stage = new Kinetic.Stage({
       container: 'biogame',
       width: wrapper.width(),
       height: wrapper.height()
   });
-  
+
   var socket = io.connect('http://'+location.host);
   console.log(location.host);
 
@@ -172,6 +172,7 @@ $(window).resize(function () {
 /* Adds delay to when the canvas is resized so that it doesn't constantly
  * redraw as the window changes
  */
+
 var waitForFinalEvent = (function () {
   var timers = {};
   return function (callback, ms, uniqueId) {

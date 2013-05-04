@@ -15,6 +15,7 @@ var express = require('express')
   , argv = require('optimist').argv
   , optimist = require('optimist');
 
+var setupFile = require('./setup.json');
 
 var app = express();
 
@@ -29,6 +30,7 @@ app.configure(function(){
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
   app.use(express.errorHandler());
+  app.use(express.favicon(__dirname + '/public/assets/images/biogrid.ico'));
   app.locals.pretty = true;
 });
 
@@ -62,20 +64,17 @@ if(argv.h || argv.help){
 }
 
 
-var creature_file = null
-if(argv._.length != 0){
-  creature_file = path.join(__dirname, argv._[0]);
-  if(!fs.existsSync(creature_file)){
-    throw {
-      name : "File Error",
-      message : "File provided does not exist"
-    }
-  }
-}
 
-var creature_count = 1;
-creature_count = argv.c ? argv.c : creature_count;
-creature_count = argv.count ? argv.count : creature_count;
+console.log();
+console.log(setupFile.world);
+console.log(setupFile.creatures);
+
+
+
+var creature_file = setupFile.creatures;
+
+var world_file = setupFile.world;
+var creature_count = setupFile.numOfCreatures;
 
 server.listen(app.get('port'), function() {
   console.log("Express server listening on port " + app.get('port'));
@@ -86,5 +85,5 @@ sim = require('./sim')
 var io = require('socket.io').listen(server);
 sim.use_comm(comm);
 world.use_comm(comm);
-sim.startSim(creature_file, creature_count);
+sim.startSim(creature_file, creature_count,world_file);
 comm.start(io, sim);

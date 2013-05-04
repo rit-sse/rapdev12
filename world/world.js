@@ -5,6 +5,11 @@ var Terrain = require('../utils/world-utils').Terrain;
 var Tile = require('../world/Tile.js').Tile;
 var Direction = require('../utils/simulation-utils').Direction;
 var fs = require('fs');
+var MiniGrid = require('../world/MiniGrid.js').MiniGrid;
+
+
+exports.World = World;
+//Test
 
 var comm;
 exports.use_comm = function(c) {
@@ -14,8 +19,18 @@ exports.use_comm = function(c) {
 exports.client_hooks = {};
 exports.updates = {};
 
-function World( jsonObject ) {
-	this.creatureClasses = {}
+/**
+ * Creates the world based on the worldfile given
+ *
+ * @param worldfile
+ * @constructor
+ */
+function World( worldfile ) {
+    console.log("Wordfile " + worldfile)
+    var jsonObject = require(worldfile);
+
+	this.creatureClasses = [];
+
 
 	//list of creatures
 	this.creatures = [];
@@ -28,6 +43,7 @@ function World( jsonObject ) {
 	
 	this.map = [];
 	var currentRow; var currentCol;
+
 	for(var i=0; i<jsonObject.map.length; i++){
 		currentRow = jsonObject.map[i];
 		this.map.push([]);
@@ -49,20 +65,28 @@ function World( jsonObject ) {
  * returns the tile the creature was added to
  */
 World.prototype.addCreature = function( creature, tile ) {
-	this.creatures.push( creature );
+	if( ! this.creatureClassExists(creature.classId)){
+        this.creatureClasses.push({
+            "id":creature.classId,
+            "name":creature.name,
+            "speed":creature.speed,
+            "offense":creature.offense
+        })
+    }
+    this.creatures.push( creature );
 	creature.setId( this.creatures.length - 1 );
 	this.activeCreatures.push( creature );
 	
 	var creTile;
-	if (arguments.length == 3 ){
-		creTile = this.getTile(arguments[1], arguments[2]);
+	if (arguments.length == 2 ){
+		creTile = this.getTile(tile.row, tile.column);
 	}
 	else{
 		creTile = this.getRandomValidTile();
 	}
 	creTile.occupant = creature.getId();
 
-  var delta = {
+  /*var delta = {
     type: "creature", 
     action: "new", 
     data: {
@@ -70,16 +94,35 @@ World.prototype.addCreature = function( creature, tile ) {
       x: creTile.col, 
       y: creTile.row,
       classId: creature.classId,
-      name: creature.name,
+      name: creature.name
     }
   };
-  comm.push_diff(delta);
+  comm.push_diff(delta);     */
 
 
 	return creTile;
 };
 
 
+/**
+ * Looks to see if the creatures class is on the board
+ *
+ * @param classId
+ * @return {Boolean}
+ */
+World.prototype.creatureClassExists = function( classId ) {
+	var classFoundFlag = false;
+	for( var i = 0; i < this.creatureClasses.length && !classFoundFlag; i++ ) {
+		if ( this.creatureClasses[i].id == classId ) {
+			classFoundFlag = true;
+		}
+	}
+	return classFoundFlag;
+}
+
+/**
+ * Empty class TODO
+ */
 World.prototype.populateWithItems = function() {
 	
 };
@@ -134,30 +177,67 @@ World.prototype.getAdjacentTile = function(tile, direction) {
 	return ( this.isOutOfBounds( [nRow,nCol] ) ) ? null : this.getTile(nRow, nCol);
 };
 
+/**
+ * Returns true or false if the coordinates given are out of bounds
+ *
+ * @param coords
+ * @return {Boolean}
+ */
 World.prototype.isOutOfBounds = function( coords ) {
 	return ( nRow < 0 || nRow >= this.map.length ||
 					 nCol < 0 || nCol >= this.map[0].length );
 }
 
+/**
+ * Returns the terrain type ate the given location
+ *
+ * @param row
+ * @param col
+ * @return {*}
+ */
 World.prototype.getTerrainAtTile = function( row, col ) {
 	return this.getTile(row, col).terrain;
 };
 
+/**
+ * Returns weather a creature is on the tile or not
+ *
+ * @param row
+ * @param col
+ * @return {*}
+ */
 World.prototype.getInhabitantAtTile = function( row, col ){
 	return this.creatures[ this.getTile(row, col).occupant ];
 };
-
+/**
+ * Returns the item that is on the given tile
+ *
+ * @param row
+ * @param col
+ * @return {*|Function|*|*|*}
+ */
 World.prototype.getItemAtTile = function( row, col ) {
 	return this.getTile(row, col).item;
 };
 
+/**
+ * Returns a random valid tile for a creature to be on
+ *
+ * @return {*}
+ */
 World.prototype.getRandomValidTile = function() {
 	var validTiles = this.findInTiles( function( tile ) {
+        console.log(tile)
 		return tile.terrain.passable && tile.occupant === null;
 	});
 	return this.randomElement( validTiles );
 };
 
+/**
+ * Returns a tile that does not have an item on it
+ *
+ * @return {*}
+ */
 World.prototype.getRandomItemlessTile = function() {
 	var validTiles = this.findInTiles( function( tile ) {
 		return tile.item == null;
@@ -165,6 +245,11 @@ World.prototype.getRandomItemlessTile = function() {
 	return this.randomElement( validTiles );
 }
 
+/**
+ * Finds all locations where a condition is on a tile
+ * @param condition
+ * @return {Array}
+ */
 World.prototype.findInTiles = function( condition ) {
 	var valid = [];
 	for ( var row = 0; row < this.map.length; row++ ) {
@@ -203,6 +288,8 @@ World.prototype.attackCreature = function(attackerId, direction) {
         comm.push_diff( attackDelta );
 		if (occupant){
             console.log(occupant + " was hit!");
+            var attacker = this.getCreaturePosition(attackerId).occupant;
+            this.creatures[occupant].hit(attacker.offense);
 			this.creatures[occupant].onHit();
         } else {
             console.log("Creature tried to attack an empty location (location " + locationToAttack + ").");
@@ -210,16 +297,22 @@ World.prototype.attackCreature = function(attackerId, direction) {
     }
 }
 
-
+/**
+ * Moves a creature around the world
+ * @param id
+ * @param direction
+ * @return {*|Boolean}
+ */
 World.prototype.moveCreature = function( id, direction ) {
-	var creaturePosition = this.getCreaturePosition(id);
-	var nextTile = this.getAdjacentTile(creaturePosition, direction);
+    var creaturePosition = this.getCreaturePosition(id);
+    var nextTile = this.getAdjacentTile(creaturePosition, direction);
 
-	if ( nextTile == null ){
-		console.log( "Creature with id " + id + " tried to move out of bounds." );
-		this.creatures[id].onCollision();
-		return;
-	}
+    if ( nextTile == null ){
+        console.log( "Creature with id " + id + " tried to move out of bounds." );
+        this.creatures[id].onCollision();
+        return false;
+    }
+
 
 	var newPos = [nextTile.row, nextTile.col]
 	
@@ -244,6 +337,26 @@ World.prototype.moveCreature = function( id, direction ) {
 		this.creatures[id].onCollision();
 	}
 	return tileCheck;
+}
+
+World.prototype.createMiniGrid = function(creatureId){
+    var miniGrid = new MiniGrid();
+    var creatureLocation = this.getCreaturePosition(creatureId);
+    for(var i = -2; i <= 2; i++){
+        for(var j = -2; j <= 2; j++){
+            if(creatureLocation != null){
+                var tile = this.getTile(creatureLocation.row + i, creatureLocation.col + j);
+                if(tile == null){
+                    tile = new Tile(null,null,creatureLocation.row + i, creatureLocation.col + j);
+                }
+
+                miniGrid.addTile(tile);
+            }
+        }
+    }
+    console.log("looked around");
+    return miniGrid;
+
 }
 
 World.prototype.randomElement = function( someArray ) {
@@ -315,6 +428,7 @@ World.prototype.getCreaturesForClient = function() {
 	}
 	return clientCreatures;
 }
+
 
 // TODO: Make this read from world.json instead of hardcoding it
 var worldFromJSON = JSON.parse( fs.readFileSync( 'world/world.json' ) );

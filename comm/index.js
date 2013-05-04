@@ -31,6 +31,7 @@ exports.push_diff = function(diff){
   for (var k in globals.updates) {
     if ('push_diff' == k) {
       for (var s = 0; s < allSockets.length; s++){
+        console.log("IT is doing something")
         allSockets[s].emit('push_diff', diff);
       }
     }
